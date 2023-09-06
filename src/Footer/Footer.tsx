@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, TextInput, Image, Text } from 'react-native';
+import {View, Image, Text} from 'react-native';
 import FooterStyle from './FooterStyle';
 
 const Footer = () => {
