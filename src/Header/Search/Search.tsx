@@ -16,7 +16,7 @@ const Search = () => {
         render={({field: {onChange, onBlur, value}}) => (
           <View style={SearchStyles.input}>
             <Image
-              source={require('images/icons/search.png')}
+              source={require('/Users/gayaneorlova/bookstore_native/images/icons/search.png')}
               style={SearchStyles.search_icon}
             />
             <TextInput

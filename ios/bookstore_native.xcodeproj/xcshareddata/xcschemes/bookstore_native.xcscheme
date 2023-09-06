@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "omeProject.app"
+               BuildableName = "bookstore_native.app"
                BlueprintName = "bookstore_native"
                ReferencedContainer = "container:bookstore_native.xcodeproj">
             </BuildableReference>
