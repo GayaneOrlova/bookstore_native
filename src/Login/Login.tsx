@@ -1,16 +1,15 @@
 import React from 'react';
 import { Controller, useForm } from "react-hook-form";
-import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, TouchableOpacity, Image, TextInput, Text, ScrollView } from 'react-native';
-import Header from '../Header/Header';
-import LoginStyles from './LoginStyles';
+import { View, Image, Text, ScrollView } from 'react-native';
 import { useAppDispatch } from '../store/hooks';
+import Header from '../Header/Header';
 import Button from '../Button/Button';
+import Input from '../Input/Input';
+import LoginStyles from './LoginStyles';
 
 const Login = () => {
   const dispatch = useAppDispatch();
-
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const onSubmit = async () => {
@@ -28,50 +27,36 @@ const Login = () => {
       <Header />
       <View style={LoginStyles.container}>
         <Text style={LoginStyles.title}>Log In</Text>
-
         <Controller
           control={control}
-          rules={{
-            required: true,
-          }}
+          rules={{ required: true, }}
           render={({ field: { onChange, value } }) => (
             <View style={LoginStyles.input_group}>
-              <View style={LoginStyles.input_form}>
-                <Image
-                  source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
-                  style={LoginStyles.input_icon}
-                />
-                <TextInput
-                  placeholder="Email"
-                  onChangeText={onChange}
-                  value={value}
-                />
-              </View>
-
+              <Input
+                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
+                onChangeText={onChange}
+                defaultValue={value}
+                placeholder={'Email'}
+              />
               <Text style={LoginStyles.input_description}>Enter your email</Text>
             </View>
           )}
           name="email"
         />
-        {errors.Email && <Text>This is required.</Text>}
+        {/* {errors.Email && <Text>This is required.</Text>} */}
 
         <Controller
           control={control}
           rules={{ maxLength: 15, }}
           render={({ field: { onChange, value } }) => (
             <View style={LoginStyles.input_group}>
-              <View style={LoginStyles.input_form}>
-                <Image
-                  source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                  style={LoginStyles.input_icon}
-                />
-                <TextInput
-                  placeholder="Password"
-                  onChangeText={onChange}
-                  value={value}
-                  secureTextEntry
-                />
-              </View>
+              <Input
+                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                onChangeText={onChange}
+                defaultValue={value}
+                placeholder={'Password'}
+                secureTextEntry
+              />
               <Text style={LoginStyles.input_description}>Enter your password</Text>
             </View>
           )}
@@ -83,18 +68,13 @@ const Login = () => {
           rules={{ maxLength: 15, }}
           render={({ field: { onChange, value } }) => (
             <View style={LoginStyles.input_group}>
-              <View style={LoginStyles.input_form}>
-                <Image
-                  source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                  style={LoginStyles.input_icon}
-                />
-                <TextInput
-                  placeholder="Password replay"
-                  onChangeText={onChange}
-                  value={value}
-                  secureTextEntry
-                />
-              </View>
+              <Input
+                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                onChangeText={onChange}
+                defaultValue={value}
+                placeholder={'Password replay'}
+                secureTextEntry
+              />
               <Text style={LoginStyles.input_description}>Repeat your password without errors</Text>
             </View>
           )}

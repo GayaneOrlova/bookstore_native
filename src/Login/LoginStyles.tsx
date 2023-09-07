@@ -15,7 +15,7 @@ const LoginStyles = StyleSheet.create({
   },
   input_form: {
     // flex: 1,
-    height: 47,
+    height: 48,
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 16,
