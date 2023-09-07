@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 const HeaderStyles = StyleSheet.create({
-  container: {
+  header_container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -9,17 +9,21 @@ const HeaderStyles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
-  logo: {
+  header_logo: {
     width: 62,
     height: 31,
   },
-  text: {
+  header_text: {
     fontSize: 14,
   },
-  button: {
+  header_button: {
     width: 135,
     height: 38,
     fontSize: 12,
+  },
+  header_user_button: {
+    flexDirection: 'row',
+    gap: 20,
   },
 });
 

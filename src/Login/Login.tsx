@@ -7,6 +7,7 @@ import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
+import Footer from '../Footer/Footer';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -37,7 +38,7 @@ const Login = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder={'Email'}
-              />
+                placeholderTextColor={'#B9BAC3'}              />
               <Text style={LoginStyles.input_description}>Enter your email</Text>
             </View>
           )}
@@ -55,6 +56,7 @@ const Login = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder={'Password'}
+                placeholderTextColor={'#B9BAC3'}
                 secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Enter your password</Text>
@@ -73,6 +75,7 @@ const Login = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder={'Password replay'}
+                placeholderTextColor={'#B9BAC3'}
                 secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Repeat your password without errors</Text>
@@ -84,6 +87,7 @@ const Login = () => {
         {/* или Sign up */}
       </View>
       <Image style={LoginStyles.image} source={require('/Users/gayaneorlova/bookstore_native/images/man-reader.png')} />
+      <Footer />
     </ScrollView>
   );
 };

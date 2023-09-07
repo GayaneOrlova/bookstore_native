@@ -8,6 +8,7 @@ type Props = {
   onChangeText: (text: string) => void;
   defaultValue: string;
   placeholder: string;
+  placeholderTextColor: string;
   secureTextEntry?: boolean;
 };
 const Input: React.FC<Props> = props => {
@@ -24,7 +25,7 @@ const Input: React.FC<Props> = props => {
         onChangeText={onChange}
         defaultValue={props.defaultValue}
         placeholder={props.placeholder}
-        placeholderTextColor={'#B9BAC3'}
+        placeholderTextColor={props.placeholderTextColor}
         secureTextEntry={props.secureTextEntry}
       />
     </View>

@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 
 import Homepage from './src/Homepage';
 import Login from './src/Login/Login';
+import UserProfile from './src/UserProfile/UserProfile';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,11 @@ function Main(): JSX.Element {
           name="Login"
           component={Login}
           options={{title: 'Login'}}
+        />
+        <Stack.Screen
+          name="UserProfile"
+          component={UserProfile}
+          options={{title: 'UserProfile'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
