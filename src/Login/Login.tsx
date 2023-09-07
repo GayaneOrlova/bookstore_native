@@ -2,10 +2,11 @@ import React from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, TouchableOpacity, Image, TextInput, Button, Text } from 'react-native';
+import { View, TouchableOpacity, Image, TextInput, Text, ScrollView } from 'react-native';
 import Header from '../Header/Header';
 import LoginStyles from './LoginStyles';
 import { useAppDispatch } from '../store/hooks';
+import Button from '../Button/Button';
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -23,10 +24,10 @@ const Login = () => {
   };
 
   return (
-    <View>
+    <ScrollView>
       <Header />
-      <View style={LoginStyles.login_container}>
-        <Text style={LoginStyles.login_title}>Log In</Text>
+      <View style={LoginStyles.container}>
+        <Text style={LoginStyles.title}>Log In</Text>
 
         <Controller
           control={control}
@@ -34,36 +35,76 @@ const Login = () => {
             required: true,
           }}
           render={({ field: { onChange, value } }) => (
-            <TextInput
-              placeholder="Email"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
+            <View style={LoginStyles.input_group}>
+              <View style={LoginStyles.input_form}>
+                <Image
+                  source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
+                  style={LoginStyles.input_icon}
+                />
+                <TextInput
+                  placeholder="Email"
+                  onChangeText={onChange}
+                  value={value}
+                />
+              </View>
+
+              <Text style={LoginStyles.input_description}>Enter your email</Text>
+            </View>
           )}
-          name="Email"
+          name="email"
         />
         {errors.Email && <Text>This is required.</Text>}
 
         <Controller
           control={control}
-          rules={{
-            maxLength: 100,
-          }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <TextInput
-              placeholder="Last name"
-              onBlur={onBlur}
-              onChangeText={onChange}
-              value={value}
-            />
+          rules={{ maxLength: 15, }}
+          render={({ field: { onChange, value } }) => (
+            <View style={LoginStyles.input_group}>
+              <View style={LoginStyles.input_form}>
+                <Image
+                  source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                  style={LoginStyles.input_icon}
+                />
+                <TextInput
+                  placeholder="Password"
+                  onChangeText={onChange}
+                  value={value}
+                  secureTextEntry
+                />
+              </View>
+              <Text style={LoginStyles.input_description}>Enter your password</Text>
+            </View>
           )}
-          name="lastName"
+          name="password"
         />
 
-        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+        <Controller
+          control={control}
+          rules={{ maxLength: 15, }}
+          render={({ field: { onChange, value } }) => (
+            <View style={LoginStyles.input_group}>
+              <View style={LoginStyles.input_form}>
+                <Image
+                  source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                  style={LoginStyles.input_icon}
+                />
+                <TextInput
+                  placeholder="Password replay"
+                  onChangeText={onChange}
+                  value={value}
+                  secureTextEntry
+                />
+              </View>
+              <Text style={LoginStyles.input_description}>Repeat your password without errors</Text>
+            </View>
+          )}
+          name="сonfirm the password"
+        />
+        <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
+        {/* или Sign up */}
       </View>
-    </View>
+      <Image style={LoginStyles.image} source={require('/Users/gayaneorlova/bookstore_native/images/man-reader.png')} />
+    </ScrollView>
   );
 };
 
