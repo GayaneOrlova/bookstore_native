@@ -10,13 +10,13 @@ const Login = () => {
     navigation.navigate('Homepage');
   };
 
-  // const onEmailChange = text => {
-  //   setEmail(text);
-  // };
+  const onEmailChange = text => {
+    setEmail(text);
+  };
 
-  // const onPasswordChange = text => {
-  //   setPassword(text);
-  // };
+  const onPasswordChange = text => {
+    setPassword(text);
+  };
 
   // const onLogin = async () => {
   //   try {
@@ -59,3 +59,11 @@ const Login = () => {
 };
 
 export default Login;
+function setEmail(text: any) {
+  throw new Error('Function not implemented.');
+}
+
+function setPassword(text: any) {
+  throw new Error('Function not implemented.');
+}
+

@@ -4,20 +4,30 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView } from 'react-native';
 import { useAppDispatch } from '../store/hooks';
 import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import Footer from '../Footer/Footer';
+import { setUser } from '../store/slices/userSlice';
+import { userLogin } from '../api/user.api/user.api';
+
+type UserLogin = {
+  email: string;
+  password: string;
+  password_confirm?: string;
+};
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>();
 
-  const onSubmit = async () => {
+  const onSubmit = async (data: UserLogin) => {
     try {
-      // const response = await postUser({email, password});
-      // await AsyncStorage.setItem('access', response.data.tokens.access);
-      // dispatch(setUser(response.data.user));
+      const response = await userLogin(data.email, data.password);
+      await AsyncStorage.setItem('access', response.data.tokens.access);
+      dispatch(setUser(response.data.user));
+      console.log(response.data.tokens.access);
+
     } catch (er) {
       console.log(er);
     }
@@ -38,7 +48,8 @@ const Login = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder={'Email'}
-                placeholderTextColor={'#B9BAC3'}              />
+                placeholderTextColor={'#B9BAC3'}
+              />
               <Text style={LoginStyles.input_description}>Enter your email</Text>
             </View>
           )}
@@ -65,7 +76,7 @@ const Login = () => {
           name="password"
         />
 
-        <Controller
+        {/* <Controller
           control={control}
           rules={{ maxLength: 15, }}
           render={({ field: { onChange, value } }) => (
@@ -82,7 +93,7 @@ const Login = () => {
             </View>
           )}
           name="сonfirm the password"
-        />
+        /> */}
         <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
         {/* или Sign up */}
       </View>
@@ -93,3 +104,11 @@ const Login = () => {
 };
 
 export default Login;
+function setEmail(text: any) {
+  throw new Error('Function not implemented.');
+}
+
+function setPassword(text: any) {
+  throw new Error('Function not implemented.');
+}
+
