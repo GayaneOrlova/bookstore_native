@@ -16,7 +16,7 @@ type SigninResponseType = {
 
 export const userLogin = ({
   email,
-  password,
+  password
 }: {
   email: string;
   password: string;

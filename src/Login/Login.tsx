@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView } from 'react-native';
 import { useAppDispatch } from '../store/hooks';
@@ -9,30 +9,41 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
 import { setUser } from '../store/slices/userSlice';
-import { userLogin } from '../api/user.api/user.api';
+import {userLogin } from '../api/user.api/user.api';
 
-type UserLogin = {
-  email: string;
-  password: string;
-  password_confirm?: string;
-};
+// type UserLogin = {
+//   email: string;
+//   password: string;
+//   password_confirm?: string;
+// };
 
 const Login = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>();
+  const { control, handleSubmit, formState: { errors } } = useForm();
 
-  const onSubmit = async (data: UserLogin) => {
+  // const onSubmit:SubmitHandler<UserLogin> = async (data) => {
+  //   try {
+  //     const response = await postUser(data.email, data.password);
+  //     await AsyncStorage.setItem('access', response.data.tokens.access);
+  //     dispatch(setUser(response.data.user));
+  //     console.log(response.data.tokens.access);
+  //   } catch (er) {
+  //     console.log(er);
+  //   }
+  // };
+
+  const onSubmit = async (email:string, password: string) => {
+  
     try {
-      const response = await userLogin(data.email, data.password);
+      const response = await userLogin(email, password);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
       console.log(response.data.tokens.access);
-
     } catch (er) {
       console.log(er);
     }
   };
-
+  
   return (
     <ScrollView>
       <Header />
@@ -45,7 +56,7 @@ const Login = () => {
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
-                onChangeText={onChange}
+                onChangeText={defaultValue => onChange(defaultValue)}
                 defaultValue={value}
                 placeholder={'Email'}
                 placeholderTextColor={'#B9BAC3'}
@@ -64,7 +75,7 @@ const Login = () => {
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                onChangeText={onChange}
+                onChangeText={defaultValue => onChange(defaultValue)}
                 defaultValue={value}
                 placeholder={'Password'}
                 placeholderTextColor={'#B9BAC3'}
