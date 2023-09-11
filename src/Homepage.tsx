@@ -15,7 +15,7 @@ const Homepage = () => {
     <ScrollView>
       <Header />
       <Banner />
-      {!isUser ? <AuthorizeBanner /> : null }
+      {!isUser.username ? <AuthorizeBanner /> : null }
       <Footer />
     </ScrollView>
   );

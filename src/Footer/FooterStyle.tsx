@@ -32,6 +32,9 @@ const FooterStyle = StyleSheet.create({
     height: 160,
     width: '100%',
   },
+  footer_button: {
+    backgroundColor: 'none',
+  },
 });
 
 export default FooterStyle;

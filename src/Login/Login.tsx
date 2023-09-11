@@ -2,7 +2,7 @@ import React from 'react';
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView } from 'react-native';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';

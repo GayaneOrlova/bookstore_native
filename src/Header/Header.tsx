@@ -27,7 +27,7 @@ const Header = () => {
           style={HeaderStyles.header_logo}
         />
         <Text style={HeaderStyles.header_text}>Catalog</Text>
-        {!isUser ? (
+        {!isUser.username ? (
           <Button
             text="Log In/ Sing Up"
             style={HeaderStyles.header_button}
