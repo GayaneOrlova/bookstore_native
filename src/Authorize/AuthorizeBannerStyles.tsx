@@ -33,8 +33,9 @@ const AuthorizeBannerStyles = StyleSheet.create({
     height: 44,
   },
   castle_image: {
-    width: 282,
-    height: 250,
+    minWidth: 282,
+    minHeight: 250,
+    width: '100%',
     margin: 'auto',
     position: 'absolute',
     bottom: 0,

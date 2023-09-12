@@ -9,16 +9,23 @@ import { useAppSelector } from '../store/hooks';
 
 const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
-  // const isUser = false;
+  
   const navigation = useNavigation();
   const onLoginPage = () => {
     navigation.navigate('Login');
+  };
+  
+  const onSignupPage = () => {
+    navigation.navigate('Signup')
   };
 
   const onUserProfilePage = () => {
     navigation.navigate('UserProfile');
   }
 
+  const onCartPage = () => {
+    navigation.navigate('Cart');
+  }
   return (
     <>
       <View style={HeaderStyles.header_container}>
@@ -27,15 +34,23 @@ const Header = () => {
           style={HeaderStyles.header_logo}
         />
         <Text style={HeaderStyles.header_text}>Catalog</Text>
-        {!isUser.username ? (
-          <Button
-            text="Log In/ Sing Up"
-            style={HeaderStyles.header_button}
-            onPress={onLoginPage}
-          />
+        {!isUser.email ? (
+          <View style={HeaderStyles.header_button_container}>
+            <Button
+              text="Log In"
+              style={HeaderStyles.header_button}
+              onPress={onLoginPage}
+            />
+            <Button
+              text="Sing Up"
+              style={HeaderStyles.header_button}
+              onPress={onSignupPage}
+            />
+          </View>
         ) : (
           <View style={HeaderStyles.header_user_button}>
-            <UserButton image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/cart.png')} />
+            <UserButton image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/cart.png')}
+              onPress={onCartPage} />
             <UserButton image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/heart.png')} />
             <UserButton
               image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/user_profile.png')}

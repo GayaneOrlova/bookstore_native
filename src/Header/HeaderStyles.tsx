@@ -16,8 +16,13 @@ const HeaderStyles = StyleSheet.create({
   header_text: {
     fontSize: 14,
   },
+  header_button_container: {
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+   gap: 10,
+  },
   header_button: {
-    width: 135,
+    width: 100,
     height: 38,
     fontSize: 12,
   },

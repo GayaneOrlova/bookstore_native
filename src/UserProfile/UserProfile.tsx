@@ -19,7 +19,7 @@ const UserProfile = () => {
     <ScrollView>
       <Header />
       <View style={UserProfileStyles.container}>
-        <Image style={UserProfileStyles.user_photo} source={require('/Users/gayaneorlova/bookstore_native/images/man-reader.png')} />
+        <Image style={UserProfileStyles.user_photo} source={require('/Users/gayaneorlova/bookstore_native/images/currentMan.png')} />
         <Text style={UserProfileStyles.title}>Personal information</Text>
         <TouchableOpacity onPress={handlePress}>
           <Text style={UserProfileStyles.change_text}>Change information</Text>
