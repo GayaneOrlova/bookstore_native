@@ -6,8 +6,9 @@ const UserProfileStyles = StyleSheet.create({
     marginBottom: 80,
   },
   user_photo: {
-    width: 290,
-    height: 290,
+    width: '100%',
+    minWidth: 290,
+    minHeight: 290,
     marginVertical: 50,
     borderRadius: 16,
   },

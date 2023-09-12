@@ -3,23 +3,30 @@ import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import Header from '../Header/Header';
-import Button from '../Button/Button';
 import Input from '../Input/Input';
 import Footer from '../Footer/Footer';
 import UserProfileStyles from './UserProfileStyles';
+import { useAppSelector } from '../store/hooks';
 
 const UserProfile = () => {
+  const user = useAppSelector(state => state.user.user);
+  
+  const userAvatar = useAppSelector(state => state.user.userAvatar.avatar);
+
+  console.log('aaaaa', userAvatar)
   const { control, handleSubmit, formState: { errors } } = useForm();
 
   const handlePress = () => {
-
   };
+
 
   return (
     <ScrollView>
       <Header />
       <View style={UserProfileStyles.container}>
-        <Image style={UserProfileStyles.user_photo} source={require('/Users/gayaneorlova/bookstore_native/images/currentMan.png')} />
+        <Image style={UserProfileStyles.user_photo}
+        source={{uri: `${userAvatar}`}}
+        />
         <Text style={UserProfileStyles.title}>Personal information</Text>
         <TouchableOpacity onPress={handlePress}>
           <Text style={UserProfileStyles.change_text}>Change information</Text>
@@ -34,7 +41,7 @@ const UserProfile = () => {
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/user__profile.png')}
                 onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'jjj'} //здесь будет информация об имени пользователя
+                placeholder={user.username} //здесь будет информация об имени пользователя
                 placeholderTextColor={'#344966'}
                 style={UserProfileStyles.input}
               />
@@ -53,7 +60,7 @@ const UserProfile = () => {
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
                 onChangeText={onChange}
                 defaultValue={value}
-                placeholder={''}
+                placeholder={user.email}
                 placeholderTextColor={'#344966'}
                 style={UserProfileStyles.input}
               />
@@ -78,7 +85,7 @@ const UserProfile = () => {
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
                 onChangeText={onChange}
                 defaultValue={value}
-                placeholder={''}
+                placeholder={'**********'}
                 placeholderTextColor={'#344966'}
                 secureTextEntry
                 style={UserProfileStyles.input}

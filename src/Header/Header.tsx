@@ -9,12 +9,12 @@ import { useAppSelector } from '../store/hooks';
 
 const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
-  
+
   const navigation = useNavigation();
   const onLoginPage = () => {
     navigation.navigate('Login');
   };
-  
+
   const onSignupPage = () => {
     navigation.navigate('Signup')
   };

@@ -6,8 +6,13 @@ export type User = {
   username: string;
 };
 
+export type UserProfile = {
+  avatar: string;
+};
+
 type UserSliceType = {
   user: User;
+  userAvatar: UserProfile;
 };
 
 const initialState: UserSliceType = {
@@ -15,6 +20,9 @@ const initialState: UserSliceType = {
     id: '',
     email: '',
     username: '',
+  },
+  userAvatar: {
+    avatar: '',
   },
 };
 
@@ -26,12 +34,16 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     
+    setUserProfile(state, action){
+      state.userAvatar = action.payload;
+    },
+    
     logout(state) {
       (state.user.email = ''), (state.user.id = ''), (state.user.username = '');
     },
   },
 });
 
-export const {setUser, logout} = userSlice.actions;
+export const {setUser, setUserProfile, logout} = userSlice.actions;
 
 export default userSlice.reducer;

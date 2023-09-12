@@ -8,8 +8,8 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import { setUser } from '../store/slices/userSlice';
-import {userLogin } from '../api/user.api/user.api';
+import { setUser, setUserProfile } from '../store/slices/userSlice';
+import {userLogin, userProfile } from '../api/user.api/user.api';
 
 // type UserLogin = {
 //   email: string;
@@ -20,26 +20,21 @@ import {userLogin } from '../api/user.api/user.api';
 const Login = () => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, formState: { errors } } = useForm();
-
-  // const onSubmit:SubmitHandler<UserLogin> = async (data) => {
-  //   try {
-  //     const response = await postUser(data.email, data.password);
-  //     await AsyncStorage.setItem('access', response.data.tokens.access);
-  //     dispatch(setUser(response.data.user));
-  //     console.log(response.data.tokens.access);
-  //   } catch (er) {
-  //     console.log(er);
-  //   }
-  // };
-
-  const onSubmit = async (email:string, password: string) => {
   
+  const onSubmit = async (email:string, password: string) => {
     try {
       const response = await userLogin(email, password);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
-      console.log(response.data.tokens.access);
-    } catch (er) {
+      try {
+          const response = await userProfile();
+          console.log(response.data);
+          dispatch(setUserProfile(response.data));
+        } catch (er) {
+          console.log(er);
+        }
+      }    
+    catch (er) {
       console.log(er);
     }
   };
@@ -86,27 +81,7 @@ const Login = () => {
           )}
           name="password"
         />
-
-        {/* <Controller
-          control={control}
-          rules={{ maxLength: 15, }}
-          render={({ field: { onChange, value } }) => (
-            <View style={LoginStyles.input_group}>
-              <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                onChangeText={onChange}
-                defaultValue={value}
-                placeholder={'Password replay'}
-                placeholderTextColor={'#B9BAC3'}
-                secureTextEntry
-              />
-              <Text style={LoginStyles.input_description}>Repeat your password without errors</Text>
-            </View>
-          )}
-          name="сonfirm the password"
-        /> */}
         <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
-        {/* или Sign up */}
       </View>
       <Image style={LoginStyles.image} source={require('/Users/gayaneorlova/bookstore_native/images/man-reader.png')} />
       <Footer />

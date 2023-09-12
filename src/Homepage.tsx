@@ -11,13 +11,12 @@ import Catalog from './Catalog/Catalog';
 
 const Homepage = () => {
   const isUser = useAppSelector(state => state.user.user);
-
   return (
     <ScrollView>
       <Header />
       <Banner />
       <Catalog />
-      {!isUser.username ? <AuthorizeBanner /> : null }
+      {!isUser.email ? <AuthorizeBanner /> : null }
       <Footer />
     </ScrollView>
   );

@@ -24,6 +24,10 @@ export const userLogin = ({
   return axios.post<LoginResponseType>('/login/', {email, password});
 };
 
+export const userProfile = () => {
+  return axios.get('/profile/avatar/')
+};
+
 export const userSignUp = ({
   email,
   password,
@@ -39,3 +43,5 @@ export const userSignUp = ({
 export const getUser = () => {
   return axios.get<User>('/me/');
 };
+
+

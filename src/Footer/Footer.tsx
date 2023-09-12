@@ -31,7 +31,7 @@ const Footer = () => {
           <Text style={FooterStyle.footer_text}>Catalog</Text>
           <Text style={FooterStyle.footer_text}>My Account</Text>
           <Text style={FooterStyle.footer_text}>Cart</Text>
-          {isUser.username ? (
+          {isUser.email ? (
             <TouchableOpacity
               onPress={onLogout}>
               <Text style={FooterStyle.footer_text}>LOGOUT</Text>

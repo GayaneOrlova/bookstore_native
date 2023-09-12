@@ -5,36 +5,25 @@ import { NavigationContainer } from '@react-navigation/native';
 import Homepage from './src/Homepage';
 import Login from './src/Login/Login';
 import UserProfile from './src/UserProfile/UserProfile';
-import { useAppSelector } from './src/store/hooks';
 import Cart from './src/Cart/Cart';
-import LoginSignup from './src/Login/Login';
 import Signup from './src/Signup/Signup';
+import { useAppSelector } from './src/store/hooks';
 
 const Stack = createStackNavigator();
 
 function Main(): JSX.Element {
-  const currentUser = useAppSelector(state => state.user.user)
+  const user = useAppSelector(state => state.user.user)
 
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen
-          name="Homepage"
-          component={Homepage}
-          options={{ title: 'Homepage' }}
-        />
-        <Stack.Screen
-          name="UserProfile"
-          component={UserProfile}
-          options={{ title: 'UserProfile' }}
-        />
-        <Stack.Screen
-          name="Cart"
-          component={Cart}
-          options={{ title: 'Cart' }}
-        />
-        {!currentUser.username &&
+        {!user.email ? (
           <>
+            <Stack.Screen
+              name="Homepage"
+              component={Homepage}
+              options={{ title: 'Homepage' }}
+            />
             <Stack.Screen
               name="Login"
               component={Login}
@@ -46,7 +35,20 @@ function Main(): JSX.Element {
               options={{ title: 'Signup' }}
             />
           </>
-        }
+        ) : (
+          <>
+            <Stack.Screen
+              name="UserProfile"
+              component={UserProfile}
+              options={{ title: 'UserProfile' }}
+            />
+            <Stack.Screen
+              name="Cart"
+              component={Cart}
+              options={{ title: 'Cart' }}
+            />
+          </>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
