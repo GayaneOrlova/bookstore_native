@@ -53,7 +53,7 @@ const Header = () => {
               onPress={onCartPage} />
             <UserButton image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/heart.png')} />
             <UserButton
-              image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/user_profile.png')}
+              image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/userrprofile.png')}
               onPress={onUserProfilePage}
             />
           </View>

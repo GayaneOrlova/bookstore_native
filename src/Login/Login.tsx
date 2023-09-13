@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import { setUser, setUserProfile } from '../store/slices/userSlice';
+import { setUser, setUserAvatar } from '../store/slices/userSlice';
 import {userLogin, userProfile } from '../api/user.api/user.api';
 
 // type UserLogin = {
@@ -21,6 +21,8 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, formState: { errors } } = useForm();
   
+  AsyncStorage.removeItem('access');
+
   const onSubmit = async (email:string, password: string) => {
     try {
       const response = await userLogin(email, password);
@@ -29,7 +31,7 @@ const Login = () => {
       try {
           const response = await userProfile();
           console.log(response.data);
-          dispatch(setUserProfile(response.data));
+          dispatch(setUserAvatar(response.data));
         } catch (er) {
           console.log(er);
         }
