@@ -8,7 +8,7 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import { setUser, setUserAvatar } from '../store/slices/userSlice';
+import { setUser, setUserProfile } from '../store/slices/userSlice';
 import {userLogin, userProfile } from '../api/user.api/user.api';
 
 // type UserLogin = {
@@ -28,10 +28,10 @@ const Login = () => {
       const response = await userLogin(email, password);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
-      try {
+        try {
           const response = await userProfile();
-          console.log(response.data);
-          dispatch(setUserAvatar(response.data));
+          console.log('profile:', response.data);
+          dispatch(setUserProfile(response.data));
         } catch (er) {
           console.log(er);
         }

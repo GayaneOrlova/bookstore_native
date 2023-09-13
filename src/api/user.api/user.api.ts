@@ -25,21 +25,24 @@ export const userLogin = ({
 };
 
 export const userProfile = () => {
-  return axios.get('/profile/avatar/')
+  return axios.get('/profile/')
 };
 
+
+// export const userAvatar = () => {
+//   return axios.get('/profile/avatar/')
+// };
+
 export const userPasswordChange = ({
-  email,
   password,
   new_password,
   confirm_password
 } : {
-  email: string;
   password: string;
   new_password: string;
   confirm_password: string;
 }) => {
-  return axios.put('/change-password/', {email, password, new_password, confirm_password});
+  return axios.put('/change-password/', {password, new_password, confirm_password});
 };
 
 // export const userPasswordChange = (options: {
