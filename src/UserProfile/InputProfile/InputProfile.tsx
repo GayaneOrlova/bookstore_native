@@ -36,7 +36,7 @@ const InputProfile = () => {
   };
   
   return (
-      <View style={InputProfileStyles.container}>
+      <View>
       {userAvatar ? (
         <Image style={InputProfileStyles.user_photo}
           source={{ uri: `${userAvatar}` }}

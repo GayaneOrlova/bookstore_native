@@ -18,8 +18,9 @@ const UserProfile = () => {
   return (
     <ScrollView>
       <Header />
+      <View style={UserProfileStyles.container}>
       <InputProfile />
-      <InputPassword />
+      <InputPassword /></View>
       <Footer />
     </ScrollView>
   )

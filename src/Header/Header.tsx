@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import HeaderStyles from './HeaderStyles';
 import Search from './Search/Search';
 import Button from '../Button/Button';
@@ -26,6 +26,11 @@ const Header = () => {
   const onCartPage = () => {
     navigation.navigate('Cart');
   }
+  
+  const onHomepage = () => {
+    navigation.navigate('Homepage');
+  };
+  
   return (
     <>
       <View style={HeaderStyles.header_container}>
@@ -33,7 +38,9 @@ const Header = () => {
           source={require('/Users/gayaneorlova/bookstore_native/images/icons/logo.png')}
           style={HeaderStyles.header_logo}
         />
+        <TouchableOpacity onPress={onHomepage}>
         <Text style={HeaderStyles.header_text}>Catalog</Text>
+        </TouchableOpacity>
         {!isUser.email ? (
           <View style={HeaderStyles.header_button_container}>
             <Button
@@ -62,6 +69,6 @@ const Header = () => {
       <Search />
     </>
   );
-};
+  };
 
 export default Header;

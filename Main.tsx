@@ -17,7 +17,6 @@ function Main(): JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {!user.email ? (
           <>
             <Stack.Screen
               name="Homepage"
@@ -35,7 +34,7 @@ function Main(): JSX.Element {
               options={{ title: 'Signup' }}
             />
           </>
-        ) : (
+          {user.email && (
           <>
             <Stack.Screen
               name="UserProfile"

@@ -13,6 +13,7 @@ import { setNewPassword } from '../../store/slices/userSlice';
 
 const InputPassword = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
+
   const [showInputChange, setShowInputChange] = useState(false);
   const dispatch = useAppDispatch();
   const user = useAppSelector(state => state.user.user);
@@ -24,11 +25,13 @@ const InputPassword = () => {
 
   const onSubmit = async (password: string, new_password: string, confirm_password: string) => {
     try {
-      console.log('что тут:')
-      const response = await userPasswordChange(password, new_password, confirm_password );
+      
+      const body = {password: password.password, new_password:password.new_password, confirm_password: password.confirm_password}
+      console.log(body) 
+      const response = await userPasswordChange(body);
       // await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setNewPassword(response.data));
-      console.log('Password', response.data);
+      // console.log('Password', response.data);
     }
     catch (er) {
       console.log(er);

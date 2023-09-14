@@ -1,10 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const InputProfileStyles = StyleSheet.create({
-  container: {
-    marginHorizontal: 15,
-    marginBottom: 80,
-  },
   user_photo: {
     width: '100%',
     minWidth: 290,

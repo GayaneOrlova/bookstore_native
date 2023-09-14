@@ -1,38 +1,6 @@
 import { StyleSheet } from 'react-native';
 
 const InputPasswordStyles = StyleSheet.create({
-  container: {
-    marginHorizontal: 15,
-    marginBottom: 80,
-  },
-  user_photo: {
-    width: '100%',
-    minWidth: 290,
-    minHeight: 290,
-    marginVertical: 50,
-    borderRadius: 16,
-  },
-  user_avatar_container: {
-    backgroundColor: '#F0F4EF',
-    borderWidth: 1,
-    borderRadius: 16,
-    marginVertical: 50,
-    minWidth: 290,
-    minHeight: 290,
-    width: '100%',
-  },
-  user_avatar_icon: {
-    width: 154,
-    height: 154,
-    // width: '100%',
-    alignSelf: 'center',
-    marginVertical: 70,
-  },
-  title: {
-    fontSize: 16,
-    color: '#0D1821',
-    marginBottom: 10,
-  },
   change_text: {
     fontSize: 12,
     color: '#8D9F4F',
