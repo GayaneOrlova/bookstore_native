@@ -23,15 +23,14 @@ const InputPassword = () => {
     setShowInputChange(true);
   };
 
-  const onSubmit = async (password: string, new_password: string, confirm_password: string) => {
+  const onSubmit = async (text: { password: string; new_password: string; }) => {
     try {
-      
-      const body = {password: password.password, new_password:password.new_password, confirm_password: password.confirm_password}
+      // console.log(password) 
+      const body = {text: text.password, new_password: text.new_password}
       console.log(body) 
-      const response = await userPasswordChange(body);
-      // await AsyncStorage.setItem('access', response.data.tokens.access);
+      const response = await userPasswordChange(text);
       dispatch(setNewPassword(response.data));
-      // console.log('Password', response.data);
+      console.log('response:', response.data);
     }
     catch (er) {
       console.log(er);
@@ -53,11 +52,11 @@ const InputPassword = () => {
           <View>
             <Input
               image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-              onChangeText={defaultValue => onChange(defaultValue)}
+              onChangeText={onChange}
               defaultValue={value}
               placeholder={'nbm,.'}
               placeholderTextColor={'#344966'}
-              // secureTextEntry
+              secureTextEntry
               style={InputPasswordStyles.input}
             />
             {!showInputChange ? (
@@ -77,11 +76,11 @@ const InputPassword = () => {
             render={({ field: { onChange, value } }) => (
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'New password'}
-                placeholderTextColor={'#344966'}
-                // secureTextEntry
+                placeholder="New password"
+                placeholderTextColor='#344966'
+                secureTextEntry
                 style={InputPasswordStyles.input}
               />
             )}
@@ -94,11 +93,11 @@ const InputPassword = () => {
             render={({ field: { onChange, value } }) => (
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={value}
                 placeholder={'Password replay'}
                 placeholderTextColor={'#344966'}
-                // secureTextEntry
+                secureTextEntry
                 style={InputPasswordStyles.input}
               />
             )}

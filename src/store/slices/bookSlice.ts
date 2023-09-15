@@ -1,7 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import type { User } from './userSlice';
 
-
 export type BookType = {
   title: string;
   author: string;

@@ -21,12 +21,11 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const { control, handleSubmit, formState: { errors } } = useForm();
   
-  AsyncStorage.removeItem('access');
-
-  const onSubmit = async (email:string, password: string) => {
+  const onSubmit = async (text: { email: string; password: string; }) => {
     try {
-      const response = await userLogin(email, password);
+      const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
+      console.log(response.data.tokens.access)
       dispatch(setUser(response.data.user));
         try {
           const response = await userProfile();

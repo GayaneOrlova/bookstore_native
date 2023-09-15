@@ -19,8 +19,9 @@ const UserProfile = () => {
     <ScrollView>
       <Header />
       <View style={UserProfileStyles.container}>
-      <InputProfile />
-      <InputPassword /></View>
+        <InputProfile />
+        <InputPassword />
+      </View>
       <Footer />
     </ScrollView>
   )
