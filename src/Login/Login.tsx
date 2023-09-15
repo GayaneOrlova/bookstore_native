@@ -9,37 +9,39 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
 import { setUser, setUserProfile } from '../store/slices/userSlice';
-import {userLogin, userProfile } from '../api/user.api/user.api';
+import { userLogin, userProfile } from '../api/user.api/user.api';
 
-// type UserLogin = {
-//   email: string;
-//   password: string;
-//   password_confirm?: string;
-// };
+type UserLogin = {
+  email: string;
+  password: string;
+};
 
-const Login = () => {
+type Props = {
+  text: UserLogin;
+};
+
+
+const Login: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, formState: { errors } } = useForm();
-  
-  const onSubmit = async (text: { email: string; password: string; }) => {
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>();
+
+  const onSubmit = async (text: UserLogin) => {
     try {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
-      console.log(response.data.tokens.access)
       dispatch(setUser(response.data.user));
-        try {
-          const response = await userProfile();
-          console.log('profile:', response.data);
-          dispatch(setUserProfile(response.data));
-        } catch (er) {
-          console.log(er);
-        }
-      }    
+      try {
+        const response = await userProfile();
+        dispatch(setUserProfile(response.data));
+      } catch (er) {
+        console.log(er);
+      }
+    }
     catch (er) {
       console.log(er);
     }
   };
-  
+
   return (
     <ScrollView>
       <Header />
@@ -52,10 +54,10 @@ const Login = () => {
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'Email'}
-                placeholderTextColor={'#B9BAC3'}
+                placeholder='Email'
+                placeholderTextColor='#B9BAC3'
               />
               <Text style={LoginStyles.input_description}>Enter your email</Text>
             </View>
@@ -71,10 +73,10 @@ const Login = () => {
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'Password'}
-                placeholderTextColor={'#B9BAC3'}
+                placeholder='Password'
+                placeholderTextColor='#B9BAC3'
                 secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Enter your password</Text>
@@ -91,11 +93,3 @@ const Login = () => {
 };
 
 export default Login;
-function setEmail(text: any) {
-  throw new Error('Function not implemented.');
-}
-
-function setPassword(text: any) {
-  throw new Error('Function not implemented.');
-}
-

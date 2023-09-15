@@ -12,6 +12,12 @@ import { userPasswordChange } from '../../api/user.api/user.api';
 import { setNewPassword } from '../../store/slices/userSlice';
 import InputProfileStyles from './InputProfileStyles';
 
+// type UserLoginType = {
+//   password: string;
+//   new_password: string;
+//   confirm_password: string;
+// };
+
 const InputProfile = () => {
   const { control, handleSubmit, formState: { errors } } = useForm();
   const dispatch = useAppDispatch();
@@ -62,7 +68,7 @@ const InputProfile = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder={userName}
-                placeholderTextColor={'#344966'}
+                placeholderTextColor='#344966'
                 style={UserProfileStyles.input}
               />
               <Text style={InputProfileStyles.input_description}>Your name</Text>
@@ -77,10 +83,10 @@ const InputProfile = () => {
             <View>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={user.email}
                 placeholder={user.email}
-                placeholderTextColor={'#344966'}
+                placeholderTextColor='#344966'
                 style={InputProfileStyles.input}
               />
               <Text style={InputProfileStyles.input_description}>Your email</Text>

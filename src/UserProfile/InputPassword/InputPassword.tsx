@@ -10,27 +10,32 @@ import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import Button from '../../Button/Button';
 import { userPasswordChange } from '../../api/user.api/user.api';
 import { setNewPassword } from '../../store/slices/userSlice';
+import { Rect } from 'react-native-safe-area-context';
 
-const InputPassword = () => {
-  const { control, handleSubmit, formState: { errors } } = useForm();
 
-  const [showInputChange, setShowInputChange] = useState(false);
+type UserLoginType = {
+  password: string;
+  new_password: string;
+  confirm_password: string;
+};
+
+type Props = {
+  text: UserLoginType;
+};
+
+const InputPassword: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
-  const user = useAppSelector(state => state.user.user);
-  const userAvatar = useAppSelector(state => state.user.userProfile.avatar);
-
+  const [showInputChange, setShowInputChange] = useState(false);
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>();
+  
   const handlePress = () => {
     setShowInputChange(true);
   };
 
-  const onSubmit = async (text: { password: string; new_password: string; }) => {
+  const onSubmit = async (text: UserLoginType) => {
     try {
-      // console.log(password) 
-      const body = {text: text.password, new_password: text.new_password}
-      console.log(body) 
       const response = await userPasswordChange(text);
       dispatch(setNewPassword(response.data));
-      console.log('response:', response.data);
     }
     catch (er) {
       console.log(er);
@@ -54,8 +59,8 @@ const InputPassword = () => {
               image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
               onChangeText={onChange}
               defaultValue={value}
-              placeholder={'nbm,.'}
-              placeholderTextColor={'#344966'}
+              placeholder='**********'
+              placeholderTextColor='#344966'
               secureTextEntry
               style={InputPasswordStyles.input}
             />
@@ -95,8 +100,8 @@ const InputPassword = () => {
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
                 onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'Password replay'}
-                placeholderTextColor={'#344966'}
+                placeholder='Password replay'
+                placeholderTextColor='#344966'
                 secureTextEntry
                 style={InputPasswordStyles.input}
               />

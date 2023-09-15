@@ -5,14 +5,11 @@ type TokensResponseType = {
   refresh: string;
   access: string;
 };
-type LoginResponseType = {
+type LoginSignupResponseType = {
   user: User;
   tokens: TokensResponseType;
 };
-type SigninResponseType = {
-  user: User;
-  tokens: TokensResponseType;
-};
+
 
 export const userLogin = ({
   email,
@@ -21,9 +18,8 @@ export const userLogin = ({
   email: string;
   password: string;
 }) => {
-  return axios.post<LoginResponseType>('/login/', { email, password });
+  return axios.post<LoginSignupResponseType>('/login/', { email, password });
 };
-
 
 export const userProfile = () => {
   return axios.get('/profile/')
@@ -32,34 +28,37 @@ export const userProfile = () => {
 export const userPasswordChange = ({
   password,
   new_password,
+  confirm_password,
 }: {
   password: string;
   new_password: string;
+  confirm_password: string;
 }) => {
-  return axios.put('/change-password/', { password, new_password });
+  return axios.put('/change-password/', { password, new_password, confirm_password });
 };
 
-// export const userPasswordChange = (options: {
-//   email: string;
-//   old_password: string;
-//   new_password: string;
-// }) => {
-//   const {...params} = options;
-//   console.log(params);
-//   return axios.put(`/change-password/`, params);
-// };
+export const changeProfile = (bio: string, email: string) => {
+  return axios.put('/change-password/', { bio, image});
+};
+
+const changeData = async (userId: number | undefined, fullName: string, email: string) => {
+  const response = await axiosInstance.patch<{ user: UserType; message: string }>(`/user/${userId}`, { fullName, email });
+  return response.data;
+};
+
+
+
 export const userSignUp = ({
   email,
   password,
-  passwordConfirm
+  confirm_password
 }: {
   email: string;
   password: string;
-  passwordConfirm: string;
+  confirm_password: string;
 }) => {
-  return axios.post<SigninResponseType>('/signup/', { email, password, passwordConfirm });
+  return axios.post<LoginSignupResponseType>('/signup/', { email, password, confirm_password });
 };
-
 
 export const getUser = () => {
   return axios.get<User>('/me/');
