@@ -2,6 +2,9 @@ import React from 'react';
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView } from 'react-native';
+import * as yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -10,6 +13,8 @@ import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
 import { setUser, setUserProfile } from '../store/slices/userSlice';
 import { userLogin, userProfile } from '../api/user.api/user.api';
+
+
 
 type UserLogin = {
   email: string;
@@ -23,7 +28,15 @@ type Props = {
 
 const Login: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>();
+  
+  const schema = yup.object().shape({
+    email: yup.string().email('Please enter a valid email').required('Email is required'),
+    password: yup.string().required('Password is required'),
+  });
+  
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>({
+    resolver: yupResolver(schema),
+  });
 
   const onSubmit = async (text: UserLogin) => {
     try {
@@ -64,7 +77,7 @@ const Login: React.FC<Props> = props => {
           )}
           name="email"
         />
-        {/* {errors.Email && <Text>This is required.</Text>} */}
+        {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
 
         <Controller
           control={control}
@@ -84,6 +97,7 @@ const Login: React.FC<Props> = props => {
           )}
           name="password"
         />
+        {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
         <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
       <Image style={LoginStyles.image} source={require('../../images/man-reader.png')} />

@@ -8,7 +8,7 @@ type Props = {
   onChangeText: (text: string) => void;
   defaultValue: string;
   placeholder: string;
-  placeholderTextColor: string;
+  placeholderTextColor?: string;
   secureTextEntry?: boolean;
 };
 const Input: React.FC<Props> = props => {

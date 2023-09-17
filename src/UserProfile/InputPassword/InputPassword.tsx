@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { Controller, useForm } from "react-hook-form";
+import * as yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch } from '../../store/hooks';
 import { userPasswordChange } from '../../api/user.api/user.api';
@@ -22,7 +24,14 @@ type Props = {
 const InputPassword: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
   const [showInputChange, setShowInputChange] = useState(false);
-  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>();
+  
+  const schema = yup.object().shape({
+    password: yup.string().required('Password is required'),
+    new_password: yup.string().required('Password is required'),
+    confirm_password: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match').required('Confirm password is required'),
+  });
+  
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({resolver: yupResolver(schema),});
   
   const handlePress = () => {
     setShowInputChange(true);
@@ -69,6 +78,8 @@ const InputPassword: React.FC<Props> = props => {
         )}
         name="password"
       />
+      {errors.password && <Text style={{color: 'red'}}>{errors.password.message}</Text>}
+
       {showInputChange &&
         <>
           <Controller
@@ -87,6 +98,8 @@ const InputPassword: React.FC<Props> = props => {
             )}
             name="new_password"
           />
+          {errors.new_password && <Text style={{color: 'red'}}>{errors.new_password.message}</Text>}
+
           <Text style={{ fontSize: 14, marginVertical: 10, }}>Enter your password</Text>
           <Controller
             control={control}
@@ -104,6 +117,8 @@ const InputPassword: React.FC<Props> = props => {
             )}
             name="confirm_password"
           />
+          {errors.confirm_password && <Text style={{color: 'red'}}>{errors.confirm_password.message}</Text>}
+
           <Text style={{ fontSize: 14, marginVertical: 10, }}>Repeat your password without errors</Text>
           <Button style={InputPasswordStyles.button_confirm} text={'Confirm'}
             onPress={handleSubmit(onSubmit)} />

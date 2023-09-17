@@ -32,10 +32,6 @@ export const userLogin = ({
   return axios.post<LoginSignupResponseType>('/login/', { email, password });
 };
 
-export const userProfile = () => {
-  return axios.get('/profile/')
-};
-
 export const userPasswordChange = ({
   password,
   new_password,
@@ -48,6 +44,13 @@ export const userPasswordChange = ({
   return axios.post('/change-password/', { password, new_password, confirm_password });
 };
 
+export const userProfile = () => {
+  return axios.get('/profile/')
+};
+
+export const getUser = () => {
+  return axios.get<User>('/me/');
+};
 
 // export const changeProfile = (bio: string, email: string) => {
 //   return axios.put('/change-password/', { bio, image});
@@ -58,8 +61,5 @@ export const userPasswordChange = ({
 // };
 
 
-export const getUser = () => {
-  return axios.get<User>('/me/');
-};
 
 
