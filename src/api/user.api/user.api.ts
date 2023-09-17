@@ -10,6 +10,17 @@ type LoginSignupResponseType = {
   tokens: TokensResponseType;
 };
 
+export const userSignUp = ({
+  email,
+  password,
+  confirm_password
+}: {
+  email: string;
+  password: string;
+  confirm_password: string;
+}) => {
+  return axios.post('/register/', { email, password, confirm_password });
+};
 
 export const userLogin = ({
   email,
@@ -37,28 +48,15 @@ export const userPasswordChange = ({
   return axios.put('/change-password/', { password, new_password, confirm_password });
 };
 
-export const changeProfile = (bio: string, email: string) => {
-  return axios.put('/change-password/', { bio, image});
-};
 
-const changeData = async (userId: number | undefined, fullName: string, email: string) => {
-  const response = await axiosInstance.patch<{ user: UserType; message: string }>(`/user/${userId}`, { fullName, email });
-  return response.data;
-};
+// export const changeProfile = (bio: string, email: string) => {
+//   return axios.put('/change-password/', { bio, image});
+// };
 
+// const changeData = async (userId: number | undefined, fullName: string, email: string) => {
+//   return await axios.put<{ user: User; message: string }>(`/user/${userId}`, { fullName, email });
+// };
 
-
-export const userSignUp = ({
-  email,
-  password,
-  confirm_password
-}: {
-  email: string;
-  password: string;
-  confirm_password: string;
-}) => {
-  return axios.post<LoginSignupResponseType>('/signup/', { email, password, confirm_password });
-};
 
 export const getUser = () => {
   return axios.get<User>('/me/');

@@ -9,25 +9,26 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './SignupStyles';
 import { setUser } from '../store/slices/userSlice';
-import {userLogin } from '../api/user.api/user.api';
+import {userLogin, userSignUp } from '../api/user.api/user.api';
 
-// type UserLogin = {
-//   email: string;
-//   password: string;
-//   password_confirm?: string;
-// };
+type UserRegistrationType = {
+  email: string;
+  password: string;
+  confirm_password: string;
+};
 
 const Signup = () => {
   const dispatch = useAppDispatch();
-  const { control, handleSubmit, formState: { errors } } = useForm();
+  const { control, handleSubmit, formState: { errors } } = useForm<UserRegistrationType>();
 
-  const onSubmit = async (email:string, password: string) => {
-  
-    try {
-      const response = await userLogin(email, password);
+  const onSubmit = async (text: UserRegistrationType) => {
+    try {      
+      console.log(text);
+
+      const response = await userSignUp(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
-      console.log(response.data.tokens.access);
+      console.log(response.data);
     } catch (er) {
       console.log(er);
     }
@@ -37,7 +38,7 @@ const Signup = () => {
     <ScrollView>
       <Header />
       <View style={LoginStyles.container}>
-        <Text style={LoginStyles.title}>Log In</Text>
+        <Text style={LoginStyles.title}>Sign Up</Text>
         <Controller
           control={control}
           rules={{ required: true, }}
@@ -45,10 +46,10 @@ const Signup = () => {
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'Email'}
-                placeholderTextColor={'#B9BAC3'}
+                placeholder='Email'
+                placeholderTextColor='#B9BAC3'
               />
               <Text style={LoginStyles.input_description}>Enter your email</Text>
             </View>
@@ -64,11 +65,11 @@ const Signup = () => {
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
-                onChangeText={defaultValue => onChange(defaultValue)}
+                onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'Password'}
-                placeholderTextColor={'#B9BAC3'}
-                secureTextEntry
+                placeholder='Password'
+                placeholderTextColor='#B9BAC3'
+                // secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Enter your password</Text>
             </View>
@@ -84,17 +85,16 @@ const Signup = () => {
                 image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
                 onChangeText={onChange}
                 defaultValue={value}
-                placeholder={'Password replay'}
-                placeholderTextColor={'#B9BAC3'}
-                secureTextEntry
+                placeholder='Password replay'
+                placeholderTextColor='#B9BAC3'
+                // secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Repeat your password without errors</Text>
             </View>
           )}
-          name="сonfirm the password"
+          name="confirm_password"
         />
         <Button text="Sign Up" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
-  
       </View>
       <Image style={LoginStyles.image} source={require('/Users/gayaneorlova/bookstore_native/images/man-reader.png')} />
       <Footer />

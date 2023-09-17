@@ -62,7 +62,7 @@ function Main(): JSX.Element {
           />
         </>
         {isUser.email ? (
-          <>
+          <> 
             <Stack.Screen
               name="UserProfile"
               component={UserProfile}
