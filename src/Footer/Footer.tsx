@@ -18,7 +18,7 @@ const Footer = () => {
     <View style={FooterStyle.footer}>
       <View style={FooterStyle.footer_container}>
         <Image
-          source={require('/Users/gayaneorlova/bookstore_native/images/icons/logo_footer.png')}
+          source={require('../../images/icons/logo_footer.png')}
           style={FooterStyle.footer_logo}
         />
 
@@ -45,7 +45,7 @@ const Footer = () => {
           </Text>
           <Image
             style={FooterStyle.footer_image}
-            source={require('/Users/gayaneorlova/bookstore_native/images/map.png')}
+            source={require('../../images/map.png')}
           />
         </View>
       </View>

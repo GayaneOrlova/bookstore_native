@@ -12,7 +12,7 @@ const AuthorizeBanner = () => {
     <View style={AuthorizeBannerStyles.authorize_container}>
     <Image
       style={AuthorizeBannerStyles.fairy_image}
-      source={require('/Users/gayaneorlova/bookstore_native/images/fairy.png')}
+      source={require('../../images/fairy.png')}
     />
     <View style={AuthorizeBannerStyles.text_group}>
       <Text style={AuthorizeBannerStyles.text_group_title}>Authorize now</Text>
@@ -27,7 +27,7 @@ const AuthorizeBanner = () => {
     </View>
     <Image
       style={AuthorizeBannerStyles.castle_image}
-      source={require('/Users/gayaneorlova/bookstore_native/images/castle.png')}
+      source={require('../../images/castle.png')}
     />
   </View>
 );

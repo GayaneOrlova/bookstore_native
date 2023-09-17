@@ -53,7 +53,7 @@ const Login: React.FC<Props> = props => {
           render={({ field: { onChange, value } }) => (
             <View style={LoginStyles.input_group}>
               <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
+                image_source={require('../../images/icons/mail.png')}
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Email'
@@ -72,7 +72,7 @@ const Login: React.FC<Props> = props => {
           render={({ field: { onChange, value } }) => (
             <View style={LoginStyles.input_group}>
               <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                image_source={require('../../images/icons/hide.png')}
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password'
@@ -86,7 +86,7 @@ const Login: React.FC<Props> = props => {
         />
         <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
-      <Image style={LoginStyles.image} source={require('/Users/gayaneorlova/bookstore_native/images/man-reader.png')} />
+      <Image style={LoginStyles.image} source={require('../../images/man-reader.png')} />
       <Footer />
     </ScrollView>
   );

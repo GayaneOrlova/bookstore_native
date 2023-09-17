@@ -27,7 +27,7 @@ const Cart = () => {
         />
         <Image
           style={CartStyles.cart_image}
-          source={require('/Users/gayaneorlova/bookstore_native/images/books.png')}
+          source={require('../../images/books.png')}
         />
       </View>
       <Footer />

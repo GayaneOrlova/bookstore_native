@@ -52,7 +52,7 @@ const InputPassword: React.FC<Props> = props => {
         render={({ field: { onChange, value } }) => (
           <View>
             <Input
-              image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+              image_source={require('../../../images/icons/hide.png')}
               onChangeText={onChange}
               defaultValue={value}
               placeholder='**********'
@@ -76,7 +76,7 @@ const InputPassword: React.FC<Props> = props => {
             rules={{ maxLength: 15, }}
             render={({ field: { onChange, value } }) => (
               <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                image_source={require('../../../images/icons/hide.png')}
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder="New password"
@@ -93,7 +93,7 @@ const InputPassword: React.FC<Props> = props => {
             rules={{ maxLength: 15, }}
             render={({ field: { onChange, value } }) => (
               <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/hide.png')}
+                image_source={require('../../../images/icons/hide.png')}
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password replay'

@@ -10,7 +10,7 @@ const Banner: React.FC<Props> = () => {
     <View style={BannerStyles.container}>
       <Image
         style={BannerStyles.background_image}
-        source={require('/Users/gayaneorlova/bookstore_native/images/books.png')}
+        source={require('../../images/books.png')}
       />
       <View style={BannerStyles.text_group}>
         <Text style={BannerStyles.text_group_title}>
@@ -23,7 +23,7 @@ const Banner: React.FC<Props> = () => {
       </View>
       <Image
         style={BannerStyles.woman_image}
-        source={require('/Users/gayaneorlova/bookstore_native/images/woman-reader.png')}
+        source={require('../../images/woman-reader.png')}
       />
     </View>
   );

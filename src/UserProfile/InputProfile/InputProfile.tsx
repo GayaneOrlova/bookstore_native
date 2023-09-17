@@ -48,7 +48,7 @@ const InputProfile = () => {
       ) :
       <View style={InputProfileStyles.user_avatar_container}>
       <Image style={InputProfileStyles.user_avatar_icon}
-          source={require('/Users/gayaneorlova/bookstore_native/images/icons/user_profile.png')}
+          source={require('../../../images/icons/user_profile.png')}
         />
         </View>
       }
@@ -62,7 +62,7 @@ const InputProfile = () => {
           render={({ field: { onChange, value } }) => (
             <View>
               <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/user__profile.png')}
+                image_source={require('../../../images/icons/user__profile.png')}
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder={userName}
@@ -80,7 +80,7 @@ const InputProfile = () => {
           render={({ field: { onChange, value } }) => (
             <View>
               <Input
-                image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/mail.png')}
+                image_source={require('../../../images/icons/mail.png')}
                 onChangeText={onChange}
                 defaultValue={user.email}
                 placeholder={user.email}

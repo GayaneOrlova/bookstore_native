@@ -16,7 +16,7 @@ const Search = () => {
             onChangeText={onChange}
             defaultValue={value}
             placeholder="Search"
-            image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/search.png')}
+            image_source={require('../../../images/icons/search.png')}
           />
         )}
         name="search text"

@@ -35,7 +35,7 @@ const Header = () => {
     <>
       <View style={HeaderStyles.header_container}>
         <Image
-          source={require('/Users/gayaneorlova/bookstore_native/images/icons/logo.png')}
+          source={require('../../images/icons/logo.png')}
           style={HeaderStyles.header_logo}
         />
         <TouchableOpacity onPress={onHomepage}>
@@ -56,11 +56,11 @@ const Header = () => {
           </View>
         ) : (
           <View style={HeaderStyles.header_user_button}>
-            <UserButton image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/cart.png')}
+            <UserButton image_source={require('../../images/icons/cart.png')}
               onPress={onCartPage} />
-            <UserButton image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/heart.png')} />
+            <UserButton image_source={require('../../images/icons/heart.png')} />
             <UserButton
-              image_source={require('/Users/gayaneorlova/bookstore_native/images/icons/userrprofile.png')}
+              image_source={require('../../images/icons/userrprofile.png')}
               onPress={onUserProfilePage}
             />
           </View>
