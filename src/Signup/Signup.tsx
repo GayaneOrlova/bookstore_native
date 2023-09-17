@@ -2,14 +2,15 @@ import React from 'react';
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView } from 'react-native';
+
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { setUser } from '../store/slices/userSlice';
+import {userSignUp } from '../api/user.api/user.api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './SignupStyles';
-import { setUser } from '../store/slices/userSlice';
-import {userLogin, userSignUp } from '../api/user.api/user.api';
 
 type UserRegistrationType = {
   email: string;
@@ -23,8 +24,6 @@ const Signup = () => {
 
   const onSubmit = async (text: UserRegistrationType) => {
     try {      
-      console.log(text);
-
       const response = await userSignUp(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
@@ -57,7 +56,7 @@ const Signup = () => {
           name="email"
         />
         {/* {errors.Email && <Text>This is required.</Text>} */}
-
+        
         <Controller
           control={control}
           rules={{ maxLength: 15, }}
@@ -69,7 +68,7 @@ const Signup = () => {
                 defaultValue={value}
                 placeholder='Password'
                 placeholderTextColor='#B9BAC3'
-                // secureTextEntry
+                secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Enter your password</Text>
             </View>
@@ -87,7 +86,7 @@ const Signup = () => {
                 defaultValue={value}
                 placeholder='Password replay'
                 placeholderTextColor='#B9BAC3'
-                // secureTextEntry
+                secureTextEntry
               />
               <Text style={LoginStyles.input_description}>Repeat your password without errors</Text>
             </View>

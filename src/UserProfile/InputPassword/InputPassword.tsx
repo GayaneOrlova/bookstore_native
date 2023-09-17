@@ -1,17 +1,13 @@
 import React, { useState } from 'react';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { Controller, useForm } from "react-hook-form";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Image, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import Header from '../../Header/Header';
-import Input from '../../Input/Input';
-import Footer from '../../Footer/Footer';
-import InputPasswordStyles from './InputPasswordStyles';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import Button from '../../Button/Button';
+
+import { useAppDispatch } from '../../store/hooks';
 import { userPasswordChange } from '../../api/user.api/user.api';
 import { setNewPassword } from '../../store/slices/userSlice';
-import { Rect } from 'react-native-safe-area-context';
-
+import Input from '../../Input/Input';
+import Button from '../../Button/Button';
+import InputPasswordStyles from './InputPasswordStyles';
 
 type UserLoginType = {
   password: string;

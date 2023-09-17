@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
+import { View, Image, Text, TouchableOpacity } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Image, Text, ScrollView, TouchableOpacity, TextInput } from 'react-native';
-import Header from '../../Header/Header';
-import Input from '../../Input/Input';
-import Footer from '../../Footer/Footer';
-import UserProfileStyles from './InputProfileStyles';
+
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import Button from '../../Button/Button';
 import { userPasswordChange } from '../../api/user.api/user.api';
 import { setNewPassword } from '../../store/slices/userSlice';
+import Input from '../../Input/Input';
+import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
 
 // type UserLoginType = {
@@ -69,7 +67,7 @@ const InputProfile = () => {
                 defaultValue={value}
                 placeholder={userName}
                 placeholderTextColor='#344966'
-                style={UserProfileStyles.input}
+                style={InputProfileStyles.input}
               />
               <Text style={InputProfileStyles.input_description}>Your name</Text>
             </View>
