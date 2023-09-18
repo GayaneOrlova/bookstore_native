@@ -55,6 +55,11 @@ const InputProfileStyles = StyleSheet.create({
     height: 44,
     marginTop: 30,
   },
+  buttons_container: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    gap: 110,
+  },
 });
 
 export default InputProfileStyles;

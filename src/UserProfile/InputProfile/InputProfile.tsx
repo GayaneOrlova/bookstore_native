@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { View, Image, Text, TouchableOpacity } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import * as yup from 'yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { changeProfile, userPasswordChange, userProfile } from '../../api/user.api/user.api';
-import { setNewPassword, setUserProfile } from '../../store/slices/userSlice';
+import { changeProfile, userProfile } from '../../api/user.api/user.api';
+import { setUserProfile } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
-import UserProfile from '../UserProfile';
-import * as yup from 'yup';
-import { yupResolver } from "@hookform/resolvers/yup";
+
 
 // type UserLoginType = {
 //   password: string;
@@ -23,18 +22,22 @@ const InputProfile = () => {
   const dispatch = useAppDispatch();
   const [showInputChange, setShowInputChange] = useState(false);
   const user = useAppSelector(state => state.user.user);
-  const userAvatar = useAppSelector(state => state.user.userProfile.avatar);
   const userName = useAppSelector(state => state.user.userProfile.bio);
+  const userAvatar = useAppSelector(state => state.user.userProfile.avatar);
 
   const handlePress = () => {
     setShowInputChange(true);
   };
+  
+  const handleClose = () => {
+    setShowInputChange(false);
+  };
 
   const schema = yup.object().shape({
     bio: yup.string().required('Username is required'),
-    email: yup.string().required('Username is required'),
+    email: yup.string().email().notRequired(),
   });
-  
+
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
@@ -43,28 +46,26 @@ const InputProfile = () => {
     try {
       const responce = await userProfile();
       dispatch(setUserProfile(responce.data));
-      console.log(responce.data)
     }
     catch (er) {
       console.log(er);
     }
   }
 
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
   const onSubmit = async (text) => {
     try {
-    console.log(text)
       const response = await changeProfile(text);
       dispatch(setUserProfile(response.data));
-      console.log(response.data)
     }
     catch (er) {
       console.log(er);
     }
   };
+  
+ useEffect(() => {
+    fetchUserProfile();
+  }, []);
+  
 
   return (
     <View>
@@ -80,9 +81,16 @@ const InputProfile = () => {
         </View>
       }
       <Text style={InputProfileStyles.title}>Personal information</Text>
-      <TouchableOpacity onPress={handlePress}>
-        <Text style={InputProfileStyles.change_text}>Change information</Text>
-      </TouchableOpacity>
+      <View style={InputProfileStyles.buttons_container}>
+        <TouchableOpacity onPress={handlePress}>
+          <Text style={InputProfileStyles.change_text}>Change information</Text>
+        </TouchableOpacity>
+        {showInputChange &&
+          <TouchableOpacity onPress={handleClose}>
+            <Text style={InputProfileStyles.change_text}>Close without change</Text>
+          </TouchableOpacity>
+        }
+      </View>
       <Controller
         control={control}
         rules={{ required: true, }}
@@ -101,15 +109,15 @@ const InputProfile = () => {
         )}
         name="bio"
       />
+      {errors.bio && <Text style={{ color: 'red' }}>{errors.bio.message}</Text>}
+
       <Controller
         control={control}
         rules={{ required: true, }}
-        render={({ field: { onChange, value } }) => (
+        render={({ field: { } }) => (
           <View>
             <Input
               image_source={require('../../../images/icons/mail.png')}
-              onChangeText={onChange}
-              defaultValue={value}
               placeholder={user.email}
               placeholderTextColor='#344966'
               style={InputProfileStyles.input}
@@ -121,8 +129,10 @@ const InputProfile = () => {
         name="email"
       />
       {showInputChange &&
-        <Button style={InputProfileStyles.button_confirm} text={'Confirm'}
-          onPress={handleSubmit(onSubmit)} />
+        <Button
+          style={InputProfileStyles.button_confirm} text={'Confirm'}
+          onPress={handleSubmit(onSubmit)}
+        />
       }
     </View>
 

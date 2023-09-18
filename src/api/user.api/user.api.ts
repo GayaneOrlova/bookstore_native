@@ -52,14 +52,18 @@ export const getUser = () => {
   return axios.get<User>('/me/');
 };
 
-export const changeProfile = (bio?: string, avatar?: string) => {
-  return axios.put('profile/change/', { bio, avatar});
+export const changeProfile = ({
+bio
+} : {
+bio: string
+}) => {
+  return axios.put('profile/change/', {bio});
 };
 
-// const changeData = async (userId: number | undefined, fullName: string, email: string) => {
-//   return await axios.put<{ user: User; message: string }>(`/user/${userId}`, { fullName, email });
-// };
 
+const changeAvatar = async (photo: string) => {
+  return axios.post(`/avatar`, { photo });
+};
 
 
 

@@ -5,8 +5,8 @@ import InputStyles from './InputStyles';
 type Props = {
   image_source: ImageSourcePropType;
   style?: ViewStyle;
-  onChangeText: (text: string) => void;
-  defaultValue: string;
+  onChangeText?: (text: string) => void;
+  defaultValue?: string;
   placeholder: string;
   placeholderTextColor?: string;
   secureTextEntry?: boolean;

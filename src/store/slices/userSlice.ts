@@ -10,7 +10,6 @@ export type User = {
 export type UserProfile = {
   avatar: string;
   bio: string;
-  username: string;
 };
 
 export type UserPasswordChange = {
@@ -32,7 +31,6 @@ const initialState: UserSliceType = {
   userProfile: {
     bio: '',
     avatar: '',
-    username: '',
   },
   UserPasswordChange: {
     success: '',

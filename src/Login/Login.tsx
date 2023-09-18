@@ -43,13 +43,14 @@ const Login: React.FC<Props> = props => {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
-      try {
-        const response = await userProfile();
-        dispatch(setUserProfile(response.data));
-        console.log(response.data)
-      } catch (er) {
-        console.log(er);
-      }
+      console.log(response.data.user)
+      // try {
+      //   const response = await userProfile();
+      //   dispatch(setUserProfile(response.data));
+      //   console.log(response.data)
+      // } catch (er) {
+      //   console.log(er);
+      // }
     }
     catch (er) {
       console.log(er);
