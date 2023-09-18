@@ -4,11 +4,13 @@ export type User = {
   email: string;
   id: string;
   username: string;
+  
 };
 
 export type UserProfile = {
   avatar: string;
   bio: string;
+  username: string;
 };
 
 export type UserPasswordChange = {
@@ -30,6 +32,7 @@ const initialState: UserSliceType = {
   userProfile: {
     bio: '',
     avatar: '',
+    username: '',
   },
   UserPasswordChange: {
     success: '',

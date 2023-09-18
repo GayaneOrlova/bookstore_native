@@ -52,9 +52,9 @@ export const getUser = () => {
   return axios.get<User>('/me/');
 };
 
-// export const changeProfile = (bio: string, email: string) => {
-//   return axios.put('/change-password/', { bio, image});
-// };
+export const changeProfile = (bio?: string, avatar?: string) => {
+  return axios.put('profile/change/', { bio, avatar});
+};
 
 // const changeData = async (userId: number | undefined, fullName: string, email: string) => {
 //   return await axios.put<{ user: User; message: string }>(`/user/${userId}`, { fullName, email });

@@ -46,6 +46,7 @@ const Login: React.FC<Props> = props => {
       try {
         const response = await userProfile();
         dispatch(setUserProfile(response.data));
+        console.log(response.data)
       } catch (er) {
         console.log(er);
       }
