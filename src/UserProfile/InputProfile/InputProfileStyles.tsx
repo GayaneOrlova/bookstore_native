@@ -7,6 +7,8 @@ const InputProfileStyles = StyleSheet.create({
     minHeight: 290,
     marginVertical: 50,
     borderRadius: 16,
+    position: 'relative',
+
   },
   user_avatar_container: {
     backgroundColor: '#F0F4EF',
@@ -16,6 +18,7 @@ const InputProfileStyles = StyleSheet.create({
     minWidth: 290,
     minHeight: 290,
     width: '100%',
+    position: 'relative',
   },
   user_avatar_icon: {
     width: 154,
@@ -44,12 +47,6 @@ const InputProfileStyles = StyleSheet.create({
     left: 60,
     top: -48,
   },
-  password_group: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 20,
-    marginBottom: 15,
-  },
   button_confirm: {
     width: 170,
     height: 44,
@@ -60,6 +57,17 @@ const InputProfileStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     gap: 110,
   },
+  camera_button: {
+    width: 40,
+    height: 40,
+    borderRadius: 16,
+    backgroundColor: '#344966',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    right: 10,
+    bottom: 60,
+    },
 });
 
 export default InputProfileStyles;

@@ -25,7 +25,6 @@ type Props = {
   text: UserLogin;
 };
 
-
 const Login: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
   
