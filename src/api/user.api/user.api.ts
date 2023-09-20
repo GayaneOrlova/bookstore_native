@@ -53,17 +53,21 @@ export const getUser = () => {
 };
 
 export const changeProfile = ({
-bio
+bio,
+avatar,
 } : {
-bio: string
+bio?: string,
+avatar?: string,
 }) => {
-  return axios.put('profile/change/', {bio});
+  return axios.put('profile/change/', {bio, avatar});
 };
 
-
-const changeAvatar = async (photo: string) => {
-  return axios.post(`/avatar`, { photo });
+export const changeAvatar = async (avatar: any) => {
+  return axios.patch(`/profile-avatar/`, avatar,
+  {headers: {
+    'content-type': 'multipart/form-data'
+  }}
+  );
 };
-
 
 

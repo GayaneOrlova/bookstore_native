@@ -27,7 +27,7 @@ type Props = {
 
 const Login: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
-  
+    
   const schema = yup.object().shape({
     email: yup.string().email('Please enter a valid email').required('Email is required'),
     password: yup.string().required('Password is required'),
@@ -36,20 +36,12 @@ const Login: React.FC<Props> = props => {
   const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>({
     resolver: yupResolver(schema),
   });
-
   const onSubmit = async (text: UserLogin) => {
     try {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
       console.log(response.data.user)
-      // try {
-      //   const response = await userProfile();
-      //   dispatch(setUserProfile(response.data));
-      //   console.log(response.data)
-      // } catch (er) {
-      //   console.log(er);
-      // }
     }
     catch (er) {
       console.log(er);
