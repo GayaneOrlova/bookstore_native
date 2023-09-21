@@ -6,12 +6,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import ImagePicker from 'react-native-image-picker';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { changeProfile, userProfile, changeAvatar } from '../../api/user.api/user.api';
-import { setUserProfile } from '../../store/slices/userSlice';
+import {changeAvatar, getAvatar } from '../../api/user.api/user.api';
+import { setAvatar } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
-import UserButton from '../../UserButton/UserButton';
 
 import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import axios from 'axios';
@@ -22,8 +21,25 @@ const InputProfile = () => {
   const dispatch = useAppDispatch();
   const [showInputChange, setShowInputChange] = useState(false);
   const user = useAppSelector(state => state.user.user);
-  const userName = useAppSelector(state => state.user.userProfile.bio);
-  const userAvatar = useAppSelector(state => state.user.userProfile.avatar);
+  const userName = useAppSelector(state => state.user.user.username);
+  const userAvatar = useAppSelector(state => state.user.userAvatar);
+
+  const fetchAvatar = async () => {
+    try {
+      const responce = await getAvatar();
+      dispatch(setAvatar(responce.data.avatar));
+      console.log('получение фото с сервера', responce.data.avatar, "аватар",userAvatar)
+    }
+    catch (er) {
+      console.log(er);
+    }
+  }
+  
+  useEffect(() => {
+    fetchAvatar();
+  }, []);
+  
+  console.log('userAvatar', userAvatar)
 
   const handlePress = () => {
     setShowInputChange(true);
@@ -34,7 +50,7 @@ const InputProfile = () => {
   };
 
   const schema = yup.object().shape({
-    bio: yup.string().required('Username is required'),
+    username: yup.string().required('Username is required'),
     email: yup.string().email().notRequired(),
   });
 
@@ -42,36 +58,22 @@ const InputProfile = () => {
     resolver: yupResolver(schema),
   });
 
-  const fetchUserProfile = async () => {
-    try {
-      const responce = await userProfile();
-      dispatch(setUserProfile(responce.data));
-    }
-    catch (er) {
-      console.log(er);
-    }
-  }
-
   const onSubmit = async (value: {
     email?: yup.Maybe<string | undefined>;
-    bio: string;
+    username: string;
   }) => {
-    try {
-      const response = await changeProfile({ bio: value.bio });
-      dispatch(setUserProfile(response.data));
-    }
-    catch (er) {
-      console.log(er);
-    }
+    // try {
+    //   const response = await changeProfile({ username: value.username });
+    //   dispatch(setUserProfile(response.data));
+    // }
+    // catch (er) {
+    //   console.log(er);
+    // }
   };
 
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
-
-
+ 
   const [photo, setPhoto] = useState(null);
-  
+
   const createFormData = (photo, body = {}) => {
     const data = new FormData();
     data.append('photo', {
@@ -95,26 +97,29 @@ const InputProfile = () => {
     console.log(response)
   }
 
-  const handleUploadPhoto = async() => {
+  const handleUploadPhoto = async () => {
     if (!photo) {
       console.log('Фотография не выбрана');
       return;
     }
-  
-  const imageFormData = createFormData(photo);
+    // console.log(" user.id",  user.id)
+    const imageFormData = createFormData(photo);
     console.log('imageFormData:', imageFormData);
-    console.log('photo:', photo);
+    // console.log('photo:', photo);
 
     try {
       const response = await changeAvatar(imageFormData);
-      dispatch(setUserProfile(response.data.avatar));
-      console.log("dispatch",response.data.avatar, "userAvatar", userAvatar)
+      dispatch(setAvatar(response.data.avatar));
+      console.log("dispatch", response.data, "userAvatar", userAvatar)
     }
     catch (er) {
-      console.log(er);
+      console.log(er, 'dfghjkl;');
     }
   };
+  
+  
 
+  
 
   return (
     <View>
@@ -173,9 +178,9 @@ const InputProfile = () => {
             <Text style={InputProfileStyles.input_description}>Your name</Text>
           </View>
         )}
-        name="bio"
+        name="username"
       />
-      {errors.bio && <Text style={{ color: 'red' }}>{errors.bio.message}</Text>}
+      {errors.username && <Text style={{ color: 'red' }}>{errors.username.message}</Text>}
 
       <Controller
         control={control}

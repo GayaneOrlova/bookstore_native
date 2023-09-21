@@ -11,10 +11,8 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import { setUser, setUserProfile } from '../store/slices/userSlice';
-import { userLogin, userProfile } from '../api/user.api/user.api';
-
-
+import { setAvatar, setUser } from '../store/slices/userSlice';
+import { getAvatar, userLogin } from '../api/user.api/user.api';
 
 type UserLogin = {
   email: string;
@@ -26,6 +24,8 @@ type Props = {
 };
 
 const Login: React.FC<Props> = props => {
+  const user = useAppSelector(state => state.user.user);
+
   const dispatch = useAppDispatch();
     
   const schema = yup.object().shape({
@@ -36,17 +36,19 @@ const Login: React.FC<Props> = props => {
   const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>({
     resolver: yupResolver(schema),
   });
+  
   const onSubmit = async (text: UserLogin) => {
     try {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
-      console.log(response.data.user)
+       
     }
     catch (er) {
       console.log(er);
     }
   };
+
 
   return (
     <ScrollView>

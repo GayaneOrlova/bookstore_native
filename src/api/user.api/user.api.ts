@@ -44,30 +44,33 @@ export const userPasswordChange = ({
   return axios.post('/change-password/', { password, new_password, confirm_password });
 };
 
-export const userProfile = () => {
-  return axios.get('/profile/')
-};
+
 
 export const getUser = () => {
   return axios.get<User>('/me/');
 };
 
 export const changeProfile = ({
-bio,
 avatar,
 } : {
-bio?: string,
-avatar?: string,
+avatar: string,
 }) => {
-  return axios.put('profile/change/', {bio, avatar});
+  return axios.put('profile/change/', {avatar});
+};
+
+
+// export const getAvatar = () => {
+//   return axios.get('/profile/')
+// };
+
+export const getAvatar = async () => {
+  return axios.get(`/avatar/`);
 };
 
 export const changeAvatar = async (avatar: any) => {
-  return axios.patch(`/profile-avatar/`, avatar,
-  {headers: {
+  return axios.patch(`/change-avatar/`, avatar, {headers: {
     'content-type': 'multipart/form-data'
-  }}
-  );
+  }});
 };
 
 

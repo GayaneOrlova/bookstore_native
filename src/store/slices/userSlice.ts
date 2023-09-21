@@ -4,12 +4,10 @@ export type User = {
   email: string;
   id: string;
   username: string;
-  
 };
 
-export type UserProfile = {
+export type UserAvatar = {
   avatar: string;
-  bio: string;
 };
 
 export type UserPasswordChange = {
@@ -19,7 +17,7 @@ export type UserPasswordChange = {
 type UserSliceType = {
   user: User;
   UserPasswordChange: UserPasswordChange,
-  userProfile: UserProfile,
+  userAvatar: UserAvatar,
 };
 
 const initialState: UserSliceType = {
@@ -28,8 +26,7 @@ const initialState: UserSliceType = {
     email: '',
     username: '',
   },
-  userProfile: {
-    bio: '',
+  userAvatar: {
     avatar: '',
   },
   UserPasswordChange: {
@@ -44,8 +41,8 @@ export const userSlice = createSlice({
     setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
-    setUserProfile(state, action){
-      state.userProfile = action.payload;
+    setAvatar(state, action){
+      state.userAvatar = action.payload;
     },
     setNewPassword(state, action){
       state.UserPasswordChange.success = action.payload;
@@ -57,6 +54,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const {setUser, setUserProfile, setNewPassword, logout} = userSlice.actions;
+export const {setUser, setAvatar, setNewPassword, logout} = userSlice.actions;
 
 export default userSlice.reducer;
