@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { Controller, useForm } from "react-hook-form";
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -23,14 +23,14 @@ type Props = {
 
 const InputPassword: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
+  const [showModal, setShowModal] = useState(false);
   const [showInputChange, setShowInputChange] = useState(false);
-  
+
   const schema = yup.object().shape({
     password: yup.string().required('Password is required'),
     new_password: yup.string().required('Password is required'),
     confirm_password: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match').required('Confirm password is required'),
   });
-  
   const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({resolver: yupResolver(schema),});
   
   const handlePress = () => {
@@ -41,6 +41,11 @@ const InputPassword: React.FC<Props> = props => {
     try {
       const response = await userPasswordChange(text);
       dispatch(setNewPassword(response.data));
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        setShowInputChange(false)
+      }, 2000);
     }
     catch (er) {
       console.log(er);
@@ -68,6 +73,7 @@ const InputPassword: React.FC<Props> = props => {
               placeholderTextColor='#344966'
               secureTextEntry
               style={InputPasswordStyles.input}
+              editable={showInputChange}
             />
             {!showInputChange ? (
               <Text style={InputPasswordStyles.input_description}>Your password</Text>
@@ -94,6 +100,7 @@ const InputPassword: React.FC<Props> = props => {
                 placeholderTextColor='#344966'
                 secureTextEntry
                 style={InputPasswordStyles.input}
+                editable={showInputChange}
               />
             )}
             name="new_password"
@@ -113,6 +120,7 @@ const InputPassword: React.FC<Props> = props => {
                 placeholderTextColor='#344966'
                 secureTextEntry
                 style={InputPasswordStyles.input}
+                editable={showInputChange}
               />
             )}
             name="confirm_password"
@@ -122,6 +130,13 @@ const InputPassword: React.FC<Props> = props => {
           <Text style={{ fontSize: 14, marginVertical: 10, }}>Repeat your password without errors</Text>
           <Button style={InputPasswordStyles.button_confirm} text={'Confirm'}
             onPress={handleSubmit(onSubmit)} />
+            <Modal visible={showModal} transparent>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+              <View style={{ backgroundColor: 'white', padding: 20 }}>
+                <Text>Password was successfully changed!</Text>
+              </View>
+            </View>
+          </Modal>
         </>
       }
     </View>

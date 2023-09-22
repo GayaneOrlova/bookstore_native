@@ -3,18 +3,19 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useAppDispatch, useAppSelector } from './src/store/hooks';
+import { getUser } from './src/api/user.api/user.api';
+import { setUser } from './src/store/slices/userSlice';
 import Homepage from './src/Homepage';
 import Login from './src/Login/Login';
 import UserProfile from './src/UserProfile/UserProfile';
 import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
-import { useAppDispatch, useAppSelector } from './src/store/hooks';
-import { getUser } from './src/api/user.api/user.api';
-import { setUser } from './src/store/slices/userSlice';
+
 
 const Stack = createStackNavigator();
 
-function Main(): JSX.Element {  
+const Main: React.FC = () => {
   const [initialization, setInitialization] = useState(false);
   const isUser = useAppSelector(state => state.user.user);
   const dispatch = useAppDispatch();
@@ -40,29 +41,29 @@ function Main(): JSX.Element {
 
   if (!initialization) { return null; }
 
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <>
-          <Stack.Screen
-            name="Homepage"
-            component={Homepage}
-            options={{ title: 'Homepage' }}
-          />
-          <Stack.Screen
-            name="Login"
-            component={Login}
-            options={{ title: 'Login' }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{ title: 'Signup' }}
-          />
-        </>
-        {isUser.email ? (
-          <> 
+        {!isUser.email ? (
+          <>
+            <Stack.Screen
+              name="Homepage"
+              component={Homepage}
+              options={{ title: 'Homepage' }}
+            />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ title: 'Login' }}
+            />
+            <Stack.Screen
+              name="Signup"
+              component={Signup}
+              options={{ title: 'Signup' }}
+            />
+          </>
+        ) : (
+          <>
             <Stack.Screen
               name="UserProfile"
               component={UserProfile}
@@ -74,9 +75,7 @@ function Main(): JSX.Element {
               options={{ title: 'Cart' }}
             />
           </>
-        )
-          : null
-        }
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );

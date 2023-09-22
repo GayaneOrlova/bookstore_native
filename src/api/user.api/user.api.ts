@@ -50,12 +50,14 @@ export const getUser = () => {
   return axios.get<User>('/me/');
 };
 
-export const changeProfile = ({
-avatar,
+export const changeUserinfo = ({
+  email,
+  username,
 } : {
-avatar: string,
+  email: string;
+  username?: string,
 }) => {
-  return axios.put('profile/change/', {avatar});
+  return axios.put('/change-userinfo/', {email, username});
 };
 
 

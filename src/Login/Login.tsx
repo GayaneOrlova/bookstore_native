@@ -19,11 +19,8 @@ type UserLogin = {
   password: string;
 };
 
-type Props = {
-  text: UserLogin;
-};
 
-const Login: React.FC<Props> = props => {
+const Login = () => {
   const user = useAppSelector(state => state.user.user);
 
   const dispatch = useAppDispatch();
@@ -32,11 +29,10 @@ const Login: React.FC<Props> = props => {
     email: yup.string().email('Please enter a valid email').required('Email is required'),
     password: yup.string().required('Password is required'),
   });
-  
+
   const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>({
     resolver: yupResolver(schema),
   });
-  
   const onSubmit = async (text: UserLogin) => {
     try {
       const response = await userLogin(text);

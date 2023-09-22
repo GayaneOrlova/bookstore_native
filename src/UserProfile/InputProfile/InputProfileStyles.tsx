@@ -64,9 +64,9 @@ const InputProfileStyles = StyleSheet.create({
     backgroundColor: '#344966',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute',
-    right: 10,
-    bottom: 60,
+    // position: 'absolute',
+    // right: 10,
+    // bottom: 60,
     },
 });
 

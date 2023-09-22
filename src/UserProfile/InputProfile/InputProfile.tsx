@@ -1,45 +1,58 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
-import { View, Image, Text, TouchableOpacity, Platform } from 'react-native';
+import { View, Image, Text, TouchableOpacity, Platform, Modal } from 'react-native';
+import ImagePicker, { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
-import ImagePicker from 'react-native-image-picker';
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import {changeAvatar, getAvatar } from '../../api/user.api/user.api';
-import { setAvatar } from '../../store/slices/userSlice';
+import { changeAvatar, changeUserinfo, getAvatar } from '../../api/user.api/user.api';
+import { setAvatar, setUser } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
 
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
-import axios from 'axios';
-
-
+type ImagePickerResponse = {
+  assets: Array<{
+    fileName: string;
+    type: string;
+    uri: string;
+  }>;
+  didCancel: boolean;
+};
 
 const InputProfile = () => {
   const dispatch = useAppDispatch();
   const [showInputChange, setShowInputChange] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [photo, setPhoto] = useState<ImagePicker.ImagePickerResponse>();
+
   const user = useAppSelector(state => state.user.user);
   const userName = useAppSelector(state => state.user.user.username);
   const userAvatar = useAppSelector(state => state.user.userAvatar);
+
+  const schema = yup.object().shape({
+    username: yup.string().required('Username is required'),
+    email: yup.string().required('Username is required'),
+  });
+  const { control, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema),
+  });
+
 
   const fetchAvatar = async () => {
     try {
       const responce = await getAvatar();
       dispatch(setAvatar(responce.data.avatar));
-      console.log('получение фото с сервера', responce.data.avatar, "аватар",userAvatar)
     }
     catch (er) {
       console.log(er);
     }
   }
-  
+
   useEffect(() => {
     fetchAvatar();
   }, []);
-  
-  console.log('userAvatar', userAvatar)
 
   const handlePress = () => {
     setShowInputChange(true);
@@ -49,32 +62,23 @@ const InputProfile = () => {
     setShowInputChange(false);
   };
 
-  const schema = yup.object().shape({
-    username: yup.string().required('Username is required'),
-    email: yup.string().email().notRequired(),
-  });
+  const onChangeUserInfo = async (value: { email: string, username?: string, }) => {
+    try {
+      const response = await changeUserinfo({ email: value.email, username: value.username });
+      dispatch(setUser(response.data));
 
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const onSubmit = async (value: {
-    email?: yup.Maybe<string | undefined>;
-    username: string;
-  }) => {
-    // try {
-    //   const response = await changeProfile({ username: value.username });
-    //   dispatch(setUserProfile(response.data));
-    // }
-    // catch (er) {
-    //   console.log(er);
-    // }
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+        setShowInputChange(false)
+      }, 2000);
+    }
+    catch (er) {
+      console.log(er);
+    }
   };
 
- 
-  const [photo, setPhoto] = useState(null);
-
-  const createFormData = (photo, body = {}) => {
+  const createFormData = (photo: ImagePickerResponse, body = {}) => {
     const data = new FormData();
     data.append('photo', {
       name: photo.assets[0].fileName,
@@ -91,65 +95,67 @@ const InputProfile = () => {
       includeBase64: false,
     };
     const response = await launchImageLibrary(options);
-    if (response) {
+    if (!response.didCancel) {
       setPhoto(response);
     }
-    console.log(response)
+  }
+
+  const handleOpenCamera = async () => {
+    const options: ImagePicker.CameraOptions = {
+      mediaType: 'photo',
+    };
+    const response = await launchCamera(options);
+    console.log('response', response)
+    if (!response.didCancel) {
+      setPhoto(response);
+    }
   }
 
   const handleUploadPhoto = async () => {
-    if (!photo) {
-      console.log('Фотография не выбрана');
-      return;
-    }
-    // console.log(" user.id",  user.id)
     const imageFormData = createFormData(photo);
-    console.log('imageFormData:', imageFormData);
-    // console.log('photo:', photo);
-
     try {
       const response = await changeAvatar(imageFormData);
       dispatch(setAvatar(response.data.avatar));
-      console.log("dispatch", response.data, "userAvatar", userAvatar)
     }
     catch (er) {
       console.log(er, 'dfghjkl;');
     }
   };
-  
-  
 
-  
+  useEffect(() => {
+    handleUploadPhoto();
+  }, [photo]);
 
   return (
     <View>
       <View>
         {userAvatar && !photo ? (
-          <Image style={InputProfileStyles.user_photo}
-            source={{ uri: `${userAvatar}` }}
-          />
+          <Image style={InputProfileStyles.user_photo} source={{ uri: `${userAvatar}` }} />
         ) :
-          <View style={InputProfileStyles.user_avatar_container}>
+          <View>
             {photo ? (
-              <Image style={InputProfileStyles.user_avatar_icon}
-                source={{ uri: `${userAvatar}` }}
-              />
+              <Image style={InputProfileStyles.user_photo} source={{ uri: `${photo.assets[0].uri}` }} />
             ) : (
-              <Image style={InputProfileStyles.user_avatar_icon}
-                source={require('../../../images/icons/user_profile.png')}
-              />
+              <Image style={InputProfileStyles.user_avatar_icon} source={require('../../../images/icons/user_profile.png')} />
             )}
           </View>
         }
-
-        <TouchableOpacity
-          style={InputProfileStyles.camera_button}
-          onPress={handleImagePicker}>
-          <Image source={require('../../../images/icons/camera.png')} />
-        </TouchableOpacity>
-        {photo ?
-          (<TouchableOpacity onPress={handleUploadPhoto}><Text>Upload</Text></TouchableOpacity>) : ''
-        }
+        <View style={{
+          flexDirection: 'row', justifyContent: 'space-around', position: 'absolute',
+          right: 10,
+          bottom: 60,
+        }}>
+          <TouchableOpacity
+            style={InputProfileStyles.camera_button}
+            onPress={handleImagePicker}>
+            <Image source={require('../../../images/icons/camera.png')} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={InputProfileStyles.camera_button}
+            onPress={handleOpenCamera}>
+            <Image source={require('../../../images/icons/camera.png')} />
+          </TouchableOpacity>
+        </View>
       </View>
       <Text style={InputProfileStyles.title}>Personal information</Text>
       <View style={InputProfileStyles.buttons_container}>
@@ -158,7 +164,7 @@ const InputProfile = () => {
         </TouchableOpacity>
         {showInputChange &&
           <TouchableOpacity onPress={handleClose}>
-            <Text style={InputProfileStyles.change_text}>Close without change</Text>
+            <Text style={InputProfileStyles.change_text}>Close </Text>
           </TouchableOpacity>
         }
       </View>
@@ -170,10 +176,11 @@ const InputProfile = () => {
             <Input
               image_source={require('../../../images/icons/user__profile.png')}
               onChangeText={onChange}
-              defaultValue={value}
+              defaultValue={showInputChange ? value : userName}
               placeholder={userName}
               placeholderTextColor='#344966'
               style={InputProfileStyles.input}
+              editable={showInputChange}
             />
             <Text style={InputProfileStyles.input_description}>Your name</Text>
           </View>
@@ -185,13 +192,16 @@ const InputProfile = () => {
       <Controller
         control={control}
         rules={{ required: true, }}
-        render={({ field: { } }) => (
+        render={({ field: { onChange, value } }) => (
           <View>
             <Input
               image_source={require('../../../images/icons/mail.png')}
+              onChangeText={onChange}
+              defaultValue={showInputChange ? value : user.email}
               placeholder={user.email}
               placeholderTextColor='#344966'
               style={InputProfileStyles.input}
+              editable={showInputChange}
             />
             <Text style={InputProfileStyles.input_description}>Your email</Text>
           </View>
@@ -199,11 +209,24 @@ const InputProfile = () => {
         )}
         name="email"
       />
+      {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
+
       {showInputChange &&
-        <Button
-          style={InputProfileStyles.button_confirm} text={'Confirm'}
-          onPress={handleSubmit(onSubmit)}
-        />
+        <>
+          <Button
+            style={InputProfileStyles.button_confirm} text={'Confirm'}
+            onPress={handleSubmit(onChangeUserInfo)}
+          />
+          <Modal visible={showModal} transparent>
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+              <View style={{ backgroundColor: 'white', padding: 20 }}>
+                <Text>Personal information was successfully changed!</Text>
+              </View>
+            </View>
+          </Modal>
+
+        </>
+
       }
     </View>
 
