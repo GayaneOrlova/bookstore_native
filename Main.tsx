@@ -44,7 +44,7 @@ const Main: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* {!isUser.email ? ( */}
+        {!isUser.email ? (
           <>
             <Stack.Screen
               name="Homepage"
@@ -62,8 +62,13 @@ const Main: React.FC = () => {
               options={{ title: 'Signup' }}
             />
           </>
-        {/* ) : ( */}
+        ) : (
           <>
+           <Stack.Screen
+              name="Homepage"
+              component={Homepage}
+              options={{ title: 'Homepage' }}
+            />
             <Stack.Screen
               name="UserProfile"
               component={UserProfile}
@@ -75,7 +80,8 @@ const Main: React.FC = () => {
               options={{ title: 'Cart' }}
             />
           </>
-        {/* )} */}
+        )
+}
       </Stack.Navigator>
     </NavigationContainer>
   );

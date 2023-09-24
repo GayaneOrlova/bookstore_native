@@ -42,7 +42,7 @@ export const userSlice = createSlice({
       state.user = action.payload;
     },
     setAvatar(state, action){
-      state.userAvatar = action.payload;
+      state.userAvatar.avatar = action.payload;
     },
     setNewPassword(state, action){
       state.UserPasswordChange.success = action.payload;

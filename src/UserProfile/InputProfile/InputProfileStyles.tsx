@@ -21,9 +21,9 @@ const InputProfileStyles = StyleSheet.create({
     position: 'relative',
   },
   user_avatar_icon: {
-    width: 154,
+    minWidth: 154,
     height: 154,
-    // width: '100%',
+    width: '100%',
     alignSelf: 'center',
     marginVertical: 70,
   },
@@ -64,10 +64,29 @@ const InputProfileStyles = StyleSheet.create({
     backgroundColor: '#344966',
     justifyContent: 'center',
     alignItems: 'center',
-    // position: 'absolute',
-    // right: 10,
-    // bottom: 60,
     },
+  change_photo_button: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    position: 'absolute',
+    right: 10,
+    bottom: 60,
+  },
+  error: {
+    color: 'red',
+    fontWeight: '700',
+  },
+  modal_container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modal_text: {
+    backgroundColor: 'white',
+    padding: 20,
+  }
+  
 });
 
 export default InputProfileStyles;

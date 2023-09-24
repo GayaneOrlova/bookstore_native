@@ -33,12 +33,12 @@ const Login = () => {
   const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>({
     resolver: yupResolver(schema),
   });
+  
   const onSubmit = async (text: UserLogin) => {
     try {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
-      dispatch(setUser(response.data.user));
-       
+      dispatch(setUser(response.data.user));  
     }
     catch (er) {
       console.log(er);
