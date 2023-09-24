@@ -1,16 +1,28 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { useAppSelector } from '../store/hooks';
 import HeaderStyles from './HeaderStyles';
 import Search from './Search/Search';
 import Button from '../Button/Button';
-import { useNavigation } from '@react-navigation/native';
 import UserButton from '../UserButton/UserButton';
-import { useAppSelector } from '../store/hooks';
+
+type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  UserProfile: undefined;
+  Cart: undefined;
+  Homepage: undefined;
+};
+
+type NavigationProps = StackNavigationProp<RootStackParamList>;
+
 
 const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const onLoginPage = () => {
     navigation.navigate('Login');
   };

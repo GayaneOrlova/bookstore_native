@@ -47,6 +47,10 @@ const LoginStyles = StyleSheet.create({
     marginVertical: 50,
     alignSelf: 'center',
   },
+  error: {
+    color: 'red',
+    fontWeight: '700',
+  },
 });
 
 export default LoginStyles

@@ -1,28 +1,21 @@
 import React from 'react';
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text, ScrollView } from 'react-native';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+import {setUser } from '../store/slices/userSlice';
+import {userLogin } from '../api/user.api/user.api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import { setAvatar, setUser } from '../store/slices/userSlice';
-import { getAvatar, userLogin } from '../api/user.api/user.api';
-
-type UserLogin = {
-  email: string;
-  password: string;
-};
 
 
 const Login = () => {
-  const user = useAppSelector(state => state.user.user);
-
   const dispatch = useAppDispatch();
     
   const schema = yup.object().shape({
@@ -30,11 +23,12 @@ const Login = () => {
     password: yup.string().required('Password is required'),
   });
 
-  const { control, handleSubmit, formState: { errors } } = useForm<UserLogin>({
+  const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
   });
   
-  const onSubmit = async (text: UserLogin) => {
+  const onSubmit = async (text: {email: string;
+    password: string;}) => {
     try {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
@@ -44,7 +38,6 @@ const Login = () => {
       console.log(er);
     }
   };
-
 
   return (
     <ScrollView>
@@ -68,7 +61,7 @@ const Login = () => {
           )}
           name="email"
         />
-        {errors.email && <Text style={{ color: 'red' }}>{errors.email.message}</Text>}
+        {errors.email && <Text style={LoginStyles.error}>{errors.email.message}</Text>}
 
         <Controller
           control={control}
@@ -88,7 +81,7 @@ const Login = () => {
           )}
           name="password"
         />
-        {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
+        {errors.password && <Text style={LoginStyles.error}>{errors.password.message}</Text>}
         <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
       <Image style={LoginStyles.image} source={require('../../images/man-reader.png')} />

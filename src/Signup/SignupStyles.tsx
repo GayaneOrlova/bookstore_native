@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const LoginStyles = StyleSheet.create({
+const SignupStyles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -14,7 +14,6 @@ const LoginStyles = StyleSheet.create({
     marginBottom: 20,
   },
   input_form: {
-    // flex: 1,
     height: 48,
     borderWidth: 1,
     borderColor: 'gray',
@@ -47,6 +46,10 @@ const LoginStyles = StyleSheet.create({
     marginVertical: 50,
     alignSelf: 'center',
   },
+  error: {
+    color: 'red',
+    fontWeight: '700',
+  },
 });
 
-export default LoginStyles
+export default SignupStyles
