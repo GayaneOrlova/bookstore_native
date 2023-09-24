@@ -106,9 +106,9 @@ const InputProfile = () => {
     };
     const response = await launchCamera(options);
     console.log('response', response)
-    if (!response.didCancel) {
-      setPhoto(response);
-    }
+    // if (!response.didCancel) {
+    //   setPhoto(response);
+    // }
   }
 
   const handleUploadPhoto = async () => {
@@ -134,7 +134,8 @@ const InputProfile = () => {
         ) :
           <View>
             {photo ? (
-              <Image style={InputProfileStyles.user_photo} source={{ uri: `${photo.assets[0].uri}` }} />
+              // <Image style={InputProfileStyles.user_photo} source={{ uri: `${photo.assets[0].uri}` }} />
+              <Text>{photo}</Text>
             ) : (
               <Image style={InputProfileStyles.user_avatar_icon} source={require('../../../images/icons/user_profile.png')} />
             )}
