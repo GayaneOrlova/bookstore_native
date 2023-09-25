@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -28,7 +28,7 @@ const Header = () => {
   };
 
   const onSignupPage = () => {
-    navigation.navigate('Signup')
+    navigation.navigate('Signup');
   };
 
   const onUserProfilePage = () => {

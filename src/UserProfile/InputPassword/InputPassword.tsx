@@ -29,7 +29,7 @@ const InputPassword: React.FC<Props> = props => {
   const schema = yup.object().shape({
     password: yup.string().required('Password is required'),
     new_password: yup.string().required('Password is required'),
-    confirm_password: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match').required('Confirm password is required'),
+    confirm_password: yup.string().oneOf([yup.ref('new_password')], 'Passwords must match').required('Confirm password is required'),
   });
   const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({resolver: yupResolver(schema),});
   

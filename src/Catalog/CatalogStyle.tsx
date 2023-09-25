@@ -12,6 +12,17 @@ const HeaderStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
   },
+  container: {
+    backgroundColor: '#F0F4EF',
+  },
+  selector: {
+    minWidth: 290,
+    width: '100%',
+    borderRadius: 16,
+    height: 48,
+    alignItems: 'center',
+    backgroundColor: '#F0F4EF',
+  },
   
 });
 

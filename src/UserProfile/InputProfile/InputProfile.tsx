@@ -62,7 +62,7 @@ const InputProfile = () => {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-        setShowInputChange(false)
+        setShowInputChange(false);
       }, 2000);
     }
     catch (er) {
@@ -103,7 +103,7 @@ const InputProfile = () => {
         setPhoto(response);
       }
     } catch (er) {
-      console.log('error', er)
+      console.log('error', er);
     }
   }
 
