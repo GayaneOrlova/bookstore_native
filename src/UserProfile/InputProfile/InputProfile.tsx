@@ -147,7 +147,7 @@ const InputProfile = () => {
           <TouchableOpacity
             style={InputProfileStyles.camera_button}
             onPress={handleOpenCamera}>
-            <Image source={require('../../../images/icons/camera.png')} />
+            <Image source={require('../../../images/icons/gallery.png')} />
           </TouchableOpacity>
         </View>
       </View>

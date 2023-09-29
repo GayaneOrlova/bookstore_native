@@ -60,6 +60,7 @@ const InputProfileStyles = StyleSheet.create({
   camera_button: {
     width: 40,
     height: 40,
+    maxWidth: '100%',
     borderRadius: 16,
     backgroundColor: '#344966',
     justifyContent: 'center',

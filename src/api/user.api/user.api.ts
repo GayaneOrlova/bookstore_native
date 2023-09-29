@@ -60,16 +60,11 @@ export const changeUserinfo = ({
   return axios.put('/change-userinfo/', {email, username});
 };
 
-
-// export const getAvatar = () => {
-//   return axios.get('/profile/')
-// };
-
-export const getAvatar = async () => {
+export const getAvatar = () => {
   return axios.get(`/avatar/`);
 };
 
-export const changeAvatar = async (avatar: any) => {
+export const changeAvatar = (avatar: any) => {
   return axios.patch(`/change-avatar/`, avatar, {headers: {
     'content-type': 'multipart/form-data'
   }});

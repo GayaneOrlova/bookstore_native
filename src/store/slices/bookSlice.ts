@@ -11,9 +11,7 @@ export type BookType = {
   rating: number;
   likes: boolean;
   body: string;
-  // comments: CommentsType;
   id: number;
-
 };
 
 export type CommentsType = {
@@ -22,6 +20,11 @@ export type CommentsType = {
   createdDate: string;
   createdUser: User;
 };
+
+export type GenreType = {
+    genreId: number;
+    name: string;
+  };
 
 type BookSliceType = {
   booksStore: BookType[]

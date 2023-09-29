@@ -18,7 +18,6 @@ type RootStackParamList = {
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-
 const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
 
