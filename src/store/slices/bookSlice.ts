@@ -8,7 +8,7 @@ export type BookType = {
   available: boolean;
   image: string;
   price: number;
-  rating: number;
+  overall_rating: number;
   likes: boolean;
   body: string;
   id: number;
