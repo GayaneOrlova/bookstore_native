@@ -12,10 +12,10 @@ const CatalogStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
   },
-  container: {
+  dropdown: {
     backgroundColor: '#F0F4EF',
   },
-  selector: {
+  box: {
     minWidth: 290,
     width: '100%',
     borderRadius: 16,

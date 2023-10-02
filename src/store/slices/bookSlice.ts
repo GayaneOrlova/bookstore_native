@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { User } from './userSlice';
 
 export type BookType = {
@@ -19,19 +19,31 @@ export type CommentsType = {
   text: string;
   createdDate: string;
   createdUser: User;
+  avatar_url: string;
+  author: string;
 };
 
 export type GenreType = {
-    genreId: number;
-    name: string;
-  };
+  id: number;
+  name: string;
+};
+
+export type RatingType = {
+  id: number;
+  rating: number;
+};
 
 type BookSliceType = {
-  booksStore: BookType[]
+  booksStore: BookType[],
+  ratingStore: RatingType,
 };
 
 const initialState: BookSliceType = {
   booksStore: [],
+  ratingStore: {
+    id: 0,
+    rating: 0
+  }
 };
 
 
@@ -42,11 +54,30 @@ const bookSlice = createSlice({
     setBooks(state, action) {
       state.booksStore = action.payload;
     },
-    setNewRating(state, action: PayloadAction<{ newRating: string; id: number }>) {
-      const index = state.booksStore.findIndex((item) => item.id === action.payload.id);
-      const book = state.booksStore[index];
-      const rating = Number(action.payload.newRating) * 10;
+
+    filteredBooks(state, action) {
+      const booksList = state.booksStore.map((book) => {
+        const test = book.genre.map(genre => {
+
+          if (action.payload.genresFilter.includes(genre)) {
+            return book
+          }
+        })
+        return test![0]
+        // console.log("test", test)
+
+      })
+      console.log(booksList)
+
     },
+
+    setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
+      state.ratingStore = action.payload;
+      // const index = state.booksStore.findIndex((item) => item.id === action.payload.id);
+      // const book = state.booksStore[index];
+      // const rating = Number(action.payload.rating);
+    },
+    
     changeBookLike(state, action) {
       const book = state!.booksStore!.findIndex(
         (item) => item.id === action.payload,
@@ -54,9 +85,10 @@ const bookSlice = createSlice({
       state.booksStore[book].likes =
         !state.booksStore[book].likes;
     },
+ 
   },
 
 });
 
-export const {setBooks, setNewRating, changeBookLike} = bookSlice.actions;
+export const { setBooks, setBookRating, changeBookLike, filteredBooks } = bookSlice.actions;
 export default bookSlice.reducer;

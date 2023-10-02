@@ -5,17 +5,29 @@ export const getAllBooks = () => {
   return axios.get<BookType[]>('/all-books/');
 };//good
 
-export const getBookById = (bookId: string | undefined) => {
+export const getBookById = (bookId: number) => {
   return axios.get<BookType>(`/books/${bookId}`);
 };//good
 
-export const createComment = (bookId: string, body: string) => {
+export const createBookComment = (bookId: number, body: string) => {
   return axios.post<CommentsType>('/comment/create/', { bookId, body });
 };//good
 
+export const getBookComment = (bookId: number) => {
+  return axios.get<CommentsType>(`/book-comment/${bookId}/`);
+};//good
+
+
+export const getBookRating = (bookId: number) => {
+  return axios.get(`book-rating/${bookId}/`);
+};//good
+
 export const createBookRating = (bookId: number, rating: number) => {
-  return axios.post('book-ratings/<int:pk>/create/', { bookId, rating });
-};
+  return axios.post(`book-rating/create/${bookId}/`, {rating});
+};//good
+
+
+
 
 export const getFavoritesBooks = () => {
   return axios.get<BookType[]>('/favorites-books/');

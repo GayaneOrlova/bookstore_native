@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import HeaderStyles from './CatalogStyle';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { getAllGenres } from '../api/genre.api';
+import { getAllGenres } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getAllBooks, getBookById } from '../api/book.api';
-import { setBooks } from '../store/slices/bookSlice';
+import { filteredBooks, setBooks } from '../store/slices/bookSlice';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 
 import Button from '../Button/Button';
@@ -13,18 +12,42 @@ import { Rating } from '@kolking/react-native-rating';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6Pro';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import CatalogStyles from './CatalogStyle';
-
+// import Slider from '@react-native-community/slider';
+// import { Slider } from 'react-native';
+// import RangeSlider from 'react-native-range-slider'
+import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import Slider from 'rn-range-slider';
+import { useNavigation } from '@react-navigation/native';
+import { number } from 'yup';
 
 type Props = {};
 
 const Catalog: React.FC<Props> = () => {
+  const navigation = useNavigation();
+  const onBookDetailPage = (id: number) => {
+    navigation.navigate('BookDetail', {id});
+  };
+
   const bookList = useAppSelector(state => state.book.booksStore);
+  
 
   const dispatch = useAppDispatch();
 
-  console.log(bookList)
-  // const [selectedGenre, setSelectedGenre] = useState(null);
-  // const [genres, setGenres] = useState([]);
+
+  const sortData = [1, 2, 3];
+
+  const [genres, setGenres] = useState<{key: any, value: any}[]>();
+  const [selectedGenres, setSelectedGenres] = useState([]);
+
+  const fetchAllGenres = async () => {
+    try {
+      const response = await getAllGenres();
+      const genresList = response.data.map(item => ({key: item.id, value: item.name}))
+      setGenres(genresList)
+    } catch (er) {
+      console.log(er);
+    }
+  };
 
   const fetchAllBooks = async () => {
     try {
@@ -34,10 +57,20 @@ const Catalog: React.FC<Props> = () => {
       console.log(er);
     }
   };
+  
+ const handleGenreSelection = () => {
+  const genresFilter= selectedGenres.map((id: number) => (genres?.find(item => item.key===id)?.value))
+  
+  dispatch(filteredBooks({genresFilter}));
 
+ console.log(genresFilter)
+  };
+  
+  
   useEffect(() => {
     fetchAllBooks();
-  }, []);
+    fetchAllGenres();
+  }, [bookList]);
 
   const onCartClick = () => {
     console.log('New rating:');
@@ -52,9 +85,9 @@ const Catalog: React.FC<Props> = () => {
 
 
   const renderBookItem = ({ item }) => (
+  <TouchableOpacity onPress={() => onBookDetailPage(item.id)}>
     <View style={CatalogStyles.book_item}>
       <View style={CatalogStyles.image_container}>
-
         <View style={CatalogStyles.icon_container}>
           <TouchableOpacity
             style={[CatalogStyles.favorite_button, liked && CatalogStyles.favorite_button_liked]}
@@ -69,7 +102,7 @@ const Catalog: React.FC<Props> = () => {
             />
           </TouchableOpacity>
         </View>
-        <Image style={{ width: 135, minHeight: 192 }} source={{ uri: item.image }} />
+        <Image style={{ width: 135, minHeight: 192, borderRadius: 16 }} source={{ uri: item.image }} />
       </View>
       <Text style={CatalogStyles.text_title}>{item.title}</Text>
       <Text style={CatalogStyles.text_author}>{item.author}</Text>
@@ -79,40 +112,57 @@ const Catalog: React.FC<Props> = () => {
       </View>
       <Button style={CatalogStyles.price_button} text={`$${item.price} USD`} onPress={onCartClick} />
     </View>
+    </TouchableOpacity>
   );
 
-  const genreData = [1, 2, 3];
-  const sortData = [1, 2, 3];
+ 
 
-  const handleGenreSelection = () => {
+  // const [minPrice, setMinPrice] = useState(0);
+  // const [maxPrice, setMaxPrice] = useState(100);
+
+  // const handleMinPriceChange = (value) => {
+  //   setMinPrice(value);
+  // };
+
+  // const handleMaxPriceChange = (value) => {
+  //   setMaxPrice(value);
+  // };
+
+  const [rangeState, setRangeState] = useState([0, 100])
+  // state = {
+  //   values: [0, 100], // начальные значения для range slider
+  // };
+
+  const onValuesChange = (value: React.SetStateAction<number[]>) => {
+    setRangeState(value);
   };
 
 
-
-
   return (
-    <View style={HeaderStyles.catalog_container}>
-      <Text style={HeaderStyles.catalog_title}>Catalog</Text>
+    <View style={CatalogStyles.catalog_container}>
+      <Text style={CatalogStyles.catalog_title}>Catalog</Text>
       <View>
         <MultipleSelectList
           placeholder='Genre'
-          setSelected={handleGenreSelection}
+          setSelected={setSelectedGenres}
+          onSelect={handleGenreSelection}
           search={false}
-          boxStyles={HeaderStyles.selector}
-          dropdownStyles={HeaderStyles.container}
-          data={genreData}
+          boxStyles={CatalogStyles.box}
+          dropdownStyles={CatalogStyles.dropdown}
+          data={genres!}
         />
         <MultipleSelectList
           placeholder={`Sort by`}
           setSelected={handleGenreSelection}
           search={false}
-          boxStyles={HeaderStyles.selector}
-          dropdownStyles={HeaderStyles.container}
+          boxStyles={CatalogStyles.box}
+          dropdownStyles={CatalogStyles.dropdown}
           data={sortData}
         />
 
         <View>
           {/* <ScrollView horizontal={true} style={{ flexGrow: 1, gap: 20 }}> */}
+         
           <FlatList
             data={bookList}
             renderItem={renderBookItem}
@@ -124,10 +174,45 @@ const Catalog: React.FC<Props> = () => {
           {/* </ScrollView> */}
         </View>
       </View>
-
+      <MultiSlider
+        containerStyle={{ alignItems: 'center' }}
+        values={rangeState}
+        sliderLength={280} // длина слайдера
+        min={0} // минимальное значение
+        max={100} // максимальное значение
+        step={1} // шаг изменения значения
+        onValuesChange={onValuesChange} // обработчик изменения значений
+        trackStyle={{ height: 12, backgroundColor: '#D6D8E7', borderRadius: 16 }}
+        selectedStyle={{ backgroundColor: '#BFCC94' }}
+        markerStyle={{ height: 32, width: 32, borderRadius: 16, backgroundColor: 'white', borderColor: '#BFCC94', borderWidth: 2 }}
+      />
     </View>
   );
 };
 
 export default Catalog;
 
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 20,
+    paddingTop: 10,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  sliderContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  slider: {
+    flex: 1,
+    marginHorizontal: 5,
+  },
+  rangeText: {
+    marginTop: 10,
+    textAlign: 'center',
+  },
+});

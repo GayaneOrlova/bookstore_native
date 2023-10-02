@@ -11,6 +11,7 @@ import Login from './src/Login/Login';
 import UserProfile from './src/UserProfile/UserProfile';
 import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
+import BookDetail from './src/BookDetail/BookDetail';
 
 
 const Stack = createStackNavigator();
@@ -61,6 +62,11 @@ const Main: React.FC = () => {
               component={Signup}
               options={{ title: 'Signup' }}
             />
+            <Stack.Screen
+              name="BookDetail"
+              component={BookDetail}
+              options={{ title: 'BookDetail' }}
+            />
           </>
         ) : (
           <>
@@ -73,6 +79,11 @@ const Main: React.FC = () => {
               name="UserProfile"
               component={UserProfile}
               options={{ title: 'UserProfile' }}
+            />
+             <Stack.Screen
+              name="BookDetail"
+              component={BookDetail}
+              options={{ title: 'BookDetail' }}
             />
             <Stack.Screen
               name="Cart"
