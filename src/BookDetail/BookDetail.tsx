@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import BookDetailStyle from './BookDetailStyle';
-import { FlatList, Image, Modal, Text, TextInput } from 'react-native';
-import { useAppSelector } from '../store/hooks';
-import { View } from 'react-native';
-import { BookType, CommentsType, setBookRating } from '../store/slices/bookSlice';
-import { createBookRating, getBookById, getBookComment, getBookRating } from '../api/book.api';
-import { StackScreenProps } from '@react-navigation/stack';
-import Header from '../Header/Header';
-import { Rating } from '@kolking/react-native-rating';
-import { ScrollView } from 'react-native-gesture-handler';
-import Footer from '../Footer/Footer';
-import CatalogStyles from '../Catalog/CatalogStyle';
-import Button from '../Button/Button';
-import Input from '../Input/Input';
 import { Controller, useForm } from "react-hook-form";
-
+import { View, ScrollView, FlatList, Image, ListRenderItemInfo, Modal, Text, TextInput } from 'react-native';
+import { Rating } from '@kolking/react-native-rating';
+import { StackScreenProps } from '@react-navigation/stack';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useAppSelector } from '../store/hooks';
+import { BookType, CommentsType } from '../store/slices/bookSlice';
+import { createBookComment, createBookRating, getBookById, getBookComment, getBookRating } from '../api/book.api';
+import Header from '../Header/Header';
+import Button from '../Button/Button';
+import Footer from '../Footer/Footer';
+import BookDetailStyle from './BookDetailStyle';
+import CatalogStyles from '../Catalog/CatalogStyle';
 import LoginStyles from '../Login/LoginStyles';
 
 type RootStackParamList = {
@@ -28,9 +23,6 @@ type Props = StackScreenProps<RootStackParamList, 'BookDetail'>;
 
 const BookDetail: React.FC<Props> = ({ route }) => {
   const isUser = useAppSelector(state => state.user.user);
-  // const userNewRating = useAppSelector(state => state.book.ratingStore);
-
-  // console.log(userNewRating)
   const bookList = useAppSelector(state => state.book.booksStore);
 
   const [bookDetail, setBookDetail] = useState<BookType>();
@@ -40,7 +32,7 @@ const BookDetail: React.FC<Props> = ({ route }) => {
   const [сomments, setComments] = useState([])
 
   const schema = yup.object().shape({
-    comment: yup.string().required('Email is required'),
+    body: yup.string().required('Comment is required'),
   });
 
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -74,14 +66,15 @@ const BookDetail: React.FC<Props> = ({ route }) => {
     }
   };
 
-  const fetchBookRating = async () => {
+  const fetchUserRating = async () => {
+    if (!isUser.email) { return }
     try {
       const responce = await getBookRating(id)
-      if (responce.data.rating) {
-        setUserRating(responce.data.rating);
-        console.log('!!!!!', responce.data)
-      }
-      else { setUserRating(0); }
+      // if (responce.data.rating) {
+      setUserRating(responce.data.rating);
+      console.log('?', responce.data)
+      //   }
+      //   else { setUserRating(0); }
     }
     catch (er) {
       console.log(er);
@@ -90,20 +83,20 @@ const BookDetail: React.FC<Props> = ({ route }) => {
 
   const fetchBookComment = async () => {
     try {
-      const responce = await getBookComment(id)
-      console.log('responce!!!!', responce.data)
-      setComments(responce.data)
+      const response = await getBookComment(id)
+      setComments(response.data)
     }
     catch (er) {
       console.log(er);
     }
   };
 
-  const onSubmit = async () => {
+  const onSubmit = async (body: string) => {
+    console.log(id, body)
     try {
-      // const response = await userLogin(text);
-      // await AsyncStorage.setItem('access', response.data.tokens.access);
-      // dispatch(setUser(response.data.user));  
+      const response = await createBookComment(id, body)
+      console.log(id, response.data)
+      setComments(response.data)
     }
     catch (er) {
       console.log(er);
@@ -111,23 +104,18 @@ const BookDetail: React.FC<Props> = ({ route }) => {
   };
 
 
-
-  const renderItem = ({ item }) => (
-    <View style={{ width: '100%', marginBottom: 10, padding: 10, flexDirection: 'column', gap: 15, backgroundColor: '#F0F9EF', borderRadius: 16 }}>
-      <View style={{ flexDirection: 'row', gap: 10 }}>
-        <Image source={{ uri: item.avatar_url }} style={{ width: 35, height: 35, borderRadius: 25 }} />
+  const renderItem = ({ item }: ListRenderItemInfo<CommentsType>) => (
+    <View style={BookDetailStyle.comment_item}>
+      <View style={BookDetailStyle.card_group}>
+        <Image source={{ uri: item.avatar_url }} style={BookDetailStyle.avatar_image} />
         <View >
-          <Text style={{ color: '#0D1821', fontWeight: 600, paddingBottom: 5 }}>{item.author}</Text>
-          <Text style={{ color: '#B9BAC3', fontSize: 10, }}>{item.created_at}</Text>
+          <Text style={BookDetailStyle.comment_author}>{item.author}</Text>
+          <Text style={BookDetailStyle.comment_time}>{item.created_at}</Text>
         </View>
       </View>
-
-      <Text style={{ color: '#344966', }}>{item.body}</Text>
+      <Text>{item.body}</Text>
     </View>
   );
-
-
-
 
   const onCartClick = () => {
   };
@@ -138,61 +126,52 @@ const BookDetail: React.FC<Props> = ({ route }) => {
 
   useEffect(() => {
     fetchBookDetail();
-    fetchBookRating();
+    fetchUserRating();
   }, [userNewRating, userRating])
 
-
   if (!bookDetail) { return null; }
-
-
 
   return (
     <ScrollView>
       <Header></Header>
-      <View style={{ marginVertical: 30, marginHorizontal: 15, }}>
-        <View style={{ flexDirection: 'row', gap: 20 }}>
-          <Image style={{ width: 135, minHeight: 202, borderRadius: 16 }} source={{ uri: bookDetail.image }} />
-
-          <View style={{ flexDirection: 'column', gap: 20, }}>
-            <Text style={{ color: '#0D1821', fontWeight: '700', fontSize: 18, maxWidth: 135 }}>
-              {bookDetail.title}
-            </Text>
-            <Text style={{ color: '#0D1821', fontSize: 14 }}>
+      <View style={BookDetailStyle.container}>
+        <View style={BookDetailStyle.card_group}>
+          <Image style={BookDetailStyle.book_image} source={{ uri: bookDetail.image }} />
+          <View style={BookDetailStyle.book_detail}>
+            <Text style={BookDetailStyle.title_text}>{bookDetail.title}</Text>
+            <Text style={BookDetailStyle.text_detail}>
               {bookDetail.author}
             </Text>
-            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-              <Image style={{ width: 15, minHeight: 15 }} source={require('../../images/icons/star.png')} />
-              <Text style={{ color: '#B9BAC3', fontSize: 14 }}>
-                {(bookDetail.overall_rating).toFixed(1)}
-              </Text>
+            <View style={BookDetailStyle.card_group}>
+              <Image style={BookDetailStyle.rate_image} source={require('../../images/icons/star.png')} />
+              <Text style={BookDetailStyle.text}>{(bookDetail.overall_rating).toFixed(1)}</Text>
             </View>
-            {isUser && userRating !== 0 &&
-              <View style={{ flexDirection: 'row', gap: 10, alignItems: 'flex-end' }}>
+            {isUser.email && userRating &&
+              <View style={BookDetailStyle.card_group}>
                 <Text>Your rate of this book: </Text>
-                <Text style={{ color: '#BFCC94', fontWeight: '700', fontSize: 18 }}>{userRating}</Text>
+                <Text style={BookDetailStyle.rate_text}>{userRating}</Text>
               </View>
             }
-            {isUser && userRating === 0 &&
+            {isUser.email && !userRating &&
               <View>
                 <Rating maxRating={5} size={20} rating={userNewRating} fillColor={'#BFCC94'} onChange={addBookRating} />
-                <Text style={{ color: '#B9BAC3', fontSize: 14, marginTop: 10 }}>Rate this book</Text>
+                <Text style={BookDetailStyle.text}>Rate this book</Text>
               </View>
             }
             <Modal visible={showModal} transparent>
-              <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-                <View style={{ backgroundColor: 'white', padding: 40 }}>
+              <View style={BookDetailStyle.modal}>
+                <View style={BookDetailStyle.modal_text}>
                   <Text>Rating was successfully add!</Text>
                 </View>
               </View>
             </Modal>
           </View>
         </View>
-        <Text style={{ fontSize: 14, color: '#0D1821', marginVertical: 20 }}>Description</Text>
-        <Text style={{ fontSize: 12, color: '#344966', marginBottom: 20 }}>{bookDetail.body}</Text>
-        <Button style={CatalogStyles.price_button} text={`$${bookDetail.price} USD`} onPress={onCartClick} />
-        {/* <View style={{ marginVertical: 30, flexDirection: 'row', gap: 15 }}> */}
+        <Text style={BookDetailStyle.description_text}>Description</Text>
+        <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>
+        <Button style={BookDetailStyle.price_button} text={`$${bookDetail.price} USD`} onPress={onCartClick} />
         <FlatList
-          style={{ marginVertical: 30, flexDirection: 'row', gap: 15 }}
+          style={BookDetailStyle.card_group}
           data={сomments}
           renderItem={renderItem}
           keyExtractor={(item) => item.created_at}
@@ -203,24 +182,20 @@ const BookDetail: React.FC<Props> = ({ route }) => {
             rules={{ required: true, }}
             render={({ field: { onChange, value } }) => (
               <TextInput
-                style={{ minHeight: 87, marginBottom: 30, paddingLeft: 10, backgroundColor: '#F0F8EF', borderRadius: 16, }}
+                style={BookDetailStyle.comment_input}
                 placeholder="Share a comment"
                 onChangeText={onChange}
-                // value={value}
                 defaultValue={value}
               />
             )}
-            name="comment"
+            name="body"
           />
-          {errors.comment && <Text style={LoginStyles.error}>{errors.comment.message}</Text>}
-
-          <Button text="Post a comment" style={{ marginBottom: 30, height: 38, width: 210 }} onPress={handleSubmit(onSubmit)} />
-
+          {errors.body && <Text style={LoginStyles.error}>{errors.body.message}</Text>}
+          <Button text="Post a comment" style={BookDetailStyle.price_button} onPress={handleSubmit(onSubmit)} />
         </View>
-        <Text style={{ color: '#0D1821', fontWeight: '700', fontSize: 18, marginBottom: 20 }}>Recommendations</Text>
+        <Text style={BookDetailStyle.title_text}>Recommendations</Text>
         <FlatList
-          data={bookList.filter((book) => book.recommendation)
-          }
+          data={bookList.filter((book) => book.recommendation)}
           renderItem={({ item }) => (
             <View>
               <Text>{item.title}</Text>
@@ -230,11 +205,9 @@ const BookDetail: React.FC<Props> = ({ route }) => {
           numColumns={2}
           contentContainerStyle={CatalogStyles.content_container}
           columnWrapperStyle={CatalogStyles.column_wrapper}
-
         />
       </View>
       <Footer />
-      {/* </View> */}
 
 
 

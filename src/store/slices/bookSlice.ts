@@ -17,8 +17,8 @@ export type BookType = {
 
 export type CommentsType = {
   id: number;
-  text: string;
-  createdDate: string;
+  body: string;
+  created_at: string;
   createdUser: User;
   avatar_url: string;
   author: string;

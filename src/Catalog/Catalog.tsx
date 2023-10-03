@@ -70,7 +70,7 @@ const Catalog: React.FC<Props> = () => {
   useEffect(() => {
     fetchAllBooks();
     fetchAllGenres();
-  }, [bookList]);
+  }, []);
 
   const onCartClick = () => {
     console.log('New rating:');

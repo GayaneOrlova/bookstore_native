@@ -10,7 +10,7 @@ export const getBookById = (bookId: number) => {
 };//good
 
 export const createBookComment = (bookId: number, body: string) => {
-  return axios.post<CommentsType>('/comment/create/', { bookId, body });
+  return axios.post(`/comment/create/${bookId}/`, {body});
 };//good
 
 export const getBookComment = (bookId: number) => {
