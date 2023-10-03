@@ -11,6 +11,7 @@ export type BookType = {
   overall_rating: number;
   likes: boolean;
   body: string;
+  recommendation: boolean;
   id: number;
 };
 

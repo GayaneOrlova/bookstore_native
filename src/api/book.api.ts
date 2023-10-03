@@ -14,7 +14,7 @@ export const createBookComment = (bookId: number, body: string) => {
 };//good
 
 export const getBookComment = (bookId: number) => {
-  return axios.get<CommentsType>(`/book-comment/${bookId}/`);
+  return axios.get(`/book-comment/${bookId}/`);
 };//good
 
 
