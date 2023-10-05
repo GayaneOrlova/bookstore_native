@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Rating } from '@kolking/react-native-rating';
 import { BookType } from '../store/slices/bookSlice';
@@ -12,8 +12,6 @@ type Props = {
 };
 
 const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
-  const [liked, setLiked] = useState(false);
-
   const onBookDetailPage = (id: number) => {
     navigation.navigate('BookDetail', { id });
   };

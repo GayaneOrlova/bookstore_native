@@ -5,12 +5,6 @@ const BookDetailStyle = StyleSheet.create({
     marginVertical: 30,
     marginHorizontal: 15,
   },
-  detail_info_group: {
-    flexDirection: 'row',
-    gap: 10,
-    // width: '100%',
-    marginBottom: 10,
-  },
   book_image: {
     width: 135,
     minHeight: 202,
@@ -77,33 +71,6 @@ const BookDetailStyle = StyleSheet.create({
     backgroundColor: '#eaebea',
     borderRadius: 16,
   },
-  comments_container: {
-  marginBottom: 10,
-  },
-  comment_item: {
-    // width: '100%',
-    marginBottom: 10,
-    padding: 10,
-    // flexDirection: 'column',
-    // gap: 15,
-    backgroundColor: '#eaebea',
-    borderRadius: 16,
-  },
-  comment_author: {
-    color: '#0D1821',
-    fontWeight: '600',
-    paddingBottom: 5,
-  },
-  comment_time: {
-    color: '#B9BAC3',
-    fontSize: 10,
-  },
-  avatar_image: {
-    width: 35,
-    height: 35,
-    borderRadius: 25,
-  },
-  
 });
 
 export default BookDetailStyle;
