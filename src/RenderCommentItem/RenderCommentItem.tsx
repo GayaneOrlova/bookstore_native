@@ -11,7 +11,7 @@ import { createBookComment, createBookRating, getBookById, getBookComment, getBo
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Footer from '../Footer/Footer';
-import BookDetailStyle from './BookDetailStyle';
+import BookDetailStyle from './RenderCommentItemStyle';
 import CatalogStyles from '../Catalog/CatalogStyle';
 import LoginStyles from '../Login/LoginStyles';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
@@ -30,7 +30,7 @@ type RootStackParamList = {
 
 type Props = StackScreenProps<RootStackParamList, 'BookDetail'>;
 
-const BookDetail: React.FC<Props> = ({ route }) => {
+const RenderCommentItem: React.FC<Props> = ({ route }) => {
   const navigation = useNavigation();
   const isUser = useAppSelector(state => state.user.user);
   const bookList = useAppSelector(state => state.book.booksStore);
@@ -227,6 +227,6 @@ const BookDetail: React.FC<Props> = ({ route }) => {
   );
 };
 
-export default BookDetail;
+export default RenderCommentItem;
 
 

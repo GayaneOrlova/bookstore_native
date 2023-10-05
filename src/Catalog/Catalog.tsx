@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import { getAllGenres } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getAllBooks, getBookById } from '../api/book.api';
-import { filteredBooks, setBooks } from '../store/slices/bookSlice';
+import { BookType, filteredBooks, setBooks } from '../store/slices/bookSlice';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
-
-import Button from '../Button/Button';
-import { Rating } from '@kolking/react-native-rating';
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome6Pro';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import CatalogStyles from './CatalogStyle';
 // import Slider from '@react-native-community/slider';
 // import { Slider } from 'react-native';
@@ -20,13 +15,27 @@ import Slider from 'rn-range-slider';
 import { useNavigation } from '@react-navigation/native';
 import { number } from 'yup';
 
+import { StackNavigationProp } from '@react-navigation/stack';
+import RenderBookItem from '../RenderBookItem/RenderBookItem';
+
 type Props = {};
 
+type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  UserProfile: undefined;
+  Cart: undefined;
+  Homepage: undefined;
+  BookDetail: { id: number }
+};
+
+type NavigationProps = StackNavigationProp<RootStackParamList>;
+
 const Catalog: React.FC<Props> = () => {
-  const navigation = useNavigation();
-  const onBookDetailPage = (id: number) => {
-    navigation.navigate('BookDetail', {id});
-  };
+  const navigation = useNavigation<NavigationProps>();
+  // const onBookDetailPage = (id: number) => {
+  //   navigation.navigate('BookDetail', {id});
+  // };
 
   const bookList = useAppSelector(state => state.book.booksStore);
   
@@ -71,51 +80,6 @@ const Catalog: React.FC<Props> = () => {
     fetchAllBooks();
     fetchAllGenres();
   }, []);
-
-  const onCartClick = () => {
-    console.log('New rating:');
-  }
-
-  const [liked, setLiked] = useState(false);
-
-  const handleLikePress = () => {
-    setLiked(!liked);
-  };
-
-
-
-  const renderBookItem = ({ item }) => (
-  <TouchableOpacity onPress={() => onBookDetailPage(item.id)}>
-    <View style={CatalogStyles.book_item}>
-      <View style={CatalogStyles.image_container}>
-        <View style={CatalogStyles.icon_container}>
-          <TouchableOpacity
-            style={[CatalogStyles.favorite_button, liked && CatalogStyles.favorite_button_liked]}
-            onPress={handleLikePress}
-          >
-            <FontAwesomeIcon
-              icon={faHeart}
-              // name="heart"
-              size={10}
-              color={liked ? '#ffffff' : 'transparent'}
-              style={CatalogStyles.favorite_icon}
-            />
-          </TouchableOpacity>
-        </View>
-        <Image style={{ width: 135, minHeight: 192, borderRadius: 16 }} source={{ uri: item.image }} />
-      </View>
-      <Text style={CatalogStyles.text_title}>{item.title}</Text>
-      <Text style={CatalogStyles.text_author}>{item.author}</Text>
-      <View style={CatalogStyles.rating_container}>
-        <Rating size={20} rating={item.overall_rating} fillColor={'#BFCC94'} />
-        <Text style={CatalogStyles.rating_text}>{(item.overall_rating.toFixed(1))}</Text>
-      </View>
-      <Button style={CatalogStyles.price_button} text={`$${item.price} USD`} onPress={onCartClick} />
-    </View>
-    </TouchableOpacity>
-  );
-
- 
 
   // const [minPrice, setMinPrice] = useState(0);
   // const [maxPrice, setMaxPrice] = useState(100);
@@ -165,7 +129,9 @@ const Catalog: React.FC<Props> = () => {
          
           <FlatList
             data={bookList}
-            renderItem={renderBookItem}
+            renderItem={({ item }: ListRenderItemInfo<BookType>) => (
+              <RenderBookItem item={item} navigation={navigation} />
+            )}
             keyExtractor={(item, index) => index.toString()}
             numColumns={2}
             contentContainerStyle={CatalogStyles.content_container}

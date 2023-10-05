@@ -13,6 +13,8 @@ import { setNewPassword } from '../store/slices/userSlice';
 import InputPassword from './InputPassword/InputPassword';
 import InputProfile from './InputProfile/InputProfile';
 
+
+
 const UserProfile = () => {
 
   return (
@@ -20,7 +22,11 @@ const UserProfile = () => {
       <Header />
       <View style={UserProfileStyles.container}>
         <InputProfile />
-        <InputPassword />
+        <InputPassword text={{
+          password: '',
+          new_password: '',
+          confirm_password: ''
+        }} />
       </View>
       <Footer />
     </ScrollView>

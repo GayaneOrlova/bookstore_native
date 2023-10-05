@@ -6,9 +6,20 @@ import { useNavigation } from '@react-navigation/native';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import { ScrollView } from 'react-native-gesture-handler';
+import { StackNavigationProp } from '@react-navigation/stack';
+
+type RootStackParamList = {
+  Login: undefined;
+  Signup: undefined;
+  UserProfile: undefined;
+  Cart: undefined;
+  Homepage: undefined;
+};
+
+type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Cart = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
   const onHomepage = () => {
     navigation.navigate('Homepage');
   };

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Image, Text, ScrollView } from 'react-native';
+import { View, Image, Text } from 'react-native';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -13,6 +13,9 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import SignupStyles from './SignupStyles';
+
+import { ScrollView } from 'react-native-gesture-handler';
+
 
 type UserRegistrationType = {
   email: string;
