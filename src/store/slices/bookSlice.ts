@@ -40,7 +40,7 @@ export type CartType = {
     book_image: string,
     book_name: string,
     id: number | null,
-    total_price: number | null
+    price: number | null
   }];
   total_price: number | null;
 };
@@ -58,7 +58,7 @@ const initialState: BookSliceType = {
     book_image: '',
     book_name: '',
     id: null,
-    total_price: null
+    price: null
   }],
   total_price: null
 },
@@ -79,11 +79,7 @@ const bookSlice = createSlice({
     setCart(state, action) {
       state.cartStore = action.payload;
     },
-    addToCart(state, action) {
-      state.cartStore.items = action.payload;
-    },
-
-
+   
 
     filteredBooks(state, action) {
       const booksList = state.booksStore.map((book) => {
@@ -120,5 +116,5 @@ const bookSlice = createSlice({
 
 });
 
-export const { setBooks, setBookRating, changeBookLike, filteredBooks } = bookSlice.actions;
+export const { setBooks, setCart, setBookRating, changeBookLike, filteredBooks } = bookSlice.actions;
 export default bookSlice.reducer;

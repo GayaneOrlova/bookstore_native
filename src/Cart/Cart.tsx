@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import CartStyles from './CartStyles';
-import Button from '../Button/Button';
-import { useNavigation } from '@react-navigation/native';
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import { FlatList, Image, Modal, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { getCart } from '../api/book.api';
-import { useAppSelector } from '../store/hooks';
-import { CartType } from '../store/slices/bookSlice';
+import { useNavigation } from '@react-navigation/native';
+import { changeCart, getCart } from '../api/book.api';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { setCart } from '../store/slices/bookSlice';
+import Button from '../Button/Button';
+import Header from '../Header/Header';
+import Footer from '../Footer/Footer';
+import CartStyles from './CartStyles';
 
 type RootStackParamList = {
-  Login: undefined;
-  Signup: undefined;
-  UserProfile: undefined;
-  Cart: undefined;
   Homepage: undefined;
 };
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Cart = () => {
+  const [showModal, setShowModal] = useState(false);
+  const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
-
-  const [userCart, setUserCart] = useState<CartType>();
+  const cartList = useAppSelector(state => state.book.cartStore);
 
   const navigation = useNavigation<NavigationProps>();
   const onHomepage = () => {
@@ -35,76 +32,101 @@ const Cart = () => {
     if (!isUser.email) { return }
     try {
       const responce = await getCart();
-      setUserCart(responce.data);
+      dispatch(setCart(responce.data));
     }
     catch (er) {
       console.log(er);
     }
   };
+
   useEffect(() => {
     fetchUserCart();
-  }, [])
+  }, [cartList]);
 
+  const handleMinus = async (id: number) => {
+    const currentCartItem = cartList.items.find(item => item.id === id);
+    if (currentCartItem?.amount! < 0) { return; }
 
-  const [amount, setAmount] = useState(0);
-
-  const handleMinus = () => {
-    if (amount > 0) {
-      setAmount(amount - 1);
+    const amount = currentCartItem?.amount! - 1;
+    try {
+      await changeCart(amount, id);
+    }
+    catch (er) {
+      console.log(er);
     }
   };
 
-  const handlePlus = () => {
-    setAmount(amount + 1);
+  const handlePlus = async (id: number) => {
+    const currentCartItem = cartList.items.find(item => item.id === id)
+    const amount = currentCartItem?.amount! + 1;
+    try {
+      await changeCart(amount, id);
+    }
+    catch (er) {
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2500);
+      console.log(er);
+    }
   };
 
-  const handleAddToCart = () => {
+  const handleDeleteCart = async (id: number) => {
+    const amount = 0;
+    try {
+      await changeCart(amount, id);
+    }
+    catch (er) {
+      console.log(er);
+    }
   };
-
-
-
 
   return (
-    // сделать условие по отрисовки корзины, если есть товары
     <ScrollView>
       <Header />
-      {userCart?.total_price ? (
-        <View style={{ marginHorizontal: 15, marginTop: 30, marginBottom: 80 }}>
+      {cartList?.total_price ? (
+        <View style={CartStyles.cart_page}>
           <FlatList
             contentContainerStyle={CartStyles.cart_item}
-            data={userCart.items}
-            keyExtractor={(item) => item.id.toString()}
-            renderItem={({ item }) => (
-              <View style={CartStyles.render_item}>
-                <Image source={{ uri: `http://127.0.0.1:8000/media/books/2023/10/05/Narnia.png` }} style={CartStyles.cart_item_image} />
+            data={cartList.items}
+            keyExtractor={(item) => item.id!.toString()}
+            renderItem={({ item, index }) => (
+              <View style={index === (cartList.items.length - 1) ? CartStyles.render_item_last : CartStyles.render_item}>
+                <Image style={CartStyles.cart_item_image} source={{ uri: `http://127.0.0.1:8000/media/${item.book_image}` }} />
                 <View style={CartStyles.cart_item_detail}>
-                  <Text style={CartStyles.cart_item_name}>{item.book_name}</Text>
+                  <Text style={CartStyles.cart_text}>{item.book_name}</Text>
                   <Text>{item.book_name}</Text>
-                  <Text>{`$${item.total_price} USD`}</Text>
                   <View style={CartStyles.amount_container}>
-                  <TouchableOpacity onPress={handleMinus} style={CartStyles.amount_buttons}>
-                    <Text style={CartStyles.amount_buttons_text}>-</Text>
-                  </TouchableOpacity>
-                  <Text style={[CartStyles.amount_buttons_text && CartStyles.amount_button_number]}>{amount}</Text>
-                  <TouchableOpacity onPress={handlePlus} style={CartStyles.amount_buttons}>
-                    <Text style={CartStyles.amount_buttons_text}>+</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={handleAddToCart} style={CartStyles.delete_container}>
-                    <Image
-                      source={require('../../images/icons/delete.png')}
-                      style={CartStyles.delete_icon}
-                    />
-                  </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleMinus(item.id!)} style={CartStyles.amount_buttons}>
+                      <Text style={CartStyles.amount_buttons_text}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={[CartStyles.amount_buttons_text && CartStyles.amount_button_number]}>{item.amount}</Text>
+                    <TouchableOpacity onPress={() => handlePlus(item.id!)} style={CartStyles.amount_buttons}>
+                      <Text style={CartStyles.amount_buttons_text}>+</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDeleteCart(item.id!)} style={CartStyles.delete_container}>
+                      <Image
+                        source={require('../../images/icons/delete.png')}
+                        style={CartStyles.delete_icon}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                  <Text style={CartStyles.item_price}>{`$${item.price} USD`}</Text>
                 </View>
-                </View>
+                <Modal visible={showModal} transparent>
+                  <View style={CartStyles.modal}>
+                    <View style={CartStyles.modal_text}>
+                      <Text>Cannot add more books than available!</Text>
+                    </View>
+                  </View>
+                </Modal>
               </View>
             )}
           />
-          <Text style={CartStyles.total_text}>Total: <Text style={CartStyles.cart_item_name}>{userCart.total_price}</Text></Text>
-          <Button
-            text="Continue shopping"
-            style={CartStyles.continue_button}
-          />
+          <Text style={CartStyles.total_text}>Total: <Text style={CartStyles.total_text}>{cartList.total_price}</Text></Text>
+          <TouchableOpacity style={CartStyles.continue_button}>
+            <Text>Continue shopping</Text>
+          </TouchableOpacity>
           <Button
             text="Chekout"
             style={CartStyles.cart_button}
@@ -127,7 +149,7 @@ const Cart = () => {
       )
       }
       <Footer />
-    </ScrollView>
+    </ScrollView >
   );
 };
 

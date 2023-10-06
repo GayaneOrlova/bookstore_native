@@ -1,15 +1,27 @@
 import { StyleSheet } from 'react-native';
 
 const CartStyles = StyleSheet.create({
+  cart_page: {
+    marginHorizontal: 15,
+    marginTop: 30,
+    marginBottom: 80,
+  },
   cart_container: {
     flexDirection: 'column',
     gap: 30,
     marginHorizontal: 15,
-    marginTop: 40,
+    marginTop: 20,
     marginBottom: 80,
     borderColor: '#D6D8E7',
   },
   render_item: {
+    flexDirection: 'row',
+    gap: 20,
+    borderBottomColor: '#D6D8E7',
+    borderBottomWidth: 1,
+    paddingBottom: 30,
+  },
+  render_item_last: {
     flexDirection: 'row',
     gap: 20,
   },
@@ -23,9 +35,10 @@ const CartStyles = StyleSheet.create({
     height: 202,
   },
   cart_item_detail: {
-    gap: 20,
+    gap: 30,
   },
-  cart_item_name: {
+  cart_text: {
+    fontSize: 18,
     fontWeight: '700',
   },
   amount_container: {
@@ -33,7 +46,7 @@ const CartStyles = StyleSheet.create({
     gap: 10,
     alignItems: 'center',
   },
-  
+
   amount_buttons: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -60,13 +73,14 @@ const CartStyles = StyleSheet.create({
   total_text: {
     fontSize: 24,
     marginBottom: 20,
-    marginTop: 50,
+    marginTop: 30,
+
   },
-  
-  cart_text: {
+  item_price: {
     fontSize: 18,
-    fontWeight: '700',
+    color: '#0D1821',
   },
+
   cart_text_description: {
     color: '#344966',
   },
@@ -74,22 +88,36 @@ const CartStyles = StyleSheet.create({
     minWidth: 290,
     height: 35,
     marginVertical: 10,
-  },  
+  },
   continue_button: {
     color: 'black',
     minWidth: 290,
     height: 35,
     marginVertical: 10,
     borderWidth: 1,
+    borderRadius: 16,
     borderColor: 'black',
-    backgroundColor: '#dcdedc',
+    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   cart_image: {
     width: 290,
     height: 176,
     alignSelf: 'center',
   },
-  
+
+  modal: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modal_text: {
+    backgroundColor: 'white',
+    padding: 40
+  },
+
 });
 
 export default CartStyles;
