@@ -33,6 +33,7 @@ const CartStyles = StyleSheet.create({
   cart_item_image: {
     width: 135,
     height: 202,
+    borderRadius: 16,
   },
   cart_item_detail: {
     gap: 30,
@@ -80,7 +81,6 @@ const CartStyles = StyleSheet.create({
     fontSize: 18,
     color: '#0D1821',
   },
-
   cart_text_description: {
     color: '#344966',
   },
@@ -106,7 +106,6 @@ const CartStyles = StyleSheet.create({
     height: 176,
     alignSelf: 'center',
   },
-
   modal: {
     flex: 1,
     justifyContent: 'center',

@@ -6,6 +6,7 @@ type Props = {
   style?: ViewStyle;
   onPress?: (value: any) => void;
   image_source: ImageSourcePropType;
+  amount?: number,
 };
 
 const UserButton: React.FC<Props> = props => {
@@ -16,7 +17,7 @@ const UserButton: React.FC<Props> = props => {
       <Image source={props.image_source} />
       {/* нужно сделать логику для отображения на авторизованной странице */}
       <View style={UserButtonStyles.button_index}>
-        <Text style={UserButtonStyles.button_index_count}>1</Text>
+        <Text style={UserButtonStyles.button_index_count}>{props.amount}</Text>
       </View>
     </TouchableOpacity>
   );

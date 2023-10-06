@@ -20,7 +20,9 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
-
+  const cartList = useAppSelector(state => state.book.cartStore);
+  const totalAmount = cartList.items.reduce((sum, item) => sum + item.amount!, 0);
+  
   const navigation = useNavigation<NavigationProps>();
   const onLoginPage = () => {
     navigation.navigate('Login');
@@ -68,7 +70,7 @@ const Header = () => {
         ) : (
           <View style={HeaderStyles.header_user_button}>
             <UserButton image_source={require('../../images/icons/cart.png')}
-              onPress={onCartPage} />
+              onPress={onCartPage} amount={totalAmount} />
             <UserButton image_source={require('../../images/icons/heart.png')} />
             <UserButton
               image_source={require('../../images/icons/userrprofile.png')}
