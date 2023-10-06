@@ -30,20 +30,41 @@ export type GenreType = {
 };
 
 export type RatingType = {
-  id: number;
-  rating: number;
+  id: number | null;
+  rating: number | null;
+};
+
+export type CartType = {
+  items: [{
+    amount: number | null,
+    book_image: string,
+    book_name: string,
+    id: number | null,
+    total_price: number | null
+  }];
+  total_price: number | null;
 };
 
 type BookSliceType = {
   booksStore: BookType[],
   ratingStore: RatingType,
+  cartStore: CartType,
 };
 
 const initialState: BookSliceType = {
   booksStore: [],
+  cartStore: {items: [{
+    amount: null,
+    book_image: '',
+    book_name: '',
+    id: null,
+    total_price: null
+  }],
+  total_price: null
+},
   ratingStore: {
-    id: 0,
-    rating: 0
+    id: null,
+    rating: null
   }
 };
 
@@ -55,6 +76,14 @@ const bookSlice = createSlice({
     setBooks(state, action) {
       state.booksStore = action.payload;
     },
+    setCart(state, action) {
+      state.cartStore = action.payload;
+    },
+    addToCart(state, action) {
+      state.cartStore.items = action.payload;
+    },
+
+
 
     filteredBooks(state, action) {
       const booksList = state.booksStore.map((book) => {
