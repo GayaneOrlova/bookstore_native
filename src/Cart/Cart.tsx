@@ -18,12 +18,12 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Cart = () => {
-  const [showModal, setShowModal] = useState(false);
+  const navigation = useNavigation<NavigationProps>();
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
+  const [showModal, setShowModal] = useState(false);
 
-  const navigation = useNavigation<NavigationProps>();
   const onHomepage = () => {
     navigation.navigate('Homepage');
   };
@@ -66,7 +66,7 @@ const Cart = () => {
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
-      }, 2500);
+      }, 2000);
       console.log(er);
     }
   };
@@ -92,7 +92,7 @@ const Cart = () => {
             keyExtractor={(item) => item.id!.toString()}
             renderItem={({ item, index }) => (
               <View style={index === (cartList.items.length - 1) ? CartStyles.render_item_last : CartStyles.render_item}>
-                <Image style={CartStyles.cart_item_image} source={{ uri: `http://127.0.0.1:8000/media/${item.book_image}` }} />
+                <Image style={CartStyles.cart_item_image} source={{ uri: `${item.book_image}` }} />
                 <View style={CartStyles.cart_item_detail}>
                   <Text style={CartStyles.cart_text}>{item.book_name}</Text>
                   <Text>{item.book_name}</Text>

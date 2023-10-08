@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Text, FlatList, ListRenderItemInfo, } from 'react-native';
 import { CommentsType } from '../store/slices/bookSlice';
-import { RouteProp } from '@react-navigation/native';
 import BookDetailStyle from './BookCommentsStyle';
 import { getBookComment } from '../api/book.api';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -19,6 +18,7 @@ const BookComments: React.FC<Props> = ({ route }) => {
   const fetchBookComment = async () => {
     try {
       const response = await getBookComment(id)
+      
       setComments(response.data)
     }
     catch (er) {

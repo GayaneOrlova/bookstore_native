@@ -15,11 +15,6 @@ const UserButton: React.FC<Props> = props => {
       style={{ ...UserButtonStyles.button, ...props.style }}
       onPress={props.onPress}>
       <Image source={props.image_source} />
-      <View style={UserButtonStyles.button_index}>
-        <Text style={UserButtonStyles.button_index_count}>{props.amount}</Text>
-      </View>
-      
-      
     </TouchableOpacity>
   );
 };

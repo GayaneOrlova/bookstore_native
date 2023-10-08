@@ -43,7 +43,7 @@ export const changeCart = (amount: number, bookId: number) => {
 };//good
 
 export const createCartItem = (bookId: number) => {
-  return axios.post('/add-to-cart/', {bookId});
+  return axios.post('/add-to-cart/', {id: bookId});
 };//good
 
 export const changeFavoriteById = (bookId: number) => {

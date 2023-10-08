@@ -21,11 +21,6 @@ import RenderBookItem from '../RenderBookItem/RenderBookItem';
 type Props = {};
 
 type RootStackParamList = {
-  Login: undefined;
-  Signup: undefined;
-  UserProfile: undefined;
-  Cart: undefined;
-  Homepage: undefined;
   BookDetail: { id: number }
 };
 
@@ -33,9 +28,6 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Catalog: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
-  // const onBookDetailPage = (id: number) => {
-  //   navigation.navigate('BookDetail', {id});
-  // };
   const isUser = useAppSelector(state => state.user.user);
   const bookList = useAppSelector(state => state.book.booksStore);
   console.log('list', bookList)
@@ -69,10 +61,8 @@ const Catalog: React.FC<Props> = () => {
   
  const handleGenreSelection = () => {
   const genresFilter= selectedGenres.map((id: number) => (genres?.find(item => item.key===id)?.value))
-  
   dispatch(filteredBooks({genresFilter}));
 
- console.log(genresFilter)
   };
   
   

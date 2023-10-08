@@ -9,7 +9,7 @@ import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppSelector } from '../store/hooks';
 import { BookType, CommentsType } from '../store/slices/bookSlice';
-import { createBookComment, createBookRating, getBookById, getBookRating } from '../api/book.api';
+import { createBookComment, createBookRating, createCartItem, getBookById, getBookRating } from '../api/book.api';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Footer from '../Footer/Footer';
@@ -94,7 +94,17 @@ const BookDetail: React.FC<Props> = ({route}) => {
     }
   };
 
-  const onCartClick = () => {
+  const onClickToCart = async () => {
+    try {
+      const response = await createCartItem(id);
+      setShowModal(true);
+      setTimeout(() => {
+        setShowModal(false);
+      }, 2500);
+      // setBookDetail(response.data);
+    } catch (er) {
+      console.log(er);
+    }
   };
 
   useEffect(() => {
@@ -135,7 +145,7 @@ const BookDetail: React.FC<Props> = ({route}) => {
             <Modal visible={showModal} transparent>
               <View style={BookDetailStyle.modal}>
                 <View style={BookDetailStyle.modal_text}>
-                  <Text>Rating was successfully add!</Text>
+                  <Text>Successfully added!</Text>
                 </View>
               </View>
             </Modal>
@@ -143,7 +153,7 @@ const BookDetail: React.FC<Props> = ({route}) => {
         </View>
         <Text style={BookDetailStyle.description_text}>Description</Text>
         <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>
-        <Button style={BookDetailStyle.price_button} text={`$${bookDetail.price} USD`} onPress={onCartClick} />
+        <Button style={BookDetailStyle.price_button} text={`$${bookDetail.price} USD`} onPress={onClickToCart} />
         <BookComments route={{ params: { id: id }}} />
         {isUser.email &&
           <View>

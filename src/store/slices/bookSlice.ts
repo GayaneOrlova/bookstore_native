@@ -39,27 +39,57 @@ export type RatingType = {
 };
 
 export type CartType = {
-  items: [];
+  items: [{
+    amount: number | null,
+    book_image: string,
+    book_name: string,
+    id: number | null,
+    price: number | null
+  }];
   total_price: number | null;
 };
+
+// export type FavoriteType = {
+//   title: string;
+//   author: string;
+//   // genre: string;
+//   // available: boolean;
+//   image: string;
+//   price: number;
+//   overall_rating: number;
+//   // likes: boolean;
+//   // recommendation: boolean;
+//   id: number;
+// };
+
+
 
 type BookSliceType = {
   booksStore: BookType[],
   ratingStore: RatingType,
   cartStore: CartType,
+  // favoriteStore: FavoriteType[],
 };
 
 const initialState: BookSliceType = {
   booksStore: [],
   cartStore: {
-    items: [],
+    items: [{
+      amount: null,
+      book_image: '',
+      book_name: '',
+      id: null,
+      price: null
+    }],
     total_price: null
   },
   ratingStore: {
     id: null,
     rating: null
   },
+  // favoriteStore: [],
 };
+
 
 const bookSlice = createSlice({
   name: 'bookSlice',

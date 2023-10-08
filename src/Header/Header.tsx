@@ -7,6 +7,7 @@ import HeaderStyles from './HeaderStyles';
 import Search from './Search/Search';
 import Button from '../Button/Button';
 import UserButton from '../UserButton/UserButton';
+import UserButtonStyles from '../UserButton/UserButtonStyles';
 
 type RootStackParamList = {
   Login: undefined;
@@ -23,8 +24,8 @@ const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
   const totalAmount = cartList.items.reduce((sum, item) => sum + item.amount!, 0);
-  
   const navigation = useNavigation<NavigationProps>();
+  
   const onLoginPage = () => {
     navigation.navigate('Login');
   };
@@ -40,15 +41,15 @@ const Header = () => {
   const onCartPage = () => {
     navigation.navigate('Cart');
   }
-  
+
   const onFavoritePage = () => {
     navigation.navigate('FavoritesPage');
   };
-  
+
   const onHomepage = () => {
     navigation.navigate('Homepage');
   };
-  
+
   return (
     <>
       <View style={HeaderStyles.header_container}>
@@ -57,7 +58,7 @@ const Header = () => {
           style={HeaderStyles.header_logo}
         />
         <TouchableOpacity onPress={onHomepage}>
-        <Text style={HeaderStyles.header_text}>Catalog</Text>
+          <Text style={HeaderStyles.header_text}>Catalog</Text>
         </TouchableOpacity>
         {!isUser.email ? (
           <View style={HeaderStyles.header_button_container}>
@@ -77,8 +78,10 @@ const Header = () => {
             <UserButton
               image_source={require('../../images/icons/cart.png')}
               onPress={onCartPage}
-              amount={totalAmount}
             />
+            <View style={UserButtonStyles.button_index}>
+              <Text style={UserButtonStyles.button_index_count}>{totalAmount}</Text>
+            </View>
             <UserButton onPress={onFavoritePage} image_source={require('../../images/icons/heart.png')} />
             <UserButton
               image_source={require('../../images/icons/userrprofile.png')}
@@ -90,6 +93,6 @@ const Header = () => {
       <Search />
     </>
   );
-  };
+};
 
 export default Header;
