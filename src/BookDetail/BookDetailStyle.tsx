@@ -63,6 +63,8 @@ const BookDetailStyle = StyleSheet.create({
     height: 38,
     marginBottom:40,
     alignItems: 'center',
+    backgroundColor: '#344966',
+
   },
   comment_input: {
     minHeight: 87,

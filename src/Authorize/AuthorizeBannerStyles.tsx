@@ -31,6 +31,7 @@ const AuthorizeBannerStyles = StyleSheet.create({
   authorize_button: {
     width: 231,
     height: 44,
+    backgroundColor: '#344966',
   },
   castle_image: {
     minWidth: 282,

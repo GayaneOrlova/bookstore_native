@@ -32,6 +32,7 @@ const BannerStyles = StyleSheet.create({
   text_group_button: {
     width: 200,
     height: 38,
+    backgroundColor: '#344966',
   },
 
   background_image: {

@@ -4,7 +4,7 @@ const ButtonStyles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#344966',
+    // backgroundColor: '#344966',
     borderRadius: 16,
   },
   text_button: {

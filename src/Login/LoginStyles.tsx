@@ -38,6 +38,7 @@ const LoginStyles = StyleSheet.create({
     width: 151,
     height: 44,
     marginTop: 20,
+    backgroundColor: '#344966',
   },
   image: {
     flexDirection: 'column',

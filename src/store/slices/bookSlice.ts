@@ -5,13 +5,16 @@ export type BookType = {
   title: string;
   author: string;
   genre: string;
-  available: boolean;
-  image: string;
+  published_at: number;
   price: number;
-  overall_rating: number;
-  likes: boolean;
+  image: string;
   body: string;
+  available: boolean;
   recommendation: boolean;
+  new: boolean;
+  bestseller: boolean;
+  overall_rating: number;
+  like: boolean;
   id: number;
 };
 
@@ -45,27 +48,45 @@ export type CartType = {
   total_price: number | null;
 };
 
+// export type FavoriteType = {
+//   title: string;
+//   author: string;
+//   // genre: string;
+//   // available: boolean;
+//   image: string;
+//   price: number;
+//   overall_rating: number;
+//   // likes: boolean;
+//   // recommendation: boolean;
+//   id: number;
+// };
+
+
+
 type BookSliceType = {
   booksStore: BookType[],
   ratingStore: RatingType,
   cartStore: CartType,
+  // favoriteStore: FavoriteType[],
 };
 
 const initialState: BookSliceType = {
   booksStore: [],
-  cartStore: {items: [{
-    amount: null,
-    book_image: '',
-    book_name: '',
-    id: null,
-    price: null
-  }],
-  total_price: null
-},
+  cartStore: {
+    items: [{
+      amount: null,
+      book_image: '',
+      book_name: '',
+      id: null,
+      price: null
+    }],
+    total_price: null
+  },
   ratingStore: {
     id: null,
     rating: null
-  }
+  },
+  // favoriteStore: [],
 };
 
 
@@ -79,7 +100,11 @@ const bookSlice = createSlice({
     setCart(state, action) {
       state.cartStore = action.payload;
     },
-   
+    // setFavoriteBooks(state, action) {
+    //   state.favoriteStore = action.payload;
+    // },
+
+
 
     filteredBooks(state, action) {
       const booksList = state.booksStore.map((book) => {
@@ -103,7 +128,7 @@ const bookSlice = createSlice({
       // const book = state.booksStore[index];
       // const rating = Number(action.payload.rating);
     },
-    
+
     changeBookLike(state, action) {
       const book = state!.booksStore!.findIndex(
         (item) => item.id === action.payload,
@@ -111,7 +136,7 @@ const bookSlice = createSlice({
       state.booksStore[book].likes =
         !state.booksStore[book].likes;
     },
- 
+
   },
 
 });

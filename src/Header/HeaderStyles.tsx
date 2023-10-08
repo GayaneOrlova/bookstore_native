@@ -25,6 +25,7 @@ const HeaderStyles = StyleSheet.create({
     width: 100,
     height: 38,
     fontSize: 12,
+    backgroundColor: '#344966',
   },
   header_user_button: {
     flexDirection: 'row',

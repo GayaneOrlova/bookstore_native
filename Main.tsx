@@ -12,6 +12,7 @@ import UserProfile from './src/UserProfile/UserProfile';
 import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
 import BookDetail from './src/BookDetail/BookDetail';
+import FavoritesPage from './src/FavoritesPage/FavoritesPage';
 
 
 const Stack = createStackNavigator();
@@ -89,6 +90,11 @@ const Main: React.FC = () => {
               name="Cart"
               component={Cart}
               options={{ title: 'Cart' }}
+            />
+            <Stack.Screen
+              name="FavoritesPage"
+              component={FavoritesPage}
+              options={{ title: 'FavoritesPage' }}
             />
           </>
         )

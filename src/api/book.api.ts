@@ -38,19 +38,26 @@ export const getCart = () => {
   return axios.get('/cart/');
 };//good
 
-export const changeCart = (amount: number, id: number) => {
-  return axios.post('/cart-item/update/', {amount, id});
+export const changeCart = (amount: number, bookId: number) => {
+  return axios.post('/cart-item/update/', {amount, bookId});
 };//good
+
+export const createCartItem = (bookId: number) => {
+  return axios.post('/add-to-cart/', {bookId});
+};//good
+
+export const changeFavoriteById = (bookId: number) => {
+  return axios.post<BookType>('/favorite-change/', {bookId});
+};//good
+
+// export const getFavoritesBook = () => {
+//   return axios.get('/favorite-list/');
+// };//good
+
 
 export const filterBooks = (params: object) => {
   return axios.get<BookType[]>('/books', { params });
 };
 
-export const addFavoriteById = (bookId: number) => {
-  return axios.post<BookType>(`/favorites/add/${bookId}`);
-};
 
-export const deletFavoriteById = (bookId: number) => {
-  return axios.delete(`/favorites/delete/${bookId}`);
-};
 

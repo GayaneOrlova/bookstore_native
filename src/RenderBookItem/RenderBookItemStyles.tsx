@@ -41,6 +41,58 @@ const RenderBookItemStyles = StyleSheet.create({
     height: 34,
     marginVertical: 10,
     alignItems: 'center',
+    backgroundColor: '#344966',
+
+  },
+  available_button: {
+    minWidth: 135,
+    height: 34,
+    marginVertical: 10,
+    alignItems: 'center',
+    backgroundColor: '#B9BAC3',
+  },
+  
+  
+  
+  new_flag: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#BFCC94',
+    minWidth: 113,
+    height: 30,
+  },
+  
+  bestseller_flag: {
+    position: 'absolute',
+    bottom: 10,
+    left: 10,
+    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#344966',
+    minWidth: 113,
+    height: 30,
+  },
+  
+  favorite_button: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
+    width: 25,
+    height: 25,
+    borderRadius: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#344966',
+    opacity: 0.5,
+  },
+  favorite_button_liked: {
+    opacity: 1
   },
 });
 

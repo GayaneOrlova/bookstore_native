@@ -36,9 +36,9 @@ const Catalog: React.FC<Props> = () => {
   // const onBookDetailPage = (id: number) => {
   //   navigation.navigate('BookDetail', {id});
   // };
-
+  const isUser = useAppSelector(state => state.user.user);
   const bookList = useAppSelector(state => state.book.booksStore);
-  
+  console.log('list', bookList)
 
   const dispatch = useAppDispatch();
 
@@ -75,6 +75,10 @@ const Catalog: React.FC<Props> = () => {
  console.log(genresFilter)
   };
   
+  
+  useEffect(() => {
+    fetchAllBooks();
+  }, [isUser.email]);
   
   useEffect(() => {
     fetchAllBooks();
@@ -158,27 +162,3 @@ const Catalog: React.FC<Props> = () => {
 
 export default Catalog;
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 20,
-    paddingTop: 10,
-  },
-  label: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  sliderContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  slider: {
-    flex: 1,
-    marginHorizontal: 5,
-  },
-  rangeText: {
-    marginTop: 10,
-    textAlign: 'center',
-  },
-});

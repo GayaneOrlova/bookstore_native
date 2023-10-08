@@ -14,6 +14,7 @@ type RootStackParamList = {
   UserProfile: undefined;
   Cart: undefined;
   Homepage: undefined;
+  FavoritesPage: undefined;
 };
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
@@ -39,6 +40,10 @@ const Header = () => {
   const onCartPage = () => {
     navigation.navigate('Cart');
   }
+  
+  const onFavoritePage = () => {
+    navigation.navigate('FavoritesPage');
+  };
   
   const onHomepage = () => {
     navigation.navigate('Homepage');
@@ -69,9 +74,12 @@ const Header = () => {
           </View>
         ) : (
           <View style={HeaderStyles.header_user_button}>
-            <UserButton image_source={require('../../images/icons/cart.png')}
-              onPress={onCartPage} amount={totalAmount} />
-            <UserButton image_source={require('../../images/icons/heart.png')} />
+            <UserButton
+              image_source={require('../../images/icons/cart.png')}
+              onPress={onCartPage}
+              amount={totalAmount}
+            />
+            <UserButton onPress={onFavoritePage} image_source={require('../../images/icons/heart.png')} />
             <UserButton
               image_source={require('../../images/icons/userrprofile.png')}
               onPress={onUserProfilePage}

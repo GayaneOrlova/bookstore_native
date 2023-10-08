@@ -88,6 +88,7 @@ const CartStyles = StyleSheet.create({
     minWidth: 290,
     height: 35,
     marginVertical: 10,
+    backgroundColor: '#344966',
   },
   continue_button: {
     color: 'black',
