@@ -47,7 +47,7 @@ export const createCartItem = (bookId: number) => {
 };//good
 
 export const changeFavoriteById = (bookId: number) => {
-  return axios.post<BookType>('/favorite-change/', {bookId});
+  return axios.post<BookType>('/favorite-change/', {id:bookId});
 };//good
 
 // export const getFavoritesBook = () => {

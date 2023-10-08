@@ -3,11 +3,11 @@ import { TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import RenderBookItemStyles from './FavoriteIconStyles';
-import { BookType } from '../store/slices/bookSlice';
+import { BookType, changeBookLike } from '../store/slices/bookSlice';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../BookComments/BookComments';
 import { changeFavoriteById } from '../api/book.api';
-import { useAppSelector } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Text } from 'react-native-svg';
 
 
@@ -17,9 +17,13 @@ type Props = {
 }
 
 const FavoriteIcon: React.FC<Props> = (props) => {
+  const dispatch = useAppDispatch();
+
+
   const onLikeClick = async() => {
     try {
-      await changeFavoriteById(props.id);
+      const res = await changeFavoriteById(props.id);
+      dispatch(changeBookLike(props.id));
     }
     catch(er){
       console.log(er);

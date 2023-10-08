@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppSelector } from '../store/hooks';
-import { BookType } from '../store/slices/bookSlice';
+import { BookType, CommentsType } from '../store/slices/bookSlice';
 import { createBookComment, createBookRating, getBookById, getBookRating } from '../api/book.api';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
@@ -26,11 +26,15 @@ type RootStackParamList = {
 };
 type Props = StackScreenProps<RootStackParamList, 'BookDetail'>;
 
-const BookDetail: React.FC<Props> = ({ route }) => {
+
+const BookDetail: React.FC<Props> = ({route}) => {
   const navigation = useNavigation();
   const { id } = route.params;
   const isUser = useAppSelector(state => state.user.user);
   const bookList = useAppSelector(state => state.book.booksStore);
+  const book = bookList.find(book => book.id === id)
+  
+  console.log(id, '11111')
   const [bookDetail, setBookDetail] = useState<BookType>();
   const [userRating, setUserRating] = useState();
   const [userNewRating, setUserNewRating] = useState();
@@ -106,7 +110,7 @@ const BookDetail: React.FC<Props> = ({ route }) => {
       <View style={BookDetailStyle.container}>
         <View style={{ flexDirection: 'row', gap: 10, }}>
           <View style={RenderBookItemStyles.book_image_container}>
-            <FavoriteIcon />
+            <FavoriteIcon id={id} like={book!.like}/>
             <Image style={BookDetailStyle.book_image} source={{ uri: bookDetail.image }} />
           </View>
           <View style={BookDetailStyle.book_detail}>

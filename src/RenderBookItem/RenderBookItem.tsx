@@ -21,19 +21,8 @@ const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
   const onCartClick = () => {
     console.log('New rating:');
   };
-  
-  // const onLikeClick = async() => {
-  //   try {
-  //     await changeFavoriteById(item.id);
-  //   }
-  //   catch(er){
-  //     console.log(er);
-  //   }
-  // };
 
   
-  console.log(item.id)
-
   return (
     <TouchableOpacity onPress={() => onBookDetailPage(item.id)}>
       <View style={RenderBookItemStyles.book_container}>

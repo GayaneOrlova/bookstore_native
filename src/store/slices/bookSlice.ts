@@ -25,6 +25,7 @@ export type CommentsType = {
   createdUser: User;
   avatar_url: string;
   author: string;
+  like: boolean;
 };
 
 export type GenreType = {
@@ -38,57 +39,27 @@ export type RatingType = {
 };
 
 export type CartType = {
-  items: [{
-    amount: number | null,
-    book_image: string,
-    book_name: string,
-    id: number | null,
-    price: number | null
-  }];
+  items: [];
   total_price: number | null;
 };
-
-// export type FavoriteType = {
-//   title: string;
-//   author: string;
-//   // genre: string;
-//   // available: boolean;
-//   image: string;
-//   price: number;
-//   overall_rating: number;
-//   // likes: boolean;
-//   // recommendation: boolean;
-//   id: number;
-// };
-
-
 
 type BookSliceType = {
   booksStore: BookType[],
   ratingStore: RatingType,
   cartStore: CartType,
-  // favoriteStore: FavoriteType[],
 };
 
 const initialState: BookSliceType = {
   booksStore: [],
   cartStore: {
-    items: [{
-      amount: null,
-      book_image: '',
-      book_name: '',
-      id: null,
-      price: null
-    }],
+    items: [],
     total_price: null
   },
   ratingStore: {
     id: null,
     rating: null
   },
-  // favoriteStore: [],
 };
-
 
 const bookSlice = createSlice({
   name: 'bookSlice',
@@ -97,13 +68,21 @@ const bookSlice = createSlice({
     setBooks(state, action) {
       state.booksStore = action.payload;
     },
+    changeBookLike(state, action) {
+      const book = state!.booksStore!.findIndex(
+        (item) => item.id === action.payload,
+      );
+      state.booksStore[book].like =
+        !state.booksStore[book].like;
+    },
     setCart(state, action) {
       state.cartStore = action.payload;
     },
-    // setFavoriteBooks(state, action) {
-    //   state.favoriteStore = action.payload;
-    // },
 
+
+    setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
+      state.ratingStore = action.payload;
+    },
 
 
     filteredBooks(state, action) {
@@ -122,20 +101,7 @@ const bookSlice = createSlice({
 
     },
 
-    setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
-      state.ratingStore = action.payload;
-      // const index = state.booksStore.findIndex((item) => item.id === action.payload.id);
-      // const book = state.booksStore[index];
-      // const rating = Number(action.payload.rating);
-    },
 
-    changeBookLike(state, action) {
-      const book = state!.booksStore!.findIndex(
-        (item) => item.id === action.payload,
-      );
-      state.booksStore[book].likes =
-        !state.booksStore[book].likes;
-    },
 
   },
 
