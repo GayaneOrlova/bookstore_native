@@ -38,6 +38,16 @@ export type RatingType = {
   rating: number | null;
 };
 
+// type ItemType = {
+//   items: [{
+//     amount: number | null,
+//     book_image: string,
+//     book_name: string,
+//     id: number | null,
+//     price: number | null
+//   }];
+// }
+
 export type CartType = {
   items: [{
     amount: number | null,
@@ -49,26 +59,10 @@ export type CartType = {
   total_price: number | null;
 };
 
-// export type FavoriteType = {
-//   title: string;
-//   author: string;
-//   // genre: string;
-//   // available: boolean;
-//   image: string;
-//   price: number;
-//   overall_rating: number;
-//   // likes: boolean;
-//   // recommendation: boolean;
-//   id: number;
-// };
-
-
-
 type BookSliceType = {
   booksStore: BookType[],
   ratingStore: RatingType,
   cartStore: CartType,
-  // favoriteStore: FavoriteType[],
 };
 
 const initialState: BookSliceType = {
@@ -87,7 +81,6 @@ const initialState: BookSliceType = {
     id: null,
     rating: null
   },
-  // favoriteStore: [],
 };
 
 
@@ -108,34 +101,30 @@ const bookSlice = createSlice({
     setCart(state, action) {
       state.cartStore = action.payload;
     },
-
-
+    changeCartItem(state, action: PayloadAction<CartType>) {
+      const newItem = action.payload;      
+      const updatedItems = state.cartStore.items.map((item) => {
+        if (item.id === newItem.id) {
+          return newItem;
+        }
+        return item;
+      });
+      state.cartStore.items = updatedItems
+      console.log('updatedItems', updatedItems)  
+      console.log('state',state.cartStore)
+    },
     setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
       state.ratingStore = action.payload;
     },
-
-
     filteredBooks(state, action) {
-      const booksList = state.booksStore.map((book) => {
-        const test = book.genre.map(genre => {
-
-          if (action.payload.genresFilter.includes(genre)) {
-            return book
-          }
-        })
-        return test![0]
-        // console.log("test", test)
-
-      })
-      console.log(booksList)
-
+      state.booksStore = state.booksStore.map((book) => {
+        if(book.genre.some((genre) => action.payload.genresFilter.includes(genre))) {
+          return book;
+        }
+      }).filter((notEmpty) => notEmpty)
     },
-
-
-
   },
-
 });
 
-export const { setBooks, setCart, setBookRating, changeBookLike, filteredBooks } = bookSlice.actions;
+export const { setBooks, setCart, setBookRating, changeCartItem, changeBookLike, filteredBooks } = bookSlice.actions;
 export default bookSlice.reducer;

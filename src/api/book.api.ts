@@ -38,8 +38,9 @@ export const getCart = () => {
   return axios.get('/cart/');
 };//good
 
-export const changeCart = (amount: number, bookId: number) => {
-  return axios.post('/cart-item/update/', {amount, bookId});
+export const changeCart = (amount: number, id: number) => {
+console.log({amount: amount, id: id})
+  return axios.post('/cart-item/update/', {amount: amount, id: id});
 };//good
 
 export const createCartItem = (bookId: number) => {

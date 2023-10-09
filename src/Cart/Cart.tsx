@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { changeCart, getCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { setCart } from '../store/slices/bookSlice';
+import { changeCartItem, setCart } from '../store/slices/bookSlice';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -27,7 +27,7 @@ const Cart = () => {
   const onHomepage = () => {
     navigation.navigate('Homepage');
   };
-
+  
   const fetchUserCart = async () => {
     if (!isUser.email) { return }
     try {
@@ -41,15 +41,16 @@ const Cart = () => {
 
   useEffect(() => {
     fetchUserCart();
-  }, [cartList]);
+  }, []);
 
   const handleMinus = async (id: number) => {
     const currentCartItem = cartList.items.find(item => item.id === id);
     if (currentCartItem?.amount! < 0) { return; }
-
     const amount = currentCartItem?.amount! - 1;
+
     try {
-      await changeCart(amount, id);
+     const responce = await changeCart(amount, id);
+     dispatch(changeCartItem(responce.data));
     }
     catch (er) {
       console.log(er);
@@ -60,7 +61,9 @@ const Cart = () => {
     const currentCartItem = cartList.items.find(item => item.id === id)
     const amount = currentCartItem?.amount! + 1;
     try {
-      await changeCart(amount, id);
+      const responce = await changeCart(amount, id);
+      dispatch(changeCartItem(responce.data));
+
     }
     catch (er) {
       setShowModal(true);

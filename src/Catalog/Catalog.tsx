@@ -59,12 +59,15 @@ const Catalog: React.FC<Props> = () => {
     }
   };
   
- const handleGenreSelection = () => {
-  const genresFilter= selectedGenres.map((id: number) => (genres?.find(item => item.key===id)?.value))
-  dispatch(filteredBooks({genresFilter}));
+const handleGenreSelection = () => {
+  if (selectedGenres.length > 0) {
+    const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key===id)?.value))
+    dispatch(filteredBooks({genresFilter}));
+  } else {
+    fetchAllBooks();
+  }
+};
 
-  };
-  
   
   useEffect(() => {
     fetchAllBooks();
