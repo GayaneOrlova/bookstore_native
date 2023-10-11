@@ -34,7 +34,7 @@ const FavoritesPage: React.FC<Props> = () => {
             renderItem={({ item }: ListRenderItemInfo<BookType>) => (
               <RenderBookItem item={item} navigation={navigation} />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.genre}
             numColumns={2}
             contentContainerStyle={FavoritesPageStyles.content_container}
             columnWrapperStyle={FavoritesPageStyles.column_wrapper}

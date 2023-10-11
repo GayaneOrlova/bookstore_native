@@ -10,6 +10,7 @@ import { setNewPassword } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputPasswordStyles from './InputPasswordStyles';
+import { toastic } from '../../utils/utils';
 
 type UserLoginType = {
   password: string;
@@ -48,7 +49,8 @@ const InputPassword: React.FC<Props> = props => {
       }, 2000);
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 

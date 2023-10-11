@@ -7,6 +7,7 @@ import RenderBookItemStyles from './RenderBookItemStyles';
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 import CartStyles from '../Cart/CartStyles';
 import { createCartItem } from '../api/book.api';
+import { toastic } from '../utils/utils';
 
 type Props = {
   item: BookType;
@@ -15,6 +16,7 @@ type Props = {
 
 const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
   const [showModal, setShowModal] = useState(false);
+  const overall_rating = (item.overall_rating.toFixed(1))
   const onBookDetailPage = (id: number) => {
     navigation.navigate('BookDetail', { id });
   };
@@ -22,13 +24,11 @@ const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
   const onClickToCart = async () => {
     try {
       const response = await createCartItem(item.id);
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-      }, 2500);
+      toastic('Book was successfully added!')
       // setBookDetail(response.data);
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -45,16 +45,16 @@ const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
         <Text style={RenderBookItemStyles.book_author}>{item.author}</Text>
         <View style={RenderBookItemStyles.rating_container}>
           <Rating size={20} rating={item.overall_rating} fillColor={'#BFCC94'} />
-          <Text style={RenderBookItemStyles.rating_text}>{(item.overall_rating.toFixed(1))}</Text>
+          <Text style={RenderBookItemStyles.rating_text}>{overall_rating}</Text>
         </View>
         <Button style={item.available ? RenderBookItemStyles.price_button : RenderBookItemStyles.available_button} text={item.available ? `$${item.price} USD` : 'Not available'} onPress={onClickToCart} />
-        <Modal visible={showModal} transparent>
+        {/* <Modal visible={showModal} transparent>
           <View style={CartStyles.modal}>
             <View style={CartStyles.modal_text}>
               <Text>Successfully added!</Text>
             </View>
           </View>
-        </Modal>
+        </Modal> */}
       </View>
     </TouchableOpacity>
   );

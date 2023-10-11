@@ -11,6 +11,7 @@ import { setAvatar, setUser } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
+import { toastic } from '../../utils/utils';
 
 
 const InputProfile = () => {
@@ -25,7 +26,7 @@ const InputProfile = () => {
 
   const schema = yup.object().shape({
     username: yup.string().required('Username is required'),
-    email: yup.string().required('Username is required'),
+    email: yup.string().required('Email is required'),
   });
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -38,7 +39,8 @@ const InputProfile = () => {
       dispatch(setAvatar(responce.data.avatar));
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   }
 
@@ -66,7 +68,8 @@ const InputProfile = () => {
       }, 2000);
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText);
     }
   };
 
@@ -114,7 +117,8 @@ const InputProfile = () => {
       dispatch(setAvatar(response.data.avatar));
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText);
     }
   };
 

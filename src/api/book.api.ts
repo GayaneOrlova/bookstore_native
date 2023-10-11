@@ -30,6 +30,10 @@ export const getFavoritesBooks = () => {
   return axios.get<BookType[]>('/favorites-books/');
 };//good
 
+export const changeFavoriteById = (bookId: number) => {
+  return axios.post<BookType>('/favorite-change/', {id:bookId});
+};//good
+
 export const getAllGenres = () => {
   return axios.get<GenreType[]>('/genres/');
 };//good
@@ -47,9 +51,7 @@ export const createCartItem = (bookId: number) => {
   return axios.post('/add-to-cart/', {id: bookId});
 };//good
 
-export const changeFavoriteById = (bookId: number) => {
-  return axios.post<BookType>('/favorite-change/', {id:bookId});
-};//good
+
 
 // export const getFavoritesBook = () => {
 //   return axios.get('/favorite-list/');

@@ -38,17 +38,8 @@ export type RatingType = {
   rating: number | null;
 };
 
-// type ItemType = {
-//   items: [{
-//     amount: number | null,
-//     book_image: string,
-//     book_name: string,
-//     id: number | null,
-//     price: number | null
-//   }];
-// }
-
 export type CartType = {
+  id: number | null;
   items: [{
     amount: number | null,
     book_image: string,
@@ -63,11 +54,13 @@ type BookSliceType = {
   booksStore: BookType[],
   ratingStore: RatingType,
   cartStore: CartType,
+  bookComments: CommentsType [],
 };
 
 const initialState: BookSliceType = {
   booksStore: [],
   cartStore: {
+    id: null,
     items: [{
       amount: null,
       book_image: '',
@@ -81,8 +74,8 @@ const initialState: BookSliceType = {
     id: null,
     rating: null
   },
+  bookComments: [],
 };
-
 
 const bookSlice = createSlice({
   name: 'bookSlice',
@@ -91,6 +84,7 @@ const bookSlice = createSlice({
     setBooks(state, action) {
       state.booksStore = action.payload;
     },
+    
     changeBookLike(state, action) {
       const book = state!.booksStore!.findIndex(
         (item) => item.id === action.payload,
@@ -98,9 +92,11 @@ const bookSlice = createSlice({
       state.booksStore[book].like =
         !state.booksStore[book].like;
     },
+    
     setCart(state, action) {
       state.cartStore = action.payload;
     },
+    
     changeCartItem(state, action: PayloadAction<CartType>) {
       const newItem = action.payload;      
       const updatedItems = state.cartStore.items.map((item) => {
@@ -113,9 +109,11 @@ const bookSlice = createSlice({
       console.log('updatedItems', updatedItems)  
       console.log('state',state.cartStore)
     },
+    
     setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
       state.ratingStore = action.payload;
     },
+    
     filteredBooks(state, action) {
       state.booksStore = state.booksStore.map((book) => {
         if(book.genre.some((genre) => action.payload.genresFilter.includes(genre))) {
@@ -123,8 +121,13 @@ const bookSlice = createSlice({
         }
       }).filter((notEmpty) => notEmpty)
     },
+    
+    setBookComments(state, action) {
+      state.bookComments = action.payload;
+    },
   },
+  
 });
 
-export const { setBooks, setCart, setBookRating, changeCartItem, changeBookLike, filteredBooks } = bookSlice.actions;
+export const { setBooks, setCart, setBookRating, changeCartItem, changeBookLike, filteredBooks, setBookComments } = bookSlice.actions;
 export default bookSlice.reducer;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
-import { View, FlatList, Image, ListRenderItemInfo, Modal, Text, TextInput } from 'react-native';
+import { View, FlatList, Image, ListRenderItemInfo, Text, TextInput } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Rating } from '@kolking/react-native-rating';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -8,7 +8,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppSelector } from '../store/hooks';
-import { BookType, CommentsType } from '../store/slices/bookSlice';
+import { BookType } from '../store/slices/bookSlice';
 import { createBookComment, createBookRating, createCartItem, getBookById, getBookRating } from '../api/book.api';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
@@ -20,6 +20,9 @@ import RenderBookItemStyles from '../RenderBookItem/RenderBookItemStyles';
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import BookComments from '../BookComments/BookComments';
+
+import { toastic } from '../utils/utils';
+
 
 type RootStackParamList = {
   BookDetail: { id: number }
@@ -38,7 +41,6 @@ const BookDetail: React.FC<Props> = ({route}) => {
   const [bookDetail, setBookDetail] = useState<BookType>();
   const [userRating, setUserRating] = useState();
   const [userNewRating, setUserNewRating] = useState();
-  const [showModal, setShowModal] = useState(false)
 
   const schema = yup.object().shape({
     body: yup.string().required('Comment is required'),
@@ -54,22 +56,20 @@ const BookDetail: React.FC<Props> = ({route}) => {
       const response = await getBookById(id);
       setBookDetail(response.data);
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   }
-
   const addBookRating = async (rating: number) => {
     try {
       const responce = await createBookRating(id, rating)
       // setBookRating(responce.data.rating)
       setUserNewRating(responce.data.rating);
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-      }, 2000);
+      toastic('Rating was successfully added!')
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -80,30 +80,30 @@ const BookDetail: React.FC<Props> = ({route}) => {
       setUserRating(responce.data.rating);
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
-  const onSubmit = async (body: { body: string }) => {
+  const onCommentSubmit = async (body: { body: string }) => {
     try {
       const response = await createBookComment(id, body.body)
+      console.log('response', response.data)
       // setComments(response.data)
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
   const onClickToCart = async () => {
     try {
       const response = await createCartItem(id);
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-      }, 2500);
-      // setBookDetail(response.data);
+      toastic('Book was added to cart!')
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -111,6 +111,8 @@ const BookDetail: React.FC<Props> = ({route}) => {
     fetchBookDetail();
     fetchUserRating();
   }, [userNewRating, userRating])
+
+  const overall_rating = (bookDetail.overall_rating).toFixed(1)
 
   if (!bookDetail) { return null; }
 
@@ -128,7 +130,7 @@ const BookDetail: React.FC<Props> = ({route}) => {
             <Text style={BookDetailStyle.text_author}>{bookDetail.author}</Text>
             <View style={{ flexDirection: 'row', gap: 10 }}>
               <Image style={BookDetailStyle.rate_image} source={require('../../images/icons/star.png')} />
-              <Text style={BookDetailStyle.text}>{(bookDetail.overall_rating).toFixed(1)}</Text>
+              <Text style={BookDetailStyle.text}>{overall_rating}</Text>
             </View>
             {isUser.email && userRating &&
               <View style={{ flexDirection: 'row', gap: 10 }}>
@@ -142,13 +144,6 @@ const BookDetail: React.FC<Props> = ({route}) => {
                 <Text style={BookDetailStyle.text}>Rate this book</Text>
               </View>
             }
-            <Modal visible={showModal} transparent>
-              <View style={BookDetailStyle.modal}>
-                <View style={BookDetailStyle.modal_text}>
-                  <Text>Successfully added!</Text>
-                </View>
-              </View>
-            </Modal>
           </View>
         </View>
         <Text style={BookDetailStyle.description_text}>Description</Text>
@@ -171,7 +166,7 @@ const BookDetail: React.FC<Props> = ({route}) => {
               name="body"
             />
             {errors.body && <Text style={LoginStyles.error}>{errors.body.message}</Text>}
-            <Button text="Post a comment" style={BookDetailStyle.price_button} onPress={handleSubmit(onSubmit)} />
+            <Button text="Post a comment" style={BookDetailStyle.price_button} onPress={handleSubmit(onCommentSubmit)} />
           </View>
         }
         <Text style={BookDetailStyle.title_text}>Recommendations</Text>
@@ -180,7 +175,7 @@ const BookDetail: React.FC<Props> = ({route}) => {
           renderItem={({ item }: ListRenderItemInfo<BookType>) => (
             <RenderBookItem item={item} navigation={navigation} />
           )}
-          keyExtractor={(index) => index.toString()}
+          keyExtractor={(item, index) => item.author}
           numColumns={2}
           contentContainerStyle={CatalogStyles.content_container}
           columnWrapperStyle={CatalogStyles.column_wrapper}

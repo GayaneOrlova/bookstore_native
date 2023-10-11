@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text } from 'react-native';
 import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
-
 import { useAppDispatch } from '../store/hooks';
 import { setUser } from '../store/slices/userSlice';
-import {userSignUp } from '../api/user.api/user.api';
+import { userSignUp } from '../api/user.api/user.api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import SignupStyles from './SignupStyles';
-
 import { ScrollView } from 'react-native-gesture-handler';
+import { toastic } from '../utils/utils';
 
 
 type UserRegistrationType = {
@@ -25,7 +24,7 @@ type UserRegistrationType = {
 
 const Signup = () => {
   const dispatch = useAppDispatch();
-  
+
   const schema = yup.object().shape({
     email: yup.string().email('Please enter a valid email').required('Email is required'),
     password: yup.string().required('Password is required'),
@@ -37,15 +36,17 @@ const Signup = () => {
   });
 
   const onSubmit = async (text: UserRegistrationType) => {
-    try {      
+    try {
       const response = await userSignUp(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
-  
+
+
   return (
     <ScrollView>
       <Header />
@@ -63,13 +64,13 @@ const Signup = () => {
                 placeholder='Email'
                 placeholderTextColor='#B9BAC3'
               />
-              <Text style={SignupStyles.input_description}>Enter your email</Text>
-            </View>
+              {errors.email ? (<Text style={SignupStyles.error}>{errors.email.message}</Text>) :(
+              <Text style={SignupStyles.input_description}>Enter your email</Text>)
+              }
+              </View>
           )}
           name="email"
         />
-        {errors.email && <Text style={SignupStyles.error}>{errors.email.message}</Text>}
-        
         <Controller
           control={control}
           rules={{ maxLength: 15, }}
@@ -83,13 +84,14 @@ const Signup = () => {
                 placeholderTextColor='#B9BAC3'
                 secureTextEntry
               />
+              {errors.password ? (<Text style={SignupStyles.error}>{errors.password.message}</Text>)
+              : (
               <Text style={SignupStyles.input_description}>Enter your password</Text>
+              )}
             </View>
           )}
           name="password"
         />
-        {errors.password && <Text style={SignupStyles.error}>{errors.password.message}</Text>}
-      
         <Controller
           control={control}
           rules={{ maxLength: 15, }}
@@ -103,13 +105,14 @@ const Signup = () => {
                 placeholderTextColor='#B9BAC3'
                 secureTextEntry
               />
-              <Text style={SignupStyles.input_description}>Repeat your password without errors</Text>
+              {errors.confirm_password ? (<Text style={SignupStyles.error}>{errors.confirm_password.message}</Text>)
+              : (
+                <Text style={SignupStyles.input_description}>Repeat your password without errors</Text>
+              )}
             </View>
           )}
           name="confirm_password"
         />
-        {errors.confirm_password && <Text style={SignupStyles.error}>{errors.confirm_password.message}</Text>}
-
         <Button text="Sign Up" style={SignupStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
       <Image style={SignupStyles.image} source={require('../../images/man-reader.png')} />
@@ -119,5 +122,3 @@ const Signup = () => {
 };
 
 export default Signup;
-
-

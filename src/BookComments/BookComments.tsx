@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { View, Image, Text, FlatList, ListRenderItemInfo, } from 'react-native';
-import { CommentsType } from '../store/slices/bookSlice';
+import { CommentsType, setBookComments } from '../store/slices/bookSlice';
 import BookDetailStyle from './BookCommentsStyle';
 import { getBookComment } from '../api/book.api';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 export type RootStackParamList = {
   BookDetail: { id: number }
@@ -12,24 +13,25 @@ export type RootStackParamList = {
 type Props = StackScreenProps<RootStackParamList, 'BookDetail'>;
 
 const BookComments: React.FC<Props> = ({ route }) => {
-  const [сomments, setComments] = useState([])
-    const { id } = route.params;
+  const commentList = useAppSelector(state => state.book.bookComments);
+  console.log(commentList, 'commentList')
+  const dispatch = useAppDispatch();
+  const { id } = route.params;
 
   const fetchBookComment = async () => {
     try {
-      const response = await getBookComment(id)
-      
-      setComments(response.data)
+      const response = await getBookComment(id);
+      dispatch(setBookComments(response.data));
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
   useEffect(() => {
     fetchBookComment();
-  }, [id])
-
+  }, [])
 
   const renderItem = ({ item }: ListRenderItemInfo<CommentsType>) => (
     <View style={BookDetailStyle.comment_item}>
@@ -46,10 +48,10 @@ const BookComments: React.FC<Props> = ({ route }) => {
 
   return (
     <>
-      {сomments.length ? (
+      {commentList.length ? (
         <FlatList
           style={BookDetailStyle.comments_container}
-          data={сomments}
+          data={commentList}
           renderItem={renderItem}
           keyExtractor={(item) => item.created_at}
         />
@@ -61,5 +63,3 @@ const BookComments: React.FC<Props> = ({ route }) => {
 };
 
 export default BookComments;
-
-

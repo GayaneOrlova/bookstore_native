@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { RefAttributes, useRef } from 'react';
 import { View, Image, TextInput, ImageSourcePropType, ViewStyle } from 'react-native';
 import InputStyles from './InputStyles';
 
@@ -11,13 +11,12 @@ type Props = {
   placeholderTextColor?: string;
   secureTextEntry?: boolean;
   editable?: boolean;
+  onBlur?: (text: string) => void;
 };
 const Input: React.FC<Props> = props => {
-
   const onChange = (text: string): void => {
     props.onChangeText(text);
   }
-
   return (
     <View style={InputStyles.input_form}>
       <Image style={InputStyles.input_icon} source={props.image_source} />

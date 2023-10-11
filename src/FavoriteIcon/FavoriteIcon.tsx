@@ -9,6 +9,7 @@ import { RootStackParamList } from '../BookComments/BookComments';
 import { changeFavoriteById } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { Text } from 'react-native-svg';
+import { toastic } from '../utils/utils';
 
 
 type Props = {
@@ -26,7 +27,8 @@ const FavoriteIcon: React.FC<Props> = (props) => {
       dispatch(changeBookLike(props.id));
     }
     catch(er){
-      console.log(er);
+      const errorText = Object.values(er.response.data);
+      toastic( errorText)
     }
   };
 

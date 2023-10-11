@@ -10,6 +10,7 @@ import Button from '../Button/Button';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import CartStyles from './CartStyles';
+import { toastic } from '../utils/utils';
 
 type RootStackParamList = {
   Homepage: undefined;
@@ -35,7 +36,8 @@ const Cart = () => {
       dispatch(setCart(responce.data));
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -53,7 +55,8 @@ const Cart = () => {
      dispatch(changeCartItem(responce.data));
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -66,11 +69,15 @@ const Cart = () => {
 
     }
     catch (er) {
+      toastic('Rating was successfully added!')
+
+    
       setShowModal(true);
       setTimeout(() => {
         setShowModal(false);
       }, 2000);
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -80,7 +87,8 @@ const Cart = () => {
       await changeCart(amount, id);
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -92,7 +100,7 @@ const Cart = () => {
           <FlatList
             contentContainerStyle={CartStyles.cart_item}
             data={cartList.items}
-            keyExtractor={(item) => item.id!.toString()}
+            keyExtractor={(item) => item.book_name}
             renderItem={({ item, index }) => (
               <View style={index === (cartList.items.length - 1) ? CartStyles.render_item_last : CartStyles.render_item}>
                 <Image style={CartStyles.cart_item_image} source={{ uri: `${item.book_image}` }} />
@@ -116,13 +124,13 @@ const Cart = () => {
                   </View>
                   <Text style={CartStyles.item_price}>{`$${item.price} USD`}</Text>
                 </View>
-                <Modal visible={showModal} transparent>
+                {/* <Modal visible={showModal} transparent>
                   <View style={CartStyles.modal}>
                     <View style={CartStyles.modal_text}>
                       <Text>Cannot add more books than available!</Text>
                     </View>
                   </View>
-                </Modal>
+                </Modal> */}
               </View>
             )}
           />

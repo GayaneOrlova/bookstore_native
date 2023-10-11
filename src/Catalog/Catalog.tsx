@@ -17,6 +17,8 @@ import { number } from 'yup';
 
 import { StackNavigationProp } from '@react-navigation/stack';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
+import { toastic } from '../utils/utils';
+
 
 type Props = {};
 
@@ -30,10 +32,7 @@ const Catalog: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const isUser = useAppSelector(state => state.user.user);
   const bookList = useAppSelector(state => state.book.booksStore);
-  console.log('list', bookList)
-
   const dispatch = useAppDispatch();
-
 
   const sortData = [1, 2, 3];
 
@@ -46,7 +45,8 @@ const Catalog: React.FC<Props> = () => {
       const genresList = response.data.map(item => ({key: item.id, value: item.name}))
       setGenres(genresList)
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -55,7 +55,8 @@ const Catalog: React.FC<Props> = () => {
       const response = await getAllBooks();
       dispatch(setBooks(response.data));
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
   
@@ -129,7 +130,7 @@ const handleGenreSelection = () => {
             renderItem={({ item }: ListRenderItemInfo<BookType>) => (
               <RenderBookItem item={item} navigation={navigation} />
             )}
-            keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item) => item.author}
             numColumns={2}
             contentContainerStyle={CatalogStyles.content_container}
             columnWrapperStyle={CatalogStyles.column_wrapper}

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { View, Image, Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -13,9 +13,11 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
+import { toastic } from '../utils/utils';
 
 
 const Login = () => {
+
   const dispatch = useAppDispatch();
   const schema = yup.object().shape({
     email: yup.string().email('Please enter a valid email').required('Email is required'),
@@ -34,7 +36,8 @@ const Login = () => {
       dispatch(setUser(response.data.user));  
     }
     catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     }
   };
 
@@ -55,17 +58,17 @@ const Login = () => {
                 placeholder='Email'
                 placeholderTextColor='#B9BAC3'
               />
-              <Text style={LoginStyles.input_description}>Enter your email</Text>
+              {errors.email ? (<Text style={LoginStyles.error}>{errors.email.message}</Text>) :(
+              <Text style={LoginStyles.input_description}>Enter your email</Text>)
+              }
             </View>
           )}
           name="email"
         />
-        {errors.email && <Text style={LoginStyles.error}>{errors.email.message}</Text>}
-
         <Controller
           control={control}
           rules={{ maxLength: 15, }}
-          render={({ field: { onChange, value } }) => (
+          render={({ field: { onChange, onBlur, value } }) => (
             <View style={LoginStyles.input_group}>
               <Input
                 image_source={require('../../images/icons/hide.png')}
@@ -74,13 +77,16 @@ const Login = () => {
                 placeholder='Password'
                 placeholderTextColor='#B9BAC3'
                 secureTextEntry
+                onBlur={onBlur}
               />
+              {errors.password ? (<Text style={LoginStyles.error}>{errors.password.message}</Text>)
+              : (
               <Text style={LoginStyles.input_description}>Enter your password</Text>
+              )}
             </View>
           )}
           name="password"
         />
-        {errors.password && <Text style={LoginStyles.error}>{errors.password.message}</Text>}
         <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
       <Image style={LoginStyles.image} source={require('../../images/man-reader.png')} />

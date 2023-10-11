@@ -12,6 +12,7 @@ const LoginStyles = StyleSheet.create({
   },
   input_group: {
     marginBottom: 20,
+    flex: 1
   },
   input_form: {
     // flex: 1,
