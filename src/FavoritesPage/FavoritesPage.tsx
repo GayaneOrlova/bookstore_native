@@ -22,7 +22,7 @@ const FavoritesPage: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const bookList = useAppSelector(state => state.book.booksStore);
   const favorites = bookList.filter((book) => book.like);
-  
+
   return (
     <ScrollView>
       <Header />

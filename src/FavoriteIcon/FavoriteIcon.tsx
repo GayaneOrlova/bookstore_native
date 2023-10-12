@@ -14,7 +14,7 @@ import { toastic } from '../utils/utils';
 
 type Props = {
   id: number;
-  like: boolean;
+  like?: boolean;
 }
 
 const FavoriteIcon: React.FC<Props> = (props) => {

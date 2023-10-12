@@ -9,8 +9,8 @@ export const getBookById = (bookId: number) => {
   return axios.get<BookType>(`/books/${bookId}`);
 };//good
 
-export const createBookComment = (bookId: number, body: string) => {
-  return axios.post(`/comment/create/${bookId}/`, {body});
+export const createBookComment = (body: string, bookId: number) => {
+  return axios.post(`comments/create/`, {body: body, book: bookId});
 };//good
 
 export const getBookComment = (bookId: number) => {

@@ -14,8 +14,10 @@ export type BookType = {
   new: boolean;
   bestseller: boolean;
   overall_rating: number;
+  rating: number;
   like: boolean;
   id: number;
+  comments: [];
 };
 
 export type CommentsType = {
@@ -25,7 +27,6 @@ export type CommentsType = {
   createdUser: User;
   avatar_url: string;
   author: string;
-  like: boolean;
 };
 
 export type GenreType = {

@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Image, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Rating } from '@kolking/react-native-rating';
 import { BookType } from '../store/slices/bookSlice';
 import Button from '../Button/Button';
 import RenderBookItemStyles from './RenderBookItemStyles';
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
-import CartStyles from '../Cart/CartStyles';
-import { createCartItem } from '../api/book.api';
 import { toastic } from '../utils/utils';
+import { createCartItem } from '../api/book.api';
 
 type Props = {
   item: BookType;
@@ -17,10 +16,12 @@ type Props = {
 const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
   const [showModal, setShowModal] = useState(false);
   const overall_rating = (item.overall_rating.toFixed(1))
+  
+  
   const onBookDetailPage = (id: number) => {
     navigation.navigate('BookDetail', { id });
-  };
 
+  };
   const onClickToCart = async () => {
     try {
       const response = await createCartItem(item.id);
@@ -48,13 +49,6 @@ const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
           <Text style={RenderBookItemStyles.rating_text}>{overall_rating}</Text>
         </View>
         <Button style={item.available ? RenderBookItemStyles.price_button : RenderBookItemStyles.available_button} text={item.available ? `$${item.price} USD` : 'Not available'} onPress={onClickToCart} />
-        {/* <Modal visible={showModal} transparent>
-          <View style={CartStyles.modal}>
-            <View style={CartStyles.modal_text}>
-              <Text>Successfully added!</Text>
-            </View>
-          </View>
-        </Modal> */}
       </View>
     </TouchableOpacity>
   );
