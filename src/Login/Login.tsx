@@ -2,7 +2,6 @@ import React, { useRef } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { View, Image, Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch } from '../store/hooks';
@@ -14,18 +13,14 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
 import { toastic } from '../utils/utils';
+import { loginSchema } from '../utils/shemas';
 
 
 const Login = () => {
-
   const dispatch = useAppDispatch();
-  const schema = yup.object().shape({
-    email: yup.string().email('Please enter a valid email').required('Email is required'),
-    password: yup.string().required('Password is required'),
-  });
-
+  
   const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginSchema),
   });
   
   const onSubmit = async (text: {email: string;

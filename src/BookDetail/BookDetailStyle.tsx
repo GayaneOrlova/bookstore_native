@@ -5,6 +5,10 @@ const BookDetailStyle = StyleSheet.create({
     marginVertical: 30,
     marginHorizontal: 15,
   },
+  book_info: {
+    flexDirection: 'row',
+    gap: 10,
+  },
   book_image: {
     width: 135,
     minHeight: 202,

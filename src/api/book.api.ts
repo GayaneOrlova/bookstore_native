@@ -13,17 +13,17 @@ export const createBookComment = (body: string, bookId: number) => {
   return axios.post(`comments/create/`, {body: body, book: bookId});
 };//good
 
-export const getBookComment = (bookId: number) => {
-  return axios.get(`/book-comment/${bookId}/`);
-};//good
+// export const getBookComment = (bookId: number) => {
+//   return axios.get(`/book-comment/${bookId}/`);
+// };//good
 
 
-export const getBookRating = (bookId: number) => {
-  return axios.get(`book-rating/${bookId}/`);
-};//good
+// export const getBookRating = (bookId: number) => {
+//   return axios.get(`book-rating/${bookId}/`);
+// };//good
 
 export const createBookRating = (bookId: number, rating: number) => {
-  return axios.post(`book-rating/create/${bookId}/`, {rating});
+  return axios.post(`book-rating/create/${bookId}/`, {rating: rating});
 };//good
 
 export const getFavoritesBooks = () => {

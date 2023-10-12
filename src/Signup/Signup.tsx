@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text } from 'react-native';
-import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppDispatch } from '../store/hooks';
 import { setUser } from '../store/slices/userSlice';
@@ -14,6 +13,7 @@ import Input from '../Input/Input';
 import SignupStyles from './SignupStyles';
 import { ScrollView } from 'react-native-gesture-handler';
 import { toastic } from '../utils/utils';
+import { signupSchema } from '../utils/shemas';
 
 
 type UserRegistrationType = {
@@ -25,14 +25,10 @@ type UserRegistrationType = {
 const Signup = () => {
   const dispatch = useAppDispatch();
 
-  const schema = yup.object().shape({
-    email: yup.string().email('Please enter a valid email').required('Email is required'),
-    password: yup.string().required('Password is required'),
-    confirm_password: yup.string().oneOf([yup.ref('password')], 'Passwords must match').required('Confirm password is required'),
-  });
+
 
   const { control, handleSubmit, formState: { errors } } = useForm<UserRegistrationType>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signupSchema),
   });
 
   const onSubmit = async (text: UserRegistrationType) => {

@@ -69,14 +69,7 @@ const Cart = () => {
 
     }
     catch (er) {
-      toastic('Rating was successfully added!')
-
-    
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-      }, 2000);
-      const errorText = Object.values(er.response.data)[0];
+      const errorText = Object.values(er.response.data);
       toastic( errorText)
     }
   };
@@ -87,8 +80,8 @@ const Cart = () => {
       await changeCart(amount, id);
     }
     catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      const errorText = Object.values(er.response.data);
+      toastic(errorText)
     }
   };
 

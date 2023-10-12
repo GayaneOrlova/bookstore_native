@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { View, Image, Text, TouchableOpacity, Platform, Modal } from 'react-native';
 import ImagePicker, { launchCamera, launchImageLibrary, ImagePickerResponse } from 'react-native-image-picker';
-import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -12,6 +11,7 @@ import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
 import { toastic } from '../../utils/utils';
+import { changeUserInfoSchema } from '../../utils/shemas';
 
 
 const InputProfile = () => {
@@ -24,12 +24,8 @@ const InputProfile = () => {
   const userName = useAppSelector(state => state.user.user.username);
   const userAvatar = useAppSelector(state => state.user.userAvatar.avatar);
 
-  const schema = yup.object().shape({
-    username: yup.string().required('Username is required'),
-    email: yup.string().required('Email is required'),
-  });
   const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(changeUserInfoSchema),
   });
 
 

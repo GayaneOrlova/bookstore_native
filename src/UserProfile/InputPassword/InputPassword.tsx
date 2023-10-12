@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, Modal } from 'react-native';
 import { Controller, useForm } from "react-hook-form";
-import * as yup from 'yup';
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { useAppDispatch } from '../../store/hooks';
@@ -11,6 +10,7 @@ import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputPasswordStyles from './InputPasswordStyles';
 import { toastic } from '../../utils/utils';
+import { changePasswordSchema } from '../../utils/shemas';
 
 type UserLoginType = {
   password: string;
@@ -27,12 +27,8 @@ const InputPassword: React.FC<Props> = props => {
   const [showModal, setShowModal] = useState(false);
   const [showInputChange, setShowInputChange] = useState(false);
 
-  const schema = yup.object().shape({
-    password: yup.string().required('Password is required'),
-    new_password: yup.string().required('Password is required'),
-    confirm_password: yup.string().oneOf([yup.ref('new_password')], 'Passwords must match').required('Confirm password is required'),
-  });
-  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({resolver: yupResolver(schema),});
+
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({resolver: yupResolver(changePasswordSchema),});
   
   const handlePress = () => {
     setShowInputChange(true);
