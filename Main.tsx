@@ -13,6 +13,7 @@ import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
 import BookDetail from './src/BookDetail/BookDetail';
 import FavoritesPage from './src/FavoritesPage/FavoritesPage';
+import { toastic } from './src/utils/utils';
 
 
 const Stack = createStackNavigator();
@@ -20,6 +21,7 @@ const Stack = createStackNavigator();
 const Main: React.FC = () => {
   const [initialization, setInitialization] = useState(false);
   const isUser = useAppSelector(state => state.user.user);
+  const cartList = useAppSelector(state => state.book.cartStore);
   const dispatch = useAppDispatch();
 
   const getToken = async () => {
@@ -31,7 +33,8 @@ const Main: React.FC = () => {
       const user = response.data;
       dispatch(setUser(user));
     } catch (er) {
-      console.log(er);
+      const errorText = Object.values(er.response.data)[0];
+      toastic( errorText)
     } finally {
       setInitialization(true);
     }
@@ -39,7 +42,7 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     getToken();
-  }, []);
+  }, [cartList]);
 
   if (!initialization) { return null; }
 
