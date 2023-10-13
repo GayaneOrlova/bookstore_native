@@ -39,15 +39,17 @@ export type RatingType = {
   rating: number | null;
 };
 
-export type CartType = {
-  id: number | null;
-  items: [{
+export type CartItemType = {
     amount: number | null,
     book_image: string,
     book_name: string,
     id: number | null,
-    price: number | null
-  }];
+    price: number | null,
+};
+
+export type CartType = {
+  id: number | null;
+  items: CartItemType[];
   total_price: number | null;
 };
 
@@ -62,13 +64,7 @@ const initialState: BookSliceType = {
   booksStore: [],
   cartStore: {
     id: null,
-    items: [{
-      amount: null,
-      book_image: '',
-      book_name: '',
-      id: null,
-      price: null
-    }],
+    items: [],
     total_price: null
   },
   ratingStore: {

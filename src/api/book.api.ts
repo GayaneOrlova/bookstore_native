@@ -6,7 +6,7 @@ export const getAllBooks = () => {
 };//good
 
 export const getBookById = (bookId: number) => {
-  return axios.get<BookType>(`/books/${bookId}`);
+  return axios.get<BookType>(`/books/${bookId}/`);
 };//good
 
 export const createBookComment = (body: string, bookId: number) => {

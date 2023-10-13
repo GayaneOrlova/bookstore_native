@@ -23,7 +23,6 @@ const Cart = () => {
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
-  const [showModal, setShowModal] = useState(false);
 
   const onHomepage = () => {
     navigation.navigate('Homepage');
@@ -37,7 +36,7 @@ const Cart = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toastic( errorText);
     }
   };
 
@@ -47,16 +46,17 @@ const Cart = () => {
 
   const handleMinus = async (id: number) => {
     const currentCartItem = cartList.items.find(item => item.id === id);
+    
     if (currentCartItem?.amount! < 0) { return; }
     const amount = currentCartItem?.amount! - 1;
-
+    
+    console.log(currentCartItem?.amount!, '!!!!!')
     try {
      const responce = await changeCart(amount, id);
      dispatch(changeCartItem(responce.data));
     }
     catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toastic('An error occurred');
     }
   };
 
@@ -66,11 +66,10 @@ const Cart = () => {
     try {
       const responce = await changeCart(amount, id);
       dispatch(changeCartItem(responce.data));
-
     }
     catch (er) {
       const errorText = Object.values(er.response.data);
-      toastic( errorText)
+      toastic(errorText);
     }
   };
 
@@ -80,8 +79,9 @@ const Cart = () => {
       await changeCart(amount, id);
     }
     catch (er) {
-      const errorText = Object.values(er.response.data);
-      toastic(errorText)
+     
+      toastic( 'No such many book in store');
+
     }
   };
 
@@ -117,13 +117,6 @@ const Cart = () => {
                   </View>
                   <Text style={CartStyles.item_price}>{`$${item.price} USD`}</Text>
                 </View>
-                {/* <Modal visible={showModal} transparent>
-                  <View style={CartStyles.modal}>
-                    <View style={CartStyles.modal_text}>
-                      <Text>Cannot add more books than available!</Text>
-                    </View>
-                  </View>
-                </Modal> */}
               </View>
             )}
           />

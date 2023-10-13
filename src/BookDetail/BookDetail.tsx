@@ -30,39 +30,22 @@ const BookDetail: React.FC<Props> = () => {
   const route = useRoute();
   const id = route.params?.id;
   const isUser = useAppSelector(state => state.user.user);
-
-  const [bookDetail, setBookDetail] = useState<BookType>();
-
+  const [bookDetail, setBookDetail] = useState<BookType>({});
   const [userNewRating, setUserNewRating] = useState();
-
-  const bookList = useAppSelector(state => state.book.booksStore);
-
-  const bookById = bookList.find(book => book.id === id)
-  
-  console.log('bookById', bookById)
   
   const fetchBookDetail = async () => {
     if (!id) { return; }
     try {
       const response = await getBookById(id);
-      console.log('nuuuuuuuu', response.data);
-
       setBookDetail(response.data);
     } catch (er) {
       toastic('An error occurred');
     }
   };
-  
-
-  useEffect(() => {
-    fetchBookDetail();
-    // fetchUserRating();
-  }, [])
 
   const addBookRating = async (rating: number) => {
     try {
       const responce = await createBookRating(id, rating)
-      // setBookRating(responce.data.rating)
       setUserNewRating(responce.data.rating);
       toastic('Rating was successfully added!')
     }
@@ -71,17 +54,18 @@ const BookDetail: React.FC<Props> = () => {
     }
   };
 
+  useEffect(() => {
+    fetchBookDetail();
+  }, [userNewRating])
+  
   const onClickToCart = async () => {
     try {
-      const response = await createCartItem(id);
+      await createCartItem(id);
       toastic('Book was added to cart!')
     } catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toastic(errorText);
+      toastic('An error occurred');
     }
   };
-
-  // const overall_rating = (bookDetail.overall_rating).toFixed(1)
 
   if (!bookDetail) { return null; }
 
@@ -103,7 +87,7 @@ const BookDetail: React.FC<Props> = () => {
             {isUser.email && bookDetail.rating &&
               <View style={BookDetailStyle.book_info}>
                 <Text>Your rate of this book: </Text>
-                <Text style={BookDetailStyle.rate_text}>{bookDetail.rating}</Text>
+                <Text style={BookDetailStyle.rate_text}>{(bookDetail.overall_rating).toFixed(1)}</Text>
               </View>
             }
             {isUser.email && !bookDetail.rating &&
