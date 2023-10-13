@@ -51,6 +51,8 @@ const InputProfileStyles = StyleSheet.create({
     width: 170,
     height: 44,
     marginTop: 30,
+    backgroundColor: '#344966',
+
   },
   buttons_container: {
     flexDirection: 'row',

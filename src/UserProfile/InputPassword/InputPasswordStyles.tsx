@@ -5,11 +5,12 @@ const InputPasswordStyles = StyleSheet.create({
     fontSize: 12,
     color: '#8D9F4F',
     marginBottom: 10,
-    textDecorationLine: 'underline'
+    textDecorationLine: 'underline',
   },
   input: {
     width: 290,
     height: 56,
+    flex: 1,
   },
   input_description: {
     fontSize: 12,
@@ -26,6 +27,8 @@ const InputPasswordStyles = StyleSheet.create({
     width: 170,
     height: 44,
     marginTop: 30,
+    backgroundColor: '#344966',
+
   },
 });
 

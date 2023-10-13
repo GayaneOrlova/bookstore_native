@@ -65,10 +65,16 @@ const BookDetailStyle = StyleSheet.create({
   price_button: {
     width: 210,
     height: 38,
-    marginBottom:40,
+    marginBottom: 60,
     alignItems: 'center',
     backgroundColor: '#344966',
-
+  },
+  available_button: {
+    width: 210,
+    height: 38,
+    marginBottom: 60,
+    alignItems: 'center',
+    backgroundColor: '#B9BAC3',
   },
   comment_input: {
     minHeight: 87,

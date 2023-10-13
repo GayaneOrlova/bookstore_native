@@ -13,7 +13,6 @@ import Button from '../Button/Button';
 import Footer from '../Footer/Footer';
 import BookDetailStyle from './BookDetailStyle';
 import RenderBookItemStyles from '../RenderBookItem/RenderBookItemStyles';
-import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 import BookComments from '../BookComments/BookComments';
 import BooksRecommend from '../BooksRecommend/BooksRecommend';
 
@@ -99,8 +98,8 @@ const BookDetail: React.FC<Props> = () => {
           </View>
         </View>
         <Text style={BookDetailStyle.description_text}>Description</Text>
-        <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>
-        <Button style={BookDetailStyle.price_button} onPress={onClickToCart} text={`$${bookDetail.price} USD`}  />
+        <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>        
+        <Button style={bookDetail.available ? BookDetailStyle.price_button : BookDetailStyle.available_button} text={bookDetail.available ? `$${bookDetail.price} USD` : 'Not available'} onPress={onClickToCart} />
         <BookComments id={bookDetail.id} commentList={bookDetail.comments} />
         <BooksRecommend navigation={navigation} />
       </View>
