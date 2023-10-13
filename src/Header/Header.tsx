@@ -22,8 +22,10 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Header = () => {
   const isUser = useAppSelector(state => state.user.user);
-  const cartList = useAppSelector(state => state.book.cartStore);
-  const totalAmount = cartList.items.reduce((sum, item) => sum + item.amount!, 0);
+    const totalAmount = isUser.cart_items_count;
+
+  
+  // const cartList = useAppSelector(state => state.book.cartStore);
   const navigation = useNavigation<NavigationProps>();
   
   const onLoginPage = () => {

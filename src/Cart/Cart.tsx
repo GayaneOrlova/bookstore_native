@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Image, Modal, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { changeCart, getCart } from '../api/book.api';
+import { getCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { changeCartItem, setCart } from '../store/slices/bookSlice';
+import { CartType, setCart } from '../store/slices/bookSlice';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import CartStyles from './CartStyles';
 import { toastic } from '../utils/utils';
+import CartQuantitySelector from '../CartQuantitySelector/CartAmountSelector';
 
 type RootStackParamList = {
   Homepage: undefined;
@@ -23,67 +24,29 @@ const Cart = () => {
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
+  const [usercart, setUsercart] = useState<CartType>();
 
   const onHomepage = () => {
     navigation.navigate('Homepage');
   };
-  
+
   const fetchUserCart = async () => {
     if (!isUser.email) { return }
     try {
       const responce = await getCart();
       dispatch(setCart(responce.data));
+      setUsercart(responce.data);
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText);
+      toastic(errorText);
     }
   };
 
   useEffect(() => {
     fetchUserCart();
-  }, []);
+  }, [usercart]);
 
-  const handleMinus = async (id: number) => {
-    const currentCartItem = cartList.items.find(item => item.id === id);
-    
-    if (currentCartItem?.amount! < 0) { return; }
-    const amount = currentCartItem?.amount! - 1;
-    
-    console.log(currentCartItem?.amount!, '!!!!!')
-    try {
-     const responce = await changeCart(amount, id);
-     dispatch(changeCartItem(responce.data));
-    }
-    catch (er) {
-      toastic('An error occurred');
-    }
-  };
-
-  const handlePlus = async (id: number) => {
-    const currentCartItem = cartList.items.find(item => item.id === id)
-    const amount = currentCartItem?.amount! + 1;
-    try {
-      const responce = await changeCart(amount, id);
-      dispatch(changeCartItem(responce.data));
-    }
-    catch (er) {
-      const errorText = Object.values(er.response.data);
-      toastic(errorText);
-    }
-  };
-
-  const handleDeleteCart = async (id: number) => {
-    const amount = 0;
-    try {
-      await changeCart(amount, id);
-    }
-    catch (er) {
-     
-      toastic( 'No such many book in store');
-
-    }
-  };
 
   return (
     <ScrollView>
@@ -100,21 +63,7 @@ const Cart = () => {
                 <View style={CartStyles.cart_item_detail}>
                   <Text style={CartStyles.cart_text}>{item.book_name}</Text>
                   <Text>{item.book_name}</Text>
-                  <View style={CartStyles.amount_container}>
-                    <TouchableOpacity onPress={() => handleMinus(item.id!)} style={CartStyles.amount_buttons}>
-                      <Text style={CartStyles.amount_buttons_text}>-</Text>
-                    </TouchableOpacity>
-                    <Text style={[CartStyles.amount_buttons_text && CartStyles.amount_button_number]}>{item.amount}</Text>
-                    <TouchableOpacity onPress={() => handlePlus(item.id!)} style={CartStyles.amount_buttons}>
-                      <Text style={CartStyles.amount_buttons_text}>+</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleDeleteCart(item.id!)} style={CartStyles.delete_container}>
-                      <Image
-                        source={require('../../images/icons/delete.png')}
-                        style={CartStyles.delete_icon}
-                      />
-                    </TouchableOpacity>
-                  </View>
+                  <CartQuantitySelector id={item.id} amount={item!.amount} />
                   <Text style={CartStyles.item_price}>{`$${item.price} USD`}</Text>
                 </View>
               </View>

@@ -30,7 +30,7 @@ const BookDetail: React.FC<Props> = () => {
   const route = useRoute();
   const id = route.params?.id;
   const isUser = useAppSelector(state => state.user.user);
-  const [bookDetail, setBookDetail] = useState<BookType>({});
+  const [bookDetail, setBookDetail] = useState<BookType>();
   const [userNewRating, setUserNewRating] = useState();
   
   const fetchBookDetail = async () => {
@@ -56,7 +56,7 @@ const BookDetail: React.FC<Props> = () => {
 
   useEffect(() => {
     fetchBookDetail();
-  }, [userNewRating])
+  }, [userNewRating,])
   
   const onClickToCart = async () => {
     try {
@@ -82,7 +82,7 @@ const BookDetail: React.FC<Props> = () => {
             <Text style={BookDetailStyle.text_author}>{bookDetail.author}</Text>
             <View style={BookDetailStyle.book_info}>
               <Image style={BookDetailStyle.rate_image} source={require('../../images/icons/star.png')} />
-              <Text style={BookDetailStyle.text}>{(bookDetail.overall_rating).toFixed(1)}</Text>
+              <Text style={BookDetailStyle.text}>{(bookDetail?.overall_rating).toFixed(1)}</Text>
             </View>
             {isUser.email && bookDetail.rating &&
               <View style={BookDetailStyle.book_info}>

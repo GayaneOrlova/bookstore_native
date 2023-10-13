@@ -42,35 +42,6 @@ const CartStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
   },
-  amount_container: {
-    flexDirection: 'row',
-    gap: 10,
-    alignItems: 'center',
-  },
-
-  amount_buttons: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#dcdedc',
-    width: 32, height: 32,
-    borderRadius: 25,
-  },
-  amount_buttons_text: {
-    fontSize: 16,
-    fontWeight: '600',
-  },
-  amount_button_number: {
-    width: 20,
-    textAlign: 'center',
-  },
-  delete_container: {
-    marginLeft: 10,
-  },
-  delete_icon: {
-    width: 20,
-    height: 20,
-    marginLeft: 10,
-  },
   total_text: {
     fontSize: 24,
     marginBottom: 20,
@@ -117,7 +88,6 @@ const CartStyles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 40
   },
-
 });
 
 export default CartStyles;
