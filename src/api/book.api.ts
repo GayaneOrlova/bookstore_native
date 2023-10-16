@@ -1,8 +1,10 @@
 import { BookType, CommentsType, GenreType, Pagination } from '../store/slices/bookSlice';
 import axios from '../api/user.api/userInstance';
 
-export const getPage = (page: number) => {
-  return axios.get<Pagination>(`/all-books/?page=${page}`);
+export const getPage = (page: number, queryString?: string) => {
+console.log('request', `/all-books/?page=${page}${queryString ? '&' + queryString : ''}`)
+  return axios.get<Pagination>(`/all-books/?page=${page}${queryString ? '&' + queryString : ''}`);
+
 };//good
 
 export const getBookById = (bookId: number) => {
@@ -42,8 +44,8 @@ export const getAllGenres = () => {
   return axios.get<GenreType[]>('/genres/');
 };//good
 
-export const getGenre = (genre: string) => {
-  return axios.get(`/all-books/?genre=${genre}/`);
+export const getBooksByGenre = (genre: string) => {  
+  return axios.get(`/all-books/?${genre}`);
 };//good
 
 export const getCart = () => {

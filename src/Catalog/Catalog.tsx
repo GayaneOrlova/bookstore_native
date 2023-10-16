@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItemInfo, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
-import { getAllGenres, getGenre } from '../api/book.api';
+import { getAllGenres, getBooksByGenre, getGenre } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getPage} from '../api/book.api';
 import { BookType, filteredBooks, setCurrentPage, setPagination } from '../store/slices/bookSlice';
@@ -38,16 +38,20 @@ const Catalog: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const isUser = useAppSelector(state => state.user.user);
   const [genres, setGenres] = useState<{ key: any, value: any }[]>();
-  const [selectedGenres, setSelectedGenres] = useState([]);
   
-  // const sortData = ['Price', 'Author name', 'Rating', 'Date of issue'];
+  const [selectedGenres, setSelectedGenres] = useState([]);
+  const [queryString, setQueryString] = useState();
+  const [sortString, setSortString] = useState();
+
+  
+  const sortData = ['price', 'author', 'overall_rating',];
 
   const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
   const currentPage = useAppSelector((state) => state.book.currentPage)
   
   const changePageHandler = async (page: number) => {
     try {
-      const responce = await getPage(page);
+      const responce = await getPage(page, queryString);
       dispatch(setCurrentPage(page));
       dispatch(setPagination(responce.data));
     } catch (er) {
@@ -59,44 +63,34 @@ const Catalog: React.FC<Props> = () => {
     try {
       const response = await getAllGenres();
       const genresList = response.data.map(item => ({ key: item.id, value: item.name }))
-      console.log(genresList, 'genresList')
       setGenres(genresList)
     } catch (er) {
       const errorText = Object.values(er.response.data)[0];
       toastic(errorText)
     }
   };
-  
-  
-  
-  // getGenre
-  
-  
-  // const handleGenreSelection = async () => {
-  //   try {
-  //     const genresList = response.data.map(item => ({ key: item.id, value: item.name }))
-  //     setGenres(genresList)
+    
+  const handleGenreSelection = async () => {
+  try {
+    if (selectedGenres.length > 0) {
+      const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value));
+      const tempQueryString = "genre=" + genresFilter.join("&genre=");
+      const responce = await getBooksByGenre(tempQueryString + (sortString ? '&ordering=' + sortString : ''));
       
-  //   } catch (er) {
-  //     const errorText = Object.values(er.response.data)[0];
-  //     toastic(errorText)
-  //   }
-  // };
-  
-
-  const handleGenreSelection = () => {
-    // if (selectedGenres.length > 0) {
-    //   const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value))
-    //   // dispatch(filteredBooks({ genresFilter }));
-    // } else {
-    //   // fetchAllBooks();
-    //   console.log('lalala')
-    // }
+      console.log('7777', tempQueryString + (sortString ? '&ordering=' + sortString : ''))
+      dispatch(setPagination(responce.data));
+      setQueryString(tempQueryString);
+    }}
+    catch(er) {
+      console.log(er);
+    }
   };
 
-  const handleSortBooks = () => {
+  const handleSortBooks = (sortData: string) => {
+    setSortString(sortData);
+    handleGenreSelection();
+  
 }
-
 
 
   useEffect(() => {
@@ -104,7 +98,6 @@ const Catalog: React.FC<Props> = () => {
   }, [isUser.email]);
 
   useEffect(() => {
-    // fetchAllBooks();
     fetchAllGenres();
   }, []);
 
@@ -129,16 +122,17 @@ const Catalog: React.FC<Props> = () => {
           boxStyles={CatalogStyles.box}
           dropdownStyles={CatalogStyles.dropdown}
           data={genres!}
+          inputStyles={{padding:0}}
         />
-        {/* <SelectList
+        <SelectList
           placeholder={`Sort by`}
-          setSelected={sortBooks}
+          setSelected={handleSortBooks}
           search={false}
           boxStyles={CatalogStyles.box}
           dropdownStyles={CatalogStyles.dropdown}
           data={sortData}
           maxHeight={666}
-        /> */}
+        />
         <View>
           {/* <ScrollView horizontal={true} style={{ flexGrow: 1, gap: 20 }}> */}
           <FlatList
