@@ -4,6 +4,7 @@ const RenderBookItemStyles = StyleSheet.create({
   book_container: {
     gap: 10,
     marginTop: 10,
+    
   },
   book_image_container: {
     position: 'relative',

@@ -15,7 +15,7 @@ type Props = {
 
 const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
   const [showModal, setShowModal] = useState(false);
-  const overall_rating = (item.overall_rating.toFixed(1))
+  // const overall_rating = (item.overall_rating.toFixed(1))
   
   
   const onBookDetailPage = (id: number) => {
@@ -46,7 +46,7 @@ const RenderBookItem: React.FC<Props> = ({ item, navigation }) => {
         <Text style={RenderBookItemStyles.book_author}>{item.author}</Text>
         <View style={RenderBookItemStyles.rating_container}>
           <Rating size={20} rating={item.overall_rating} fillColor={'#BFCC94'} />
-          <Text style={RenderBookItemStyles.rating_text}>{overall_rating}</Text>
+          <Text style={RenderBookItemStyles.rating_text}>{item.overall_rating}</Text>
         </View>
         <Button style={item.available ? RenderBookItemStyles.price_button : RenderBookItemStyles.available_button} text={item.available ? `$${item.price} USD` : 'Not available'} onPress={onClickToCart} />
       </View>

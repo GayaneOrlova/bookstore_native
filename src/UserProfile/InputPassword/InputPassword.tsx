@@ -24,12 +24,10 @@ type Props = {
 
 const InputPassword: React.FC<Props> = props => {
   const dispatch = useAppDispatch();
-  const [showModal, setShowModal] = useState(false);
   const [showInputChange, setShowInputChange] = useState(false);
-
-
-  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({resolver: yupResolver(changePasswordSchema),});
   
+  const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({ resolver: yupResolver(changePasswordSchema), });
+
   const handlePress = () => {
     setShowInputChange(true);
   };
@@ -38,15 +36,11 @@ const InputPassword: React.FC<Props> = props => {
     try {
       const response = await userPasswordChange(text);
       dispatch(setNewPassword(response.data));
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-        setShowInputChange(false)
-      }, 2000);
+      toastic("Password was successfully changed!");
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toastic(errorText)
     }
   };
 
@@ -54,13 +48,14 @@ const InputPassword: React.FC<Props> = props => {
     <View>
       <View style={InputPasswordStyles.password_group}>
         <Text style={{ fontSize: 14 }}>Password</Text>
+        
         <TouchableOpacity onPress={handlePress}>
           <Text style={InputPasswordStyles.change_text}>Change password</Text>
         </TouchableOpacity>
       </View>
       <Controller
         control={control}
-        rules={{ maxLength: 15, }}
+        rules={{required: true, }}
         render={({ field: { onChange, value } }) => (
           <View>
             <Input
@@ -82,13 +77,13 @@ const InputPassword: React.FC<Props> = props => {
         )}
         name="password"
       />
-      {errors.password && <Text style={{color: 'red'}}>{errors.password.message}</Text>}
+      {errors.password && <Text style={{ color: 'red' }}>{errors.password.message}</Text>}
 
       {showInputChange &&
         <>
           <Controller
             control={control}
-            rules={{ maxLength: 15, }}
+            rules={{required: true, }}
             render={({ field: { onChange, value } }) => (
               <Input
                 image_source={require('../../../images/icons/hide.png')}
@@ -103,7 +98,7 @@ const InputPassword: React.FC<Props> = props => {
             )}
             name="new_password"
           />
-          {errors.new_password && <Text style={{color: 'red'}}>{errors.new_password.message}</Text>}
+          {errors.new_password && <Text style={{ color: 'red' }}>{errors.new_password.message}</Text>}
 
           <Text style={{ fontSize: 14, marginVertical: 10, }}>Enter your password</Text>
           <Controller
@@ -123,18 +118,11 @@ const InputPassword: React.FC<Props> = props => {
             )}
             name="confirm_password"
           />
-          {errors.confirm_password && <Text style={{color: 'red'}}>{errors.confirm_password.message}</Text>}
+          {errors.confirm_password && <Text style={{ color: 'red' }}>{errors.confirm_password.message}</Text>}
 
           <Text style={{ fontSize: 14, marginVertical: 10, }}>Repeat your password without errors</Text>
           <Button style={InputPasswordStyles.button_confirm} text={'Confirm'}
             onPress={handleSubmit(onSubmit)} />
-            <Modal visible={showModal} transparent>
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-              <View style={{ backgroundColor: 'white', padding: 20 }}>
-                <Text>Password was successfully changed!</Text>
-              </View>
-            </View>
-          </Modal>
         </>
       }
     </View>

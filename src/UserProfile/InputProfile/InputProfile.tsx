@@ -17,17 +17,15 @@ import { changeUserInfoSchema } from '../../utils/shemas';
 const InputProfile = () => {
   const dispatch = useAppDispatch();
   const [showInputChange, setShowInputChange] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   const [photo, setPhoto] = useState<ImagePickerResponse>();
-
-  const user = useAppSelector(state => state.user.user);
-  const userName = useAppSelector(state => state.user.user.username);
-  const userAvatar = useAppSelector(state => state.user.userAvatar.avatar);
-
+  
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(changeUserInfoSchema),
   });
-
+  
+  const user = useAppSelector(state => state.user.user);
+  const userName = useAppSelector(state => state.user.user.username);
+  const userAvatar = useAppSelector(state => state.user.userAvatar.avatar);
 
   const fetchAvatar = async () => {
     try {
@@ -56,12 +54,7 @@ const InputProfile = () => {
     try {
       const response = await changeUserinfo({ email: value.email, username: value.username });
       dispatch(setUser(response.data));
-
-      setShowModal(true);
-      setTimeout(() => {
-        setShowModal(false);
-        setShowInputChange(false);
-      }, 2000);
+      toastic('Personal information was successfully changed!');
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
@@ -153,6 +146,7 @@ const InputProfile = () => {
       </View>
       <Text style={InputProfileStyles.title}>Personal information</Text>
       <View style={InputProfileStyles.buttons_container}>
+      
         <TouchableOpacity onPress={handlePress}>
           <Text style={InputProfileStyles.change_text}>Change information</Text>
         </TouchableOpacity>
@@ -206,19 +200,10 @@ const InputProfile = () => {
       {errors.email && <Text style={InputProfileStyles.error}>{errors.email.message}</Text>}
 
       {showInputChange &&
-        <>
           <Button
             style={InputProfileStyles.button_confirm} text={'Confirm'}
             onPress={handleSubmit(onChangeUserInfo)}
           />
-          <Modal visible={showModal} transparent>
-            <View style={InputProfileStyles.modal_container}>
-              <View style={InputProfileStyles.modal_text}>
-                <Text>Personal information was successfully changed!</Text>
-              </View>
-            </View>
-          </Modal>
-        </>
       }
     </View>
 

@@ -61,8 +61,10 @@ const Cart = () => {
               <View style={index === (cartList.items.length - 1) ? CartStyles.render_item_last : CartStyles.render_item}>
                 <Image style={CartStyles.cart_item_image} source={{ uri: `${item.book_image}` }} />
                 <View style={CartStyles.cart_item_detail}>
-                  <Text style={CartStyles.cart_text}>{item.book_name}</Text>
-                  <Text>{item.book_name}</Text>
+                  <View style={CartStyles.cart_texts}>
+                    <Text style={CartStyles.cart_text}>{item.book_name}</Text>
+                    <Text>{item.book_author}</Text>
+                  </View>
                   <CartQuantitySelector id={item.id} amount={item!.amount} />
                   <Text style={CartStyles.item_price}>{`$${item.price} USD`}</Text>
                 </View>

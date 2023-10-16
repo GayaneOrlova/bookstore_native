@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItemInfo, View, Text } from 'react-native';
 import { useAppSelector } from '../store/hooks';
 import { useNavigation } from '@react-navigation/native';
@@ -9,6 +9,8 @@ import Footer from '../Footer/Footer';
 import { BookType } from '../store/slices/bookSlice';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import FavoritesPageStyles from './FavoritesPageStyle';
+import { getFavoritesBooks } from '../api/book.api';
+import { toastic } from '../utils/utils';
 
 type Props = {};
 
@@ -20,21 +22,39 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const FavoritesPage: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
-  const bookList = useAppSelector(state => state.book.booksStore);
-  const favorites = bookList.filter((book) => book.like);
+  const [favorites, setFavorites] = useState<BookType[]>();
+  
+  const getFavoriteBooks = async () => {
+    try {
+      const responce = await getFavoritesBooks();
+      
+      setFavorites(responce.data);
+      console.log(responce.data, 'responce.data)')
+
+    }
+    catch (er) {
+      toastic('An error occurred');
+    }
+  };
+
+  console.log(favorites, 'responce')
+
+  useEffect(() => {
+    getFavoriteBooks();
+  }, [])
+
 
   return (
     <ScrollView>
       <Header />
-      {favorites.length ? (
+      {favorites?.length ? (
         <View style={FavoritesPageStyles.catalog_container}>
           <FlatList
-            data={bookList.filter((book) => book.like)}
-
-            renderItem={({ item }: ListRenderItemInfo<BookType>) => (
+            data={favorites}
+            renderItem={({ item }) => (
               <RenderBookItem item={item} navigation={navigation} />
             )}
-            keyExtractor={(item) => item.genre}
+            keyExtractor={(item) => item.image}
             numColumns={2}
             contentContainerStyle={FavoritesPageStyles.content_container}
             columnWrapperStyle={FavoritesPageStyles.column_wrapper}

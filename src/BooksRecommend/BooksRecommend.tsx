@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, FlatList, ListRenderItemInfo, Text } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
@@ -8,6 +8,8 @@ import BookDetailStyle from './BooksRecommendStyles';
 import CatalogStyles from '../Catalog/CatalogStyle';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { isDraft } from '@reduxjs/toolkit';
+import { getRecommended } from '../api/book.api';
+import { toastic } from '../utils/utils';
 
 type Props = {
   navigation: any;
@@ -23,15 +25,28 @@ const BooksRecommend: React.FC<Props> = ({navigation}) => {
   // const route = useRoute();
   // const id = route.params?.id;
   // const navigation = useNavigation();
+  const [recommended, setRecommended] = useState<BookType[]>();
+  console.log(recommended, 'recommended')
+  const getRecommendedBooks = async () => {
+    try {
+      const responce = await getRecommended();
+      setRecommended(responce.data);
+    }
+    catch (er) {
+      toastic('An error occurred');
+    }
+  };
+
+  useEffect(() => {
+    getRecommendedBooks();
+  }, [])
 
 
-  const bookList = useAppSelector(state => state.book.booksStore);
-  // console.log(bookList, 'bookList')
   return (
     <View>
         <Text style={BookDetailStyle.title_text}>Recommendations</Text>
         <FlatList
-          data={bookList.filter((book) => book.recommendation)}
+          data={recommended}
           renderItem={({ item }: ListRenderItemInfo<BookType>) => (
             <RenderBookItem item={item} navigation={navigation}/>
           )}

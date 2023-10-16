@@ -1,12 +1,16 @@
-import { BookType, CommentsType, GenreType } from '../store/slices/bookSlice';
+import { BookType, CommentsType, GenreType, Pagination } from '../store/slices/bookSlice';
 import axios from '../api/user.api/userInstance';
 
-export const getAllBooks = () => {
-  return axios.get<BookType[]>('/all-books/');
+export const getPage = (page: number) => {
+  return axios.get<Pagination>(`/all-books/?page=${page}`);
 };//good
 
 export const getBookById = (bookId: number) => {
   return axios.get<BookType>(`/books/${bookId}/`);
+};//good
+
+export const getRecommended = () => {
+  return axios.get<BookType[]>('recommended-books/');
 };//good
 
 export const createBookComment = (body: string, bookId: number) => {
@@ -27,7 +31,7 @@ export const createBookRating = (bookId: number, rating: number) => {
 };//good
 
 export const getFavoritesBooks = () => {
-  return axios.get<BookType[]>('/favorites-books/');
+  return axios.get<BookType[]>('/favorite-list/');
 };//good
 
 export const changeFavoriteById = (bookId: number) => {
@@ -36,6 +40,10 @@ export const changeFavoriteById = (bookId: number) => {
 
 export const getAllGenres = () => {
   return axios.get<GenreType[]>('/genres/');
+};//good
+
+export const getGenre = (genre: string) => {
+  return axios.get(`/all-books/?genre=${genre}/`);
 };//good
 
 export const getCart = () => {

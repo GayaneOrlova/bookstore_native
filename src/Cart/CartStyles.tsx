@@ -36,17 +36,20 @@ const CartStyles = StyleSheet.create({
     borderRadius: 16,
   },
   cart_item_detail: {
-    gap: 30,
+    gap: 20,
+    justifyContent: 'space-between',
   },
   cart_text: {
     fontSize: 18,
     fontWeight: '700',
   },
+  cart_texts: {
+    gap: 10,
+  },
   total_text: {
     fontSize: 24,
     marginBottom: 20,
     marginTop: 30,
-
   },
   item_price: {
     fontSize: 18,
