@@ -97,7 +97,6 @@ const bookSlice = createSlice({
   reducers: {
     setPagination(state, action: PayloadAction<Pagination>) {
       state.pagination = action.payload;
-      console.log(action.payload, 'action.payload')
     }, //good
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload

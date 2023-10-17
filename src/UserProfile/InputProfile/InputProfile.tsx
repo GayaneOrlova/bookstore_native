@@ -90,7 +90,6 @@ const InputProfile = () => {
     try {
       const response = await launchCamera(options);
       if (response.didCancel) {
-        console.log('User cancelled image selection from the camera');
       } else if (!response.errorCode) {
         setPhoto(response);
       }

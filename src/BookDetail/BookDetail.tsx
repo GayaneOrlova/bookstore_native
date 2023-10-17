@@ -4,8 +4,8 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { Rating } from '@kolking/react-native-rating';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ScrollView } from 'react-native-gesture-handler';
-import { useAppSelector } from '../store/hooks';
-import { BookType } from '../store/slices/bookSlice';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { BookType, changeCartItem } from '../store/slices/bookSlice';
 import { createBookRating, createCartItem, getBookById } from '../api/book.api';
 import { toastic } from '../utils/utils';
 import Header from '../Header/Header';
@@ -16,26 +16,24 @@ import RenderBookItemStyles from '../RenderBookItem/RenderBookItemStyles';
 import BookComments from '../BookComments/BookComments';
 import BooksRecommend from '../BooksRecommend/BooksRecommend';
 
-type Props = {
-  // id: number;
-};
+type Props = {};
 
 type RootStackParamList = {
   BookDetail: { id: number }
 };
-
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const BookDetail: React.FC<Props> = () => {
+  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProps>();
 
   const route = useRoute();
   const id = route.params?.id;
-  
+
   const isUser = useAppSelector(state => state.user.user);
   const [bookDetail, setBookDetail] = useState<BookType>();
   const [userNewRating, setUserNewRating] = useState();
-  
+
   const fetchBookDetail = async () => {
     if (!id) { return; }
     try {
@@ -45,11 +43,14 @@ const BookDetail: React.FC<Props> = () => {
       toastic('An error occurred');
     }
   };
+  useEffect(() => {
+    fetchBookDetail();
+  }, [userNewRating])
 
   const addBookRating = async (rating: number) => {
     try {
-      const responce = await createBookRating(id, rating);
-      setUserNewRating(responce.data.rating);
+      const response = await createBookRating(id, rating);
+      setUserNewRating(response.data.rating);
       toastic('Rating was successfully added!');
     }
     catch (er) {
@@ -57,13 +58,10 @@ const BookDetail: React.FC<Props> = () => {
     }
   };
 
-  useEffect(() => {
-    fetchBookDetail();
-  }, [userNewRating])
-  
   const onClickToCart = async () => {
     try {
-      await createCartItem(id);
+      const response = await createCartItem(id);
+      dispatch(changeCartItem(response.data));
       toastic('Book was added to cart!')
     } catch (er) {
       toastic('An error occurred');
@@ -95,20 +93,20 @@ const BookDetail: React.FC<Props> = () => {
             }
             {isUser.email && !bookDetail.rating &&
               <View>
-                <Rating onChange={addBookRating} maxRating={5} size={20} rating={userNewRating} fillColor={'#BFCC94'}  />
+                <Rating onChange={addBookRating} maxRating={5} size={20} rating={userNewRating} fillColor={'#BFCC94'} />
                 <Text style={BookDetailStyle.text}>Rate this book</Text>
               </View>
             }
           </View>
         </View>
         <Text style={BookDetailStyle.description_text}>Description</Text>
-        <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>        
+        <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>
         <Button style={bookDetail.available ? BookDetailStyle.price_button : BookDetailStyle.available_button} text={bookDetail.available ? `$${bookDetail.price} USD` : 'Not available'} onPress={onClickToCart} />
         <BookComments id={bookDetail.id} commentList={bookDetail.comments} />
-        <BooksRecommend navigation={navigation}/>
+        <BooksRecommend navigation={navigation} />
       </View>
       <Footer />
-   </ScrollView>
+    </ScrollView>
   );
 };
 

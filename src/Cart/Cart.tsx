@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 import { getCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { CartType, setCart } from '../store/slices/bookSlice';
+import { setCart } from '../store/slices/bookSlice';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
@@ -16,7 +16,6 @@ import CartQuantitySelector from '../CartQuantitySelector/CartAmountSelector';
 type RootStackParamList = {
   Homepage: undefined;
 };
-
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Cart = () => {
@@ -44,7 +43,6 @@ const Cart = () => {
   useEffect(() => {
     fetchUserCart();
   }, []);
-console.log('cartList?.total_price', cartList?.total_price)
 
   return (
     <ScrollView>

@@ -11,9 +11,9 @@ const RenderBookItemStyles = StyleSheet.create({
   },
   book_image: {
     // maxWidth: 'auto',
-    width: 135,
-    // width: '100%',
-    minHeight: 192,
+    // width: 135,
+    width: '90%',
+    height: 253,
     borderRadius: 16,
     },
   favorite: {

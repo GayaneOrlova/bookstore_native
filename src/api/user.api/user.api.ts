@@ -41,8 +41,6 @@ export const userPasswordChange = ({
   new_password: string;
   confirm_password: string;
 }) => {
-console.log('password, new_password, confirm_password', password, new_password, confirm_password)
-
   return axios.post('/change-password/', { password, new_password, confirm_password });
 };
 

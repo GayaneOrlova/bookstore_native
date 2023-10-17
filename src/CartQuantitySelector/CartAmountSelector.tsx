@@ -1,4 +1,4 @@
-import React, {  } from 'react';
+import React, { } from 'react';
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { changeCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -11,10 +11,9 @@ type Props = {
   amount: number | null;
 }
 
-const CartQuantitySelector:React.FC<Props> = (props) => {
+const CartQuantitySelector: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const cartList = useAppSelector(state => state.book.cartStore);
-  console.log('cartList', cartList)
 
   const handleMinus = async (id: number) => {
     const currentCartItem = cartList.items.find(item => item.id === id);
@@ -34,11 +33,10 @@ const CartQuantitySelector:React.FC<Props> = (props) => {
     const amount = currentCartItem?.amount! + 1;
     try {
       const responce = await changeCart(amount, id);
-      console.log('plus',responce.data)
       dispatch(changeCartItem(responce.data));
     }
     catch (er) {
-      toastic('No such many book in store');
+      toastic('The error occurred');
     }
   };
 
@@ -46,8 +44,7 @@ const CartQuantitySelector:React.FC<Props> = (props) => {
     const amount = 0;
     try {
       const responce = await changeCart(amount, id);
-      console.log('delete',responce.data)
-      dispatch(deleteCartItem(id));
+      dispatch(deleteCartItem());
     }
     catch (er) {
       toastic('The error occurred!');

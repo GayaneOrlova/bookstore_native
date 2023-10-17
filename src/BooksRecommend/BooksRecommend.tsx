@@ -38,10 +38,8 @@ const BooksRecommend: React.FC<Props> = () => {
   };
   
   const onLikePress = async (id: number) => {
-  console.log('id', id)
     try {
       const responce = await changeFavoriteById(id);
-      console.log('recommend', responce.data)
       dispatch(changeFavoriteList(id));
     }
     catch (er) {

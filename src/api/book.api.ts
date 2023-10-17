@@ -2,7 +2,6 @@ import { BookType, CommentsType, GenreType, Pagination } from '../store/slices/b
 import axios from '../api/user.api/userInstance';
 
 export const getPage = (page: number, queryString?: string) => {
-console.log('request', `/all-books/?page=${page}${queryString ? '&' + queryString : ''}`)
   return axios.get<Pagination>(`/all-books/?page=${page}${queryString ? '&' + queryString : ''}`);
 
 };//good
@@ -53,7 +52,6 @@ export const getCart = () => {
 };//good
 
 export const changeCart = (amount: number, id: number) => {
-console.log({amount: amount, id: id})
   return axios.post('/cart-item/update/', {amount: amount, id: id});
 };//good
 

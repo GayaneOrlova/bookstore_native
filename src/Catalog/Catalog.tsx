@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ListRenderItemInfo, Text, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { changeFavoriteById, getAllGenres, getBooksByGenre } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getPage } from '../api/book.api';
 import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import { SelectList } from 'react-native-dropdown-select-list'
+import RangeSlider from 'react-native-range-slider';
 
+import RNPickerSelect from 'react-native-picker-select';
 
 import CatalogStyles from './CatalogStyle';
 // import Slider from '@react-native-community/slider';
-// import { Slider } from 'react-native';
-// import RangeSlider from 'react-native-range-slider'
+import Slider from 'react-native';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { toastic } from '../utils/utils';
 import Pagination from '../Pagination/Pagination';
+import { ModalSlideFromBottomIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 
 type Props = {};
@@ -29,41 +31,51 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Catalog: React.FC<Props> = () => {
-
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProps>();
-  const isUser = useAppSelector(state => state.user.user);
-  
+
   const [genres, setGenres] = useState<{ key: any, value: any }[]>();
 
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [queryString, setQueryString] = useState();
   const [sortString, setSortString] = useState();
+  const [rangeState, setRangeState] = useState([0, 100])
 
 
-  const onLikePress = async(id: number) => {
+
+  const onLikePress = async (id: number) => {
     try {
-      const res = await changeFavoriteById(id);      
+      const res = await changeFavoriteById(id);
       dispatch(changeBookFavorite(id));
     }
-    catch(er){
+    catch (er) {
       const errorText = Object.values(er.response.data);
-      toastic( errorText)
+      toastic(errorText)
     }
   };
 
+  const sortDataKeys = {
+    'Price': 'price',
+    'Name': 'title',
+    'Author': 'author',
+    'Rating': 'overall_rating',
+    'Data of issue': 'published_at'
+  };
 
-  // const sortData = {
-  //   'Price': 'price',
-  //   'Name': 'title',
-  //   'Author': 'Author name',
-  //   'Rating': 'overall_rating',
-  //   'Data of issue': 'published_at'
-  // };
-  
-  const sortData = ['price', 'author', 'overall_rating',];
+  // const sortDataKeys = [
+  //   {value: 'Price', label: 'price'},
+  //   {value: 'Name', label: 'title'},
+  //  { value: 'Author', label: 'author'},
+  //   {value: 'Rating', label: 'overall_rating'},
+  //   {value: 'Data of issue', label: 'published_at'}
+  // ];
+
+
+  const sortData = ['Price', 'Name', 'Author', 'Rating', 'Data of issue',];
+
   const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
   const currentPage = useAppSelector((state) => state.book.currentPage)
+  // console.log('paginationResults', paginationResults)
 
   const changePageHandler = async (page: number) => {
     try {
@@ -88,14 +100,21 @@ const Catalog: React.FC<Props> = () => {
 
   const handleGenreSelection = async () => {
     try {
+      console.log('selectedGenres.length', selectedGenres.length)
       if (selectedGenres.length > 0) {
         const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value));
         const tempQueryString = "genre=" + genresFilter.join("&genre=");
-        const responce = await getBooksByGenre(tempQueryString + (sortString ? '&ordering=' + sortString : ''));
+        const responce = await getBooksByGenre(tempQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''));
 
-        console.log('7777', tempQueryString + (sortString ? '&ordering=' + sortString : ''))
+        // console.log('7777', tempQueryString + (sortString ? '&ordering=' + sortString : ''))
         dispatch(setPagination(responce.data));
         setQueryString(tempQueryString);
+      }
+      else {
+        const books = await getBooksByGenre('')
+        dispatch(setPagination(books.data));
+
+        setQueryString('');
       }
     }
     catch (er) {
@@ -103,8 +122,10 @@ const Catalog: React.FC<Props> = () => {
     }
   };
 
-  const handleSortBooks = (sortData: string) => {
-    setSortString(sortData);
+  const handleSortBooks = (sortDataValue: string) => {
+
+    const keySort = sortDataKeys[sortDataValue]
+    setSortString(keySort);
     handleGenreSelection();
   }
 
@@ -117,9 +138,11 @@ const Catalog: React.FC<Props> = () => {
   }, []);
 
 
-  const [rangeState, setRangeState] = useState([0, 100])
   const onValuesChange = (value: React.SetStateAction<number[]>) => {
+
+    console.log('value', value)
     setRangeState(value);
+    handleGenreSelection()
   };
 
   const handlePageChange = (page: number) => {
@@ -154,8 +177,8 @@ const Catalog: React.FC<Props> = () => {
           dropdownStyles={CatalogStyles.dropdown}
           dropdownTextStyles={CatalogStyles.selectTitle}
 
-          // onSelect={handleSortBooks}
-          
+        // onSelect={handleSortBooks}
+
         />
         <View style={CatalogStyles.catalogList}>
           {/* <ScrollView horizontal={true} style={{ flexGrow: 1, gap: 20 }}> */}
@@ -174,21 +197,29 @@ const Catalog: React.FC<Props> = () => {
         <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} />
 
       </View>
+
+
       <MultiSlider
         containerStyle={{ alignItems: 'center' }}
+        valueSuffix='2'
         values={rangeState}
-        sliderLength={280}
+        sliderLength={260}
         min={0}
         max={100}
         step={1}
         onValuesChange={onValuesChange}
-        trackStyle={{ height: 12, backgroundColor: '#D6D8E7', borderRadius: 16 }}
+        trackStyle={{ height: 12, backgroundColor: '#D6D8E7', borderRadius: 16, }}
         selectedStyle={{ backgroundColor: '#BFCC94' }}
-        markerStyle={{ height: 32, width: 32, borderRadius: 16, backgroundColor: 'white', borderColor: '#BFCC94', borderWidth: 2 }}
+        markerStyle={{ marginTop: 10, height: 32, width: 32, borderRadius: 16, backgroundColor: 'white', borderColor: '#BFCC94', borderWidth: 2, }}
       />
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 50, marginVertical: -20, }}>
+        <Text>${rangeState[0]}</Text>
+        <Text>${rangeState[1]}</Text>
+      </View>
+
+
     </View>
   );
 };
 
 export default Catalog;
-
