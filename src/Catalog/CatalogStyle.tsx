@@ -32,6 +32,7 @@ const CatalogStyles = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     backgroundColor: '#F0F4EF',
+    height: 48,
   },
   checkBox: {
     borderRadius: 24,

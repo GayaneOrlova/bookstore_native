@@ -1,6 +1,6 @@
 import React from 'react';
 import DotsPagination from 'react-native-dots-pagination';
-import { View, TouchableOpacity, Text } from 'react-native';
+import { View, TouchableOpacity, Text, Image } from 'react-native';
 import PaginationStyle from './PaginationStyle';
 
 type Props = {
@@ -20,8 +20,8 @@ const Pagination: React.FC<Props> = ({ totalPages, currentPage, count, onPageCha
   return (
     <View style={PaginationStyle.container}>
       <TouchableOpacity onPress={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-        <Text style={PaginationStyle.button}>{'ᐸ'}</Text>
-      </TouchableOpacity>
+      <Image source={require('../../images/icons/back.png')}/>
+    </TouchableOpacity>
       <DotsPagination
         length={dotCount}
         passiveDotWidth={14}
@@ -34,7 +34,7 @@ const Pagination: React.FC<Props> = ({ totalPages, currentPage, count, onPageCha
         marginHorizontal={30}
       />
       <TouchableOpacity onPress={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
-        <Text style={PaginationStyle.button}>{'ᐳ'}</Text>
+      <Image source={require('../../images/icons/forward.png')}/>
       </TouchableOpacity>
     </View>
   );

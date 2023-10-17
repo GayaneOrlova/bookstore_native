@@ -6,9 +6,7 @@ import { getPage } from '../api/book.api';
 import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import { SelectList } from 'react-native-dropdown-select-list'
-import RangeSlider from 'react-native-range-slider';
 
-import RNPickerSelect from 'react-native-picker-select';
 
 import CatalogStyles from './CatalogStyle';
 // import Slider from '@react-native-community/slider';
@@ -20,6 +18,7 @@ import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { toastic } from '../utils/utils';
 import Pagination from '../Pagination/Pagination';
 import { ModalSlideFromBottomIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
+import RangeSlider from '../RangeSlider/RangeSlider';
 
 
 type Props = {};
@@ -166,6 +165,8 @@ const Catalog: React.FC<Props> = () => {
           dropdownTextStyles={CatalogStyles.selectTitle}
           badgeStyles={CatalogStyles.badge}
         />
+        <RangeSlider rangeState={rangeState} setRangeState={setRangeState} handleGenreSelection={handleGenreSelection} rangeStateMin={rangeState[0]} rangeStateMax={rangeState[1]} />
+        
         <SelectList
           placeholder={`Sort by`}
           setSelected={handleSortBooks}
@@ -199,7 +200,7 @@ const Catalog: React.FC<Props> = () => {
       </View>
 
 
-      <MultiSlider
+      {/* <MultiSlider
         containerStyle={{ alignItems: 'center' }}
         valueSuffix='2'
         values={rangeState}
@@ -215,7 +216,7 @@ const Catalog: React.FC<Props> = () => {
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 50, marginVertical: -20, }}>
         <Text>${rangeState[0]}</Text>
         <Text>${rangeState[1]}</Text>
-      </View>
+      </View> */}
 
 
     </View>
