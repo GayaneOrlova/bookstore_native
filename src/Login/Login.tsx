@@ -32,7 +32,7 @@ const Login = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toastic(errorText)
     }
   };
 

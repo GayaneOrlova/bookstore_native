@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ListRenderItemInfo, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { getAllGenres, getBooksByGenre, getGenre } from '../api/book.api';
+import { FlatList, ListRenderItemInfo, Text, View } from 'react-native';
+import { changeFavoriteById, getAllGenres, getBooksByGenre } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getPage} from '../api/book.api';
-import { BookType, filteredBooks, setCurrentPage, setPagination } from '../store/slices/bookSlice';
+import { getPage } from '../api/book.api';
+import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
 import { SelectList } from 'react-native-dropdown-select-list'
-import { useParams } from 'react-router-native';
 
 
 import CatalogStyles from './CatalogStyle';
@@ -15,10 +13,7 @@ import CatalogStyles from './CatalogStyle';
 // import { Slider } from 'react-native';
 // import RangeSlider from 'react-native-range-slider'
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import Slider from 'rn-range-slider';
-import { useNavigation } from '@react-navigation/native';
-import { number } from 'yup';
-
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { toastic } from '../utils/utils';
@@ -34,21 +29,42 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Catalog: React.FC<Props> = () => {
+
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProps>();
   const isUser = useAppSelector(state => state.user.user);
-  const [genres, setGenres] = useState<{ key: any, value: any }[]>();
   
+  const [genres, setGenres] = useState<{ key: any, value: any }[]>();
+
   const [selectedGenres, setSelectedGenres] = useState([]);
   const [queryString, setQueryString] = useState();
   const [sortString, setSortString] = useState();
 
+
+  const onLikePress = async(id: number) => {
+    try {
+      const res = await changeFavoriteById(id);      
+      dispatch(changeBookFavorite(id));
+    }
+    catch(er){
+      const errorText = Object.values(er.response.data);
+      toastic( errorText)
+    }
+  };
+
+
+  // const sortData = {
+  //   'Price': 'price',
+  //   'Name': 'title',
+  //   'Author': 'Author name',
+  //   'Rating': 'overall_rating',
+  //   'Data of issue': 'published_at'
+  // };
   
   const sortData = ['price', 'author', 'overall_rating',];
-
   const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
   const currentPage = useAppSelector((state) => state.book.currentPage)
-  
+
   const changePageHandler = async (page: number) => {
     try {
       const responce = await getPage(page, queryString);
@@ -69,19 +85,20 @@ const Catalog: React.FC<Props> = () => {
       toastic(errorText)
     }
   };
-    
+
   const handleGenreSelection = async () => {
-  try {
-    if (selectedGenres.length > 0) {
-      const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value));
-      const tempQueryString = "genre=" + genresFilter.join("&genre=");
-      const responce = await getBooksByGenre(tempQueryString + (sortString ? '&ordering=' + sortString : ''));
-      
-      console.log('7777', tempQueryString + (sortString ? '&ordering=' + sortString : ''))
-      dispatch(setPagination(responce.data));
-      setQueryString(tempQueryString);
-    }}
-    catch(er) {
+    try {
+      if (selectedGenres.length > 0) {
+        const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value));
+        const tempQueryString = "genre=" + genresFilter.join("&genre=");
+        const responce = await getBooksByGenre(tempQueryString + (sortString ? '&ordering=' + sortString : ''));
+
+        console.log('7777', tempQueryString + (sortString ? '&ordering=' + sortString : ''))
+        dispatch(setPagination(responce.data));
+        setQueryString(tempQueryString);
+      }
+    }
+    catch (er) {
       console.log(er);
     }
   };
@@ -89,13 +106,11 @@ const Catalog: React.FC<Props> = () => {
   const handleSortBooks = (sortData: string) => {
     setSortString(sortData);
     handleGenreSelection();
-  
-}
-
+  }
 
   useEffect(() => {
     changePageHandler(currentPage);
-  }, [isUser.email]);
+  }, []);
 
   useEffect(() => {
     fetchAllGenres();
@@ -107,7 +122,7 @@ const Catalog: React.FC<Props> = () => {
     setRangeState(value);
   };
 
-  const handlePageChange = (page:number) => {
+  const handlePageChange = (page: number) => {
   };
 
   return (
@@ -119,26 +134,35 @@ const Catalog: React.FC<Props> = () => {
           setSelected={setSelectedGenres}
           onSelect={handleGenreSelection}
           search={false}
-          boxStyles={CatalogStyles.box}
-          dropdownStyles={CatalogStyles.dropdown}
           data={genres!}
-          inputStyles={{padding:0}}
+          label='Selected genres:'
+          boxStyles={CatalogStyles.box}
+          inputStyles={CatalogStyles.selectTitle}
+          checkBoxStyles={CatalogStyles.checkBox}
+          dropdownStyles={CatalogStyles.dropdown}
+          dropdownTextStyles={CatalogStyles.selectTitle}
+          badgeStyles={CatalogStyles.badge}
         />
         <SelectList
           placeholder={`Sort by`}
           setSelected={handleSortBooks}
-          search={false}
-          boxStyles={CatalogStyles.box}
-          dropdownStyles={CatalogStyles.dropdown}
           data={sortData}
           maxHeight={666}
+          search={false}
+          boxStyles={CatalogStyles.box}
+          inputStyles={CatalogStyles.selectTitle}
+          dropdownStyles={CatalogStyles.dropdown}
+          dropdownTextStyles={CatalogStyles.selectTitle}
+
+          // onSelect={handleSortBooks}
+          
         />
-        <View>
+        <View style={CatalogStyles.catalogList}>
           {/* <ScrollView horizontal={true} style={{ flexGrow: 1, gap: 20 }}> */}
           <FlatList
             data={paginationResults}
             renderItem={({ item }: ListRenderItemInfo<BookType>) => (
-              <RenderBookItem item={item} navigation={navigation} />
+              <RenderBookItem item={item} navigation={navigation} onFavoritePress={() => onLikePress(item.id)} />
             )}
             keyExtractor={(item) => item.author}
             numColumns={2}

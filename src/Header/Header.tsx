@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -21,33 +21,24 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Header = () => {
-  const isUser = useAppSelector(state => state.user.user);
-    const totalAmount = isUser.cart_items_count;
-
-  
-  // const cartList = useAppSelector(state => state.book.cartStore);
   const navigation = useNavigation<NavigationProps>();
-  
+  const isUser = useAppSelector(state => state.user.user);
+
   const onLoginPage = () => {
     navigation.navigate('Login');
   };
-
   const onSignupPage = () => {
     navigation.navigate('Signup');
   };
-
   const onUserProfilePage = () => {
     navigation.navigate('UserProfile');
   }
-
   const onCartPage = () => {
     navigation.navigate('Cart');
   }
-
   const onFavoritePage = () => {
     navigation.navigate('FavoritesPage');
   };
-
   const onHomepage = () => {
     navigation.navigate('Homepage');
   };
@@ -81,9 +72,11 @@ const Header = () => {
               image_source={require('../../images/icons/cart.png')}
               onPress={onCartPage}
             />
-            <View style={UserButtonStyles.button_index}>
-              <Text style={UserButtonStyles.button_index_count}>{totalAmount}</Text>
-            </View>
+            {isUser.cart_items_count &&
+              <View style={UserButtonStyles.button_index}>
+                <Text style={UserButtonStyles.button_index_count}>{isUser.cart_items_count}</Text>
+              </View>
+            }
             <UserButton onPress={onFavoritePage} image_source={require('../../images/icons/heart.png')} />
             <UserButton
               image_source={require('../../images/icons/userrprofile.png')}

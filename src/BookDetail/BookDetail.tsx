@@ -16,7 +16,9 @@ import RenderBookItemStyles from '../RenderBookItem/RenderBookItemStyles';
 import BookComments from '../BookComments/BookComments';
 import BooksRecommend from '../BooksRecommend/BooksRecommend';
 
-type Props = {};
+type Props = {
+  // id: number;
+};
 
 type RootStackParamList = {
   BookDetail: { id: number }
@@ -26,8 +28,10 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const BookDetail: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
+
   const route = useRoute();
   const id = route.params?.id;
+  
   const isUser = useAppSelector(state => state.user.user);
   const [bookDetail, setBookDetail] = useState<BookType>();
   const [userNewRating, setUserNewRating] = useState();
@@ -44,9 +48,9 @@ const BookDetail: React.FC<Props> = () => {
 
   const addBookRating = async (rating: number) => {
     try {
-      const responce = await createBookRating(id, rating)
+      const responce = await createBookRating(id, rating);
       setUserNewRating(responce.data.rating);
-      toastic('Rating was successfully added!')
+      toastic('Rating was successfully added!');
     }
     catch (er) {
       toastic('An error occurred');
@@ -55,7 +59,7 @@ const BookDetail: React.FC<Props> = () => {
 
   useEffect(() => {
     fetchBookDetail();
-  }, [userNewRating,])
+  }, [userNewRating])
   
   const onClickToCart = async () => {
     try {
@@ -101,10 +105,10 @@ const BookDetail: React.FC<Props> = () => {
         <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>        
         <Button style={bookDetail.available ? BookDetailStyle.price_button : BookDetailStyle.available_button} text={bookDetail.available ? `$${bookDetail.price} USD` : 'Not available'} onPress={onClickToCart} />
         <BookComments id={bookDetail.id} commentList={bookDetail.comments} />
-        <BooksRecommend navigation={navigation} />
+        <BooksRecommend navigation={navigation}/>
       </View>
       <Footer />
-    </ScrollView>
+   </ScrollView>
   );
 };
 

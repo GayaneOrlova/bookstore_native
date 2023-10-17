@@ -40,12 +40,12 @@ export type RatingType = {
 };
 
 export type CartItemType = {
-    amount: number | null,
-    book_image: string,
-    book_name: string,
-    book_author: string,
-    id: number | null,
-    price: number | null,
+  amount: number | null,
+  book_image: string,
+  book_name: string,
+  book_author: string,
+  id: number | null,
+  price: number | null,
 };
 
 export type CartType = {
@@ -66,7 +66,8 @@ type BookSliceType = {
   currentPage: number,
   ratingStore: RatingType,
   cartStore: CartType,
-  bookComments: CommentsType [],
+  bookComments: CommentsType[],
+  favoriteBooks: BookType[],
 };
 
 const initialState: BookSliceType = {
@@ -87,6 +88,7 @@ const initialState: BookSliceType = {
     rating: null
   },
   bookComments: [],
+  favoriteBooks: [],
 };
 
 const bookSlice = createSlice({
@@ -96,22 +98,32 @@ const bookSlice = createSlice({
     setPagination(state, action: PayloadAction<Pagination>) {
       state.pagination = action.payload;
       console.log(action.payload, 'action.payload')
-    },
+    }, //good
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload
-    },
-    changeBookLike(state, action) {
-      const book = state!.pagination.results!.findIndex(
+    },//good
+    changeBookFavorite(state, action:PayloadAction<number>) {
+      const book = state?.pagination.results?.findIndex(
         (item) => item.id === action.payload,
       );
       state.pagination.results[book].like =
         !state.pagination.results[book].like;
-    },
+    },//good
+
+    setFavoriteList(state, action: PayloadAction<BookType[]>) {
+      state.favoriteBooks = action.payload;
+    },//good
+    changeFavoriteList(state, action) {
+      const book = state?.favoriteBooks?.findIndex((item) => item.id === action.payload);
+      state.favoriteBooks.splice(book, 1);
+    },//good
+
     setCart(state, action) {
       state.cartStore = action.payload;
-    },
-    changeCartItem(state, action: PayloadAction<CartType>) {
-      const newItem = action.payload;      
+    },//good
+    
+    changeCartItem(state, action) {
+      const newItem = action.payload;
       const updatedItems = state.cartStore.items.map((item) => {
         if (item.id === newItem.id) {
           return newItem;
@@ -119,20 +131,31 @@ const bookSlice = createSlice({
         return item;
       });
       state.cartStore.items = updatedItems;
-    },
+    },//good
+    deleteCartItem(state, action: PayloadAction) {
+      state.cartStore.items = [];
+      state.cartStore.total_price = null;
+    },//good
+    
     setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
       state.ratingStore = action.payload;
     },
-    
+
     filteredBooks(state, action) {
       state.booksStore = state.booksStore.map((book) => {
-        if(book.genre.some((genre) => action.payload.genresFilter.includes(genre))) {
+        if (book.genre.some((genre) => action.payload.genresFilter.includes(genre))) {
           return book;
         }
       }).filter((notEmpty) => notEmpty)
     },//not good
+
   },
+  // extraReducers: (builder) => {
+  //   thunk.fullfiled //
+  //    state.favoriteBooks = payload
+  //   thunk.rejected //
+  // }
 });
 
-export const { setPagination, setCurrentPage, setCart, setBookRating, changeCartItem, changeBookLike, filteredBooks } = bookSlice.actions;
+export const { setFavoriteList, setPagination, setCurrentPage, setCart, setBookRating, changeCartItem, deleteCartItem, changeBookFavorite, changeFavoriteList, filteredBooks } = bookSlice.actions;
 export default bookSlice.reducer;

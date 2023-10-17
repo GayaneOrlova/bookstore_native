@@ -2,7 +2,7 @@ import React, {  } from 'react';
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { changeCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { changeCartItem } from '../store/slices/bookSlice';
+import { changeCartItem, deleteCartItem } from '../store/slices/bookSlice';
 import { toastic } from '../utils/utils';
 import CartAmountSelectorStyles from './CartAmountSelectorStyles';
 
@@ -14,6 +14,7 @@ type Props = {
 const CartQuantitySelector:React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const cartList = useAppSelector(state => state.book.cartStore);
+  console.log('cartList', cartList)
 
   const handleMinus = async (id: number) => {
     const currentCartItem = cartList.items.find(item => item.id === id);
@@ -33,6 +34,7 @@ const CartQuantitySelector:React.FC<Props> = (props) => {
     const amount = currentCartItem?.amount! + 1;
     try {
       const responce = await changeCart(amount, id);
+      console.log('plus',responce.data)
       dispatch(changeCartItem(responce.data));
     }
     catch (er) {
@@ -43,7 +45,9 @@ const CartQuantitySelector:React.FC<Props> = (props) => {
   const handleDeleteCart = async (id: number) => {
     const amount = 0;
     try {
-      await changeCart(amount, id);
+      const responce = await changeCart(amount, id);
+      console.log('delete',responce.data)
+      dispatch(deleteCartItem(id));
     }
     catch (er) {
       toastic('The error occurred!');

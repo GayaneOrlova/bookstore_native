@@ -5,7 +5,7 @@ const PaginationStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginHorizontal: 10,
+    marginHorizontal: 30,
     // marginVertical: 20,
   },
   button: {

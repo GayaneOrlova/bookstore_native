@@ -33,10 +33,12 @@ const InputPassword: React.FC<Props> = props => {
   };
 
   const onSubmit = async (text: UserLoginType) => {
+  console.log('text!!!!!!', text)
     try {
       const response = await userPasswordChange(text);
+      console.log(response.data, 'response')
       dispatch(setNewPassword(response.data));
-      toastic("Password was successfully changed!");
+      // toastic("Password was successfully changed!");
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];

@@ -24,7 +24,6 @@ const Cart = () => {
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
-  const [usercart, setUsercart] = useState<CartType>();
 
   const onHomepage = () => {
     navigation.navigate('Homepage');
@@ -35,7 +34,6 @@ const Cart = () => {
     try {
       const responce = await getCart();
       dispatch(setCart(responce.data));
-      setUsercart(responce.data);
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
@@ -45,8 +43,8 @@ const Cart = () => {
 
   useEffect(() => {
     fetchUserCart();
-  }, [usercart]);
-
+  }, []);
+console.log('cartList?.total_price', cartList?.total_price)
 
   return (
     <ScrollView>
