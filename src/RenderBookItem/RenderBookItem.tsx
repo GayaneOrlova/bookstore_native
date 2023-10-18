@@ -7,7 +7,7 @@ import RenderBookItemStyles from './RenderBookItemStyles';
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 import { toastic } from '../utils/utils';
 import { createCartItem } from '../api/book.api';
-import { useAppDispatch } from '../store/hooks';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
 
 type Props = {
   item: BookType;
@@ -16,6 +16,7 @@ type Props = {
 };
 
 const RenderBookItem: React.FC<Props> = (props) => {
+  const isUser = useAppSelector(state => state.user.user);
 const dispatch = useAppDispatch();
   const onBookDetailPage = (id: number) => {
     props.navigation.navigate('BookDetail', { id });
@@ -36,7 +37,7 @@ const dispatch = useAppDispatch();
     <TouchableOpacity onPress={() => onBookDetailPage(props.item.id)}>
       <View style={RenderBookItemStyles.book_container}>
         <View style={RenderBookItemStyles.book_image_container}>
-          <FavoriteIcon id={props.item.id} like={props.item.like} onFavoritePress={props.onFavoritePress}/>
+          {isUser.email && <FavoriteIcon id={props.item.id} like={props.item.like} onFavoritePress={props.onFavoritePress}/>}
           {props.item.bestseller && <Button style={RenderBookItemStyles.bestseller_flag} text={'Bestseller'} />}
           {props.item.new && <Button style={RenderBookItemStyles.new_flag} text={'New'} />}
           <Image style={RenderBookItemStyles.book_image} source={{ uri: props.item.image }} />

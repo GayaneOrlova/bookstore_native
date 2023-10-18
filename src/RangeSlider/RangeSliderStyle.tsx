@@ -66,7 +66,7 @@ const RangeSliderStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: 50,
-    marginVertical: -20,
+    marginVertical: -10,
   },
 });
 

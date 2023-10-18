@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, ListRenderItemInfo, Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, ListRenderItemInfo, Text, View } from 'react-native';
 import { changeFavoriteById, getAllGenres, getBooksByGenre } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getPage } from '../api/book.api';
@@ -10,14 +10,11 @@ import { SelectList } from 'react-native-dropdown-select-list'
 
 import CatalogStyles from './CatalogStyle';
 // import Slider from '@react-native-community/slider';
-import Slider from 'react-native';
-import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { toastic } from '../utils/utils';
 import Pagination from '../Pagination/Pagination';
-import { ModalSlideFromBottomIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 import RangeSlider from '../RangeSlider/RangeSlider';
 
 
@@ -39,8 +36,6 @@ const Catalog: React.FC<Props> = () => {
   const [queryString, setQueryString] = useState();
   const [sortString, setSortString] = useState();
   const [rangeState, setRangeState] = useState([0, 100])
-
-
 
   const onLikePress = async (id: number) => {
     try {
@@ -198,27 +193,6 @@ const Catalog: React.FC<Props> = () => {
         <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} />
 
       </View>
-
-
-      {/* <MultiSlider
-        containerStyle={{ alignItems: 'center' }}
-        valueSuffix='2'
-        values={rangeState}
-        sliderLength={260}
-        min={0}
-        max={100}
-        step={1}
-        onValuesChange={onValuesChange}
-        trackStyle={{ height: 12, backgroundColor: '#D6D8E7', borderRadius: 16, }}
-        selectedStyle={{ backgroundColor: '#BFCC94' }}
-        markerStyle={{ marginTop: 10, height: 32, width: 32, borderRadius: 16, backgroundColor: 'white', borderColor: '#BFCC94', borderWidth: 2, }}
-      />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: 50, marginVertical: -20, }}>
-        <Text>${rangeState[0]}</Text>
-        <Text>${rangeState[1]}</Text>
-      </View> */}
-
-
     </View>
   );
 };

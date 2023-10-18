@@ -4,16 +4,15 @@ const RenderBookItemStyles = StyleSheet.create({
   book_container: {
     gap: 10,
     marginTop: 10,
-    
   },
   book_image_container: {
     position: 'relative',
   },
   book_image: {
     // maxWidth: 'auto',
-    // width: 135,
-    width: '90%',
-    height: 253,
+    width: 135,
+    // width: '90%',
+    height: 192,
     borderRadius: 16,
     },
   favorite: {
