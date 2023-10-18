@@ -6,7 +6,7 @@ const GenreFilterStyle = StyleSheet.create({
     borderRadius: 16,
     alignItems: 'center',
     backgroundColor: '#F0F4EF',
-    height: 48,
+    minHeight: 48,
   },
   selectTitle: {
     fontSize: 14,
@@ -25,6 +25,7 @@ const GenreFilterStyle = StyleSheet.create({
   },
   badge: {
     backgroundColor: '#344966',
+    color: 'white',
   },
 });
 

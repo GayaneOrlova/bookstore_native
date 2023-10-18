@@ -3,7 +3,7 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { changeCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { changeCartItem, deleteCartItem } from '../store/slices/bookSlice';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 import CartAmountSelectorStyles from './CartAmountSelectorStyles';
 
 type Props = {
@@ -24,7 +24,7 @@ const CartQuantitySelector: React.FC<Props> = (props) => {
       dispatch(changeCartItem(responce.data));
     }
     catch (er) {
-      toastic('The error occurred');
+      toast('The error occurred');
     }
   };
 
@@ -36,7 +36,7 @@ const CartQuantitySelector: React.FC<Props> = (props) => {
       dispatch(changeCartItem(responce.data));
     }
     catch (er) {
-      toastic('The error occurred');
+      toast('The error occurred');
     }
   };
 
@@ -47,7 +47,7 @@ const CartQuantitySelector: React.FC<Props> = (props) => {
       dispatch(deleteCartItem());
     }
     catch (er) {
-      toastic('The error occurred!');
+      toast('The error occurred!');
     }
   };
 

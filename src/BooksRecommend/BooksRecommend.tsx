@@ -7,9 +7,8 @@ import { BookType, changeFavoriteList } from '../store/slices/bookSlice';
 import BookDetailStyle from './BooksRecommendStyles';
 import CatalogStyles from '../Catalog/CatalogStyle';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
-import { isDraft } from '@reduxjs/toolkit';
 import { changeFavoriteById, getRecommended } from '../api/book.api';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 
 type Props = {
   navigation: any;
@@ -33,7 +32,7 @@ const BooksRecommend: React.FC<Props> = () => {
       setRecommended(responce.data);
     }
     catch (er) {
-      toastic('An error occurred');
+      toast('An error occurred');
     }
   };
   
@@ -44,7 +43,7 @@ const BooksRecommend: React.FC<Props> = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data);
-      toastic(errorText);
+      toast(errorText);
     }
   };
 

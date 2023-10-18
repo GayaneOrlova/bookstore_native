@@ -7,7 +7,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { BookType, changeCartItem } from '../store/slices/bookSlice';
 import { createBookRating, createCartItem, getBookById } from '../api/book.api';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Footer from '../Footer/Footer';
@@ -40,7 +40,7 @@ const BookDetail: React.FC<Props> = () => {
       const response = await getBookById(id);
       setBookDetail(response.data);
     } catch (er) {
-      toastic('An error occurred');
+      toast('An error occurred');
     }
   };
   useEffect(() => {
@@ -51,10 +51,10 @@ const BookDetail: React.FC<Props> = () => {
     try {
       const response = await createBookRating(id, rating);
       setUserNewRating(response.data.rating);
-      toastic('Rating was successfully added!');
+      toast('Rating was successfully added!');
     }
     catch (er) {
-      toastic('An error occurred');
+      toast('An error occurred');
     }
   };
 
@@ -62,9 +62,9 @@ const BookDetail: React.FC<Props> = () => {
     try {
       const response = await createCartItem(id);
       dispatch(changeCartItem(response.data));
-      toastic('Book was added to cart!')
+      toast('Book was added to cart!')
     } catch (er) {
-      toastic('An error occurred');
+      toast('An error occurred');
     }
   };
 
@@ -103,7 +103,6 @@ const BookDetail: React.FC<Props> = () => {
         <Text style={BookDetailStyle.book_body}>{bookDetail.body}</Text>
         <Button style={bookDetail.available ? BookDetailStyle.price_button : BookDetailStyle.available_button} text={bookDetail.available ? `$${bookDetail.price} USD` : 'Not available'} onPress={onClickToCart} />
         <BookComments id={bookDetail.id} commentList={bookDetail.comments} />
-        <BooksRecommend navigation={navigation} />
       </View>
       <Footer />
     </ScrollView>

@@ -12,7 +12,7 @@ import Button from '../Button/Button';
 import Input from '../Input/Input';
 import SignupStyles from './SignupStyles';
 import { ScrollView } from 'react-native-gesture-handler';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 import { signupSchema } from '../utils/shemas';
 
 
@@ -38,7 +38,7 @@ const Signup = () => {
       dispatch(setUser(response.data.user));
     } catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toast( errorText)
     }
   };
 

@@ -4,7 +4,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { CommentsType } from '../store/slices/bookSlice';
 import { createBookComment } from '../api/book.api';
 import { useAppSelector } from '../store/hooks';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 import { Controller, useForm } from 'react-hook-form';
 import BookCommentsStyle from './BookCommentsStyle';
 import { bodySchema } from '../utils/shemas';
@@ -32,7 +32,7 @@ const BookComments: React.FC<Props> = ({ commentList, id }) => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic(errorText)
+      toast(errorText)
     }
   };
   

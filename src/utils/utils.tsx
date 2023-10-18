@@ -1,6 +1,6 @@
 import Toast from 'react-native-simple-toast';
 
-export const toastic = (text: string | any) => {
+export const toast = (text: string | any) => {
   Toast.showWithGravityAndOffset( `${text}`,
       Toast.LONG,
       Toast.TOP,
@@ -8,4 +8,8 @@ export const toastic = (text: string | any) => {
       50,)
 };
 
+export const axiosError = (isAxiosError: any) => {
+ 
+  
+};
 

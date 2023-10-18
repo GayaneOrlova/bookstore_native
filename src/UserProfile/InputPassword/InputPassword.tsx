@@ -9,7 +9,7 @@ import { setNewPassword } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputPasswordStyles from './InputPasswordStyles';
-import { toastic } from '../../utils/utils';
+import { toast } from '../../utils/utils';
 import { changePasswordSchema } from '../../utils/shemas';
 
 type UserLoginType = {
@@ -36,11 +36,11 @@ const InputPassword: React.FC<Props> = props => {
     try {
       const response = await userPasswordChange(text);
       dispatch(setNewPassword(response.data));
-      // toastic("Password was successfully changed!");
+      toast("Password was successfully changed!");
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic(errorText)
+      toast(errorText)
     }
   };
 

@@ -10,7 +10,7 @@ import { changeFavoriteList, setFavoriteList } from '../store/slices/bookSlice';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import FavoritesPageStyles from './FavoritesPageStyle';
 import { changeFavoriteById, getFavoritesBooks } from '../api/book.api';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 
 type Props = {};
 
@@ -31,7 +31,7 @@ const FavoritesPage: React.FC<Props> = () => {
         dispatch(setFavoriteList(responce.data));
       }
       catch (er) {
-        toastic('An error occurred');
+        toast('An error occurred');
       };
     })();
   }, []);
@@ -43,7 +43,7 @@ const FavoritesPage: React.FC<Props> = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data);
-      toastic(errorText);
+      toast(errorText);
     }
   };
 

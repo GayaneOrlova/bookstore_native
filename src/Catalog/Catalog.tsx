@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItemInfo, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 import { changeFavoriteById } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getPage } from '../api/book.api';
 import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
 import CatalogStyles from './CatalogStyle';
-import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
-import { toastic } from '../utils/utils';
 import Pagination from '../Pagination/Pagination';
 import RangeSlider from './Sort&Filters/PriceRangeSlider/PriceRangeSlider';
 import GenreFilter from './Sort&Filters/GenreFilter/GenreFilter';
 import SortByOptions from './Sort&Filters/SortByOptions/SortByOptions';
 
+import { toast } from '../utils/utils';
 
 type Props = {};
 
@@ -52,11 +53,11 @@ const Catalog: React.FC<Props> = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data);
-      toastic(errorText)
+      toast(errorText)
     }
   };
 
-
+  console.log(genreQueryString, 'genreQueryString')
   useEffect(() => {
     changePageHandler(currentPage);
   }, [genreQueryString, sortString, rangeState, queryParams]);
@@ -66,7 +67,6 @@ const Catalog: React.FC<Props> = () => {
       <Text style={CatalogStyles.catalog_title}>Catalog</Text>
       <View>
         <GenreFilter setGenreQueryString={setGenreQueryString} />
-
         <RangeSlider rangeState={rangeState} setRangeState={setRangeState} rangeStateMin={rangeState[0]} rangeStateMax={rangeState[1]} />
         <SortByOptions setSortString={setSortString} />
         <View style={CatalogStyles.catalogList}>
@@ -82,7 +82,6 @@ const Catalog: React.FC<Props> = () => {
           />
         </View>
         <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} />
-
       </View>
     </View>
   );

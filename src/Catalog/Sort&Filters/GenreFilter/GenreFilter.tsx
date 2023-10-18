@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { getAllGenres } from '../../../api/book.api';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
-import { toastic } from '../../../utils/utils';
+import { toast } from '../../../utils/utils';
 import GenreFilterStyle from './GenreFilterStyle';
 
 type Props = {
@@ -20,7 +20,7 @@ const GenreFilter: React.FC<Props> = (props) => {
       setGenres(genresList)
     } catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic(errorText)
+      toast(errorText)
     }
   };
 

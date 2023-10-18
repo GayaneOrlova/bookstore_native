@@ -3,22 +3,26 @@ import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
+
 import { getCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { setCart } from '../store/slices/bookSlice';
+
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import CartStyles from './CartStyles';
-import { toastic } from '../utils/utils';
 import CartQuantitySelector from '../CartQuantitySelector/CartAmountSelector';
+
+import { toast } from '../utils/utils';
+import { isAxiosError } from 'axios';
 
 type RootStackParamList = {
   Homepage: undefined;
 };
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-const Cart = () => {
+const Cart:React.FC = () => {
   const navigation = useNavigation<NavigationProps>();
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
@@ -34,9 +38,14 @@ const Cart = () => {
       const responce = await getCart();
       dispatch(setCart(responce.data));
     }
-    catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toastic(errorText);
+    catch (err: any) {
+      if (isAxiosError(err)) {
+      const errorText = Object.values(err.response.data)[0];
+      toast(errorText);
+    }
+    else {
+      toast('An error was occured!');
+    }
     }
   };
 

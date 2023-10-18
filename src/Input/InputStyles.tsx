@@ -6,7 +6,6 @@ const InputStyles = StyleSheet.create({
     marginTop: 30,
   },
   input_form: {
-    // flex: 1,
     height: 48,
     borderWidth: 1,
     borderColor: 'gray',
@@ -14,6 +13,10 @@ const InputStyles = StyleSheet.create({
     backgroundColor: '#F0F4EF',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  input: {
+    flex: 1,
+    marginRight: 15,
   },
   input_icon: {
     width: 24,

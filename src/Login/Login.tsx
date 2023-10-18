@@ -12,7 +12,7 @@ import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import LoginStyles from './LoginStyles';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 import { loginSchema } from '../utils/shemas';
 
 
@@ -32,7 +32,7 @@ const Login = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic(errorText)
+      toast(errorText)
     }
   };
 

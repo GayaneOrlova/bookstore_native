@@ -10,7 +10,7 @@ import { setAvatar, setUser } from '../../store/slices/userSlice';
 import Input from '../../Input/Input';
 import Button from '../../Button/Button';
 import InputProfileStyles from './InputProfileStyles';
-import { toastic } from '../../utils/utils';
+import { toast } from '../../utils/utils';
 import { changeUserInfoSchema } from '../../utils/shemas';
 
 
@@ -34,7 +34,7 @@ const InputProfile = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toast( errorText)
     }
   }
 
@@ -54,11 +54,11 @@ const InputProfile = () => {
     try {
       const response = await changeUserinfo({ email: value.email, username: value.username });
       dispatch(setUser(response.data));
-      toastic('Personal information was successfully changed!');
+      toast('Personal information was successfully changed!');
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText);
+      toast( errorText);
     }
   };
 
@@ -106,7 +106,7 @@ const InputProfile = () => {
     }
     catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText);
+      toast( errorText);
     }
   };
 

@@ -4,14 +4,14 @@ const RenderBookItemStyles = StyleSheet.create({
   book_container: {
     gap: 10,
     marginTop: 10,
+    flexDirection: 'column',
   },
   book_image_container: {
     position: 'relative',
   },
   book_image: {
-    // maxWidth: 'auto',
     width: 135,
-    // width: '90%',
+    // width: "100%",
     height: 192,
     borderRadius: 16,
     },
@@ -42,7 +42,6 @@ const RenderBookItemStyles = StyleSheet.create({
     marginVertical: 10,
     alignItems: 'center',
     backgroundColor: '#344966',
-
   },
   available_button: {
     minWidth: 135,
@@ -51,9 +50,6 @@ const RenderBookItemStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#B9BAC3',
   },
-  
-  
-  
   new_flag: {
     position: 'absolute',
     bottom: 10,

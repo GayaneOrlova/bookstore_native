@@ -97,29 +97,29 @@ const bookSlice = createSlice({
   reducers: {
     setPagination(state, action: PayloadAction<Pagination>) {
       state.pagination = action.payload;
-    }, //good
+    },
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload
-    },//good
+    },
     changeBookFavorite(state, action:PayloadAction<number>) {
       const book = state?.pagination.results?.findIndex(
         (item) => item.id === action.payload,
       );
       state.pagination.results[book].like =
         !state.pagination.results[book].like;
-    },//good
+    },
 
     setFavoriteList(state, action: PayloadAction<BookType[]>) {
       state.favoriteBooks = action.payload;
-    },//good
+    },
     changeFavoriteList(state, action) {
       const book = state?.favoriteBooks?.findIndex((item) => item.id === action.payload);
       state.favoriteBooks.splice(book, 1);
-    },//good
+    },
 
     setCart(state, action) {
       state.cartStore = action.payload;
-    },//good
+    },
     
     changeCartItem(state, action) {
       const newItem = action.payload;
@@ -130,31 +130,16 @@ const bookSlice = createSlice({
         return item;
       });
       state.cartStore.items = updatedItems;
-    },//good
+    },
     deleteCartItem(state, action: PayloadAction) {
       state.cartStore.items = [];
       state.cartStore.total_price = null;
-    },//good
-    
+    },
     setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
       state.ratingStore = action.payload;
     },
-
-    filteredBooks(state, action) {
-      state.booksStore = state.booksStore.map((book) => {
-        if (book.genre.some((genre) => action.payload.genresFilter.includes(genre))) {
-          return book;
-        }
-      }).filter((notEmpty) => notEmpty)
-    },//not good
-
-  },
-  // extraReducers: (builder) => {
-  //   thunk.fullfiled //
-  //    state.favoriteBooks = payload
-  //   thunk.rejected //
-  // }
+  }
 });
 
-export const { setFavoriteList, setPagination, setCurrentPage, setCart, setBookRating, changeCartItem, deleteCartItem, changeBookFavorite, changeFavoriteList, filteredBooks } = bookSlice.actions;
+export const { setFavoriteList, setPagination, setCurrentPage, setCart, setBookRating, changeCartItem, deleteCartItem, changeBookFavorite, changeFavoriteList, } = bookSlice.actions;
 export default bookSlice.reducer;

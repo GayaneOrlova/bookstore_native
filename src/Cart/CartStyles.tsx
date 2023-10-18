@@ -94,3 +94,8 @@ const CartStyles = StyleSheet.create({
 });
 
 export default CartStyles;
+
+
+const COLORS = {
+  primaryBorder: "#D6D8E7",
+}

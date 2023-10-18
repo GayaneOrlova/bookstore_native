@@ -5,7 +5,7 @@ import { BookType, changeCartItem } from '../store/slices/bookSlice';
 import Button from '../Button/Button';
 import RenderBookItemStyles from './RenderBookItemStyles';
 import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
-import { toastic } from '../utils/utils';
+import { toast } from '../utils/utils';
 import { createCartItem } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 
@@ -26,10 +26,10 @@ const dispatch = useAppDispatch();
     try {
       const response = await createCartItem(props.item.id);
       dispatch(changeCartItem(response.data))
-      toastic('Book was successfully added!')
-    } catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toast('Book was successfully added!')
+    } catch (err) {
+      const errorText = Object.values(err.response.data)[0];
+      toast( errorText)
     }
   };
 

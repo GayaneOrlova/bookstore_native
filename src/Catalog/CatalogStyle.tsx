@@ -6,7 +6,7 @@ const CatalogStyles = StyleSheet.create({
     gap: 20,
     marginHorizontal: 15,
     marginTop: 20,
-    marginBottom: 80,
+    marginBottom: 20,
   },
   catalog_title: {
     fontSize: 18,

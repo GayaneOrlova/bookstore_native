@@ -6,7 +6,7 @@ const PaginationStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     marginHorizontal: 30,
-    // marginVertical: 20,
+    marginTop: 20,
   },
   button: {
     fontWeight: 'bold',

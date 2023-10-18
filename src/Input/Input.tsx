@@ -21,7 +21,7 @@ const Input: React.FC<Props> = props => {
     <View style={InputStyles.input_form}>
       <Image style={InputStyles.input_icon} source={props.image_source} />
       <TextInput
-        // style={InputStyles.input_form}
+        style={InputStyles.input}
         onChangeText={onChange}
         defaultValue={props.defaultValue}
         placeholder={props.placeholder}
