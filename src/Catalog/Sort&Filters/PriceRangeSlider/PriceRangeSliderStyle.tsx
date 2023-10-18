@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const RangeSliderStyles = StyleSheet.create({
+const PriceRangeSliderStyles = StyleSheet.create({
   box: {
     width: '100%',
     alignItems: 'center',
@@ -22,12 +22,13 @@ const RangeSliderStyles = StyleSheet.create({
     position: 'absolute',
     right: 0,
     top: '50%',
-    transform: [{ translateY: -12 }],
-    marginRight: 10,
+    transform: [{ translateY: -8 }],
+    marginRight: 22,
   },
   dropdown_button_image: {
-    width: 24,
-    height: 24
+    width: 14,
+    height: 14,
+    opacity: 0.35
   },
   dropdown: {
     width: '100%',
@@ -70,4 +71,4 @@ const RangeSliderStyles = StyleSheet.create({
   },
 });
 
-export default RangeSliderStyles;
+export default PriceRangeSliderStyles;

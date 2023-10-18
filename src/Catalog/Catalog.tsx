@@ -1,21 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, ListRenderItemInfo, Text, View } from 'react-native';
-import { changeFavoriteById, getAllGenres, getBooksByGenre } from '../api/book.api';
+import { changeFavoriteById } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { getPage } from '../api/book.api';
 import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
-import { MultipleSelectList } from 'react-native-dropdown-select-list';
-import { SelectList } from 'react-native-dropdown-select-list'
-
-
 import CatalogStyles from './CatalogStyle';
-// import Slider from '@react-native-community/slider';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { toastic } from '../utils/utils';
 import Pagination from '../Pagination/Pagination';
-import RangeSlider from '../RangeSlider/RangeSlider';
+import RangeSlider from './Sort&Filters/PriceRangeSlider/PriceRangeSlider';
+import GenreFilter from './Sort&Filters/GenreFilter/GenreFilter';
+import SortByOptions from './Sort&Filters/SortByOptions/SortByOptions';
 
 
 type Props = {};
@@ -27,15 +24,26 @@ type RootStackParamList = {
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const Catalog: React.FC<Props> = () => {
-  const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProps>();
+  const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
+  const currentPage = useAppSelector((state) => state.book.currentPage)
+  const dispatch = useAppDispatch();
 
-  const [genres, setGenres] = useState<{ key: any, value: any }[]>();
-
-  const [selectedGenres, setSelectedGenres] = useState([]);
-  const [queryString, setQueryString] = useState();
-  const [sortString, setSortString] = useState();
   const [rangeState, setRangeState] = useState([0, 100])
+  const [genreQueryString, setGenreQueryString] = useState('');
+  const [sortString, setSortString] = useState('');
+  const [queryParams, setQueryParams] = useState('');
+
+  const changePageHandler = async (page: number) => {
+    try {
+      setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
+      const responce = await getPage(page, queryParams);
+      dispatch(setPagination(responce.data));
+      dispatch(setCurrentPage(page));
+    } catch (er) {
+      console.log(er);
+    }
+  };
 
   const onLikePress = async (id: number) => {
     try {
@@ -48,136 +56,20 @@ const Catalog: React.FC<Props> = () => {
     }
   };
 
-  const sortDataKeys = {
-    'Price': 'price',
-    'Name': 'title',
-    'Author': 'author',
-    'Rating': 'overall_rating',
-    'Data of issue': 'published_at'
-  };
-
-  // const sortDataKeys = [
-  //   {value: 'Price', label: 'price'},
-  //   {value: 'Name', label: 'title'},
-  //  { value: 'Author', label: 'author'},
-  //   {value: 'Rating', label: 'overall_rating'},
-  //   {value: 'Data of issue', label: 'published_at'}
-  // ];
-
-
-  const sortData = ['Price', 'Name', 'Author', 'Rating', 'Data of issue',];
-
-  const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
-  const currentPage = useAppSelector((state) => state.book.currentPage)
-  // console.log('paginationResults', paginationResults)
-
-  const changePageHandler = async (page: number) => {
-    try {
-      const responce = await getPage(page, queryString);
-      dispatch(setCurrentPage(page));
-      dispatch(setPagination(responce.data));
-    } catch (er) {
-      console.log(er);
-    }
-  }
-
-  const fetchAllGenres = async () => {
-    try {
-      const response = await getAllGenres();
-      const genresList = response.data.map(item => ({ key: item.id, value: item.name }))
-      setGenres(genresList)
-    } catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toastic(errorText)
-    }
-  };
-
-  const handleGenreSelection = async () => {
-    try {
-      console.log('selectedGenres.length', selectedGenres.length)
-      if (selectedGenres.length > 0) {
-        const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value));
-        const tempQueryString = "genre=" + genresFilter.join("&genre=");
-        const responce = await getBooksByGenre(tempQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''));
-
-        // console.log('7777', tempQueryString + (sortString ? '&ordering=' + sortString : ''))
-        dispatch(setPagination(responce.data));
-        setQueryString(tempQueryString);
-      }
-      else {
-        const books = await getBooksByGenre('')
-        dispatch(setPagination(books.data));
-
-        setQueryString('');
-      }
-    }
-    catch (er) {
-      console.log(er);
-    }
-  };
-
-  const handleSortBooks = (sortDataValue: string) => {
-
-    const keySort = sortDataKeys[sortDataValue]
-    setSortString(keySort);
-    handleGenreSelection();
-  }
 
   useEffect(() => {
     changePageHandler(currentPage);
-  }, []);
-
-  useEffect(() => {
-    fetchAllGenres();
-  }, []);
-
-
-  const onValuesChange = (value: React.SetStateAction<number[]>) => {
-
-    console.log('value', value)
-    setRangeState(value);
-    handleGenreSelection()
-  };
-
-  const handlePageChange = (page: number) => {
-  };
+  }, [genreQueryString, sortString, rangeState, queryParams]);
 
   return (
     <View style={CatalogStyles.catalog_container}>
       <Text style={CatalogStyles.catalog_title}>Catalog</Text>
       <View>
-        <MultipleSelectList
-          placeholder='Genre'
-          setSelected={setSelectedGenres}
-          onSelect={handleGenreSelection}
-          search={false}
-          data={genres!}
-          label='Selected genres:'
-          boxStyles={CatalogStyles.box}
-          inputStyles={CatalogStyles.selectTitle}
-          checkBoxStyles={CatalogStyles.checkBox}
-          dropdownStyles={CatalogStyles.dropdown}
-          dropdownTextStyles={CatalogStyles.selectTitle}
-          badgeStyles={CatalogStyles.badge}
-        />
-        <RangeSlider rangeState={rangeState} setRangeState={setRangeState} handleGenreSelection={handleGenreSelection} rangeStateMin={rangeState[0]} rangeStateMax={rangeState[1]} />
-        
-        <SelectList
-          placeholder={`Sort by`}
-          setSelected={handleSortBooks}
-          data={sortData}
-          maxHeight={666}
-          search={false}
-          boxStyles={CatalogStyles.box}
-          inputStyles={CatalogStyles.selectTitle}
-          dropdownStyles={CatalogStyles.dropdown}
-          dropdownTextStyles={CatalogStyles.selectTitle}
+        <GenreFilter setGenreQueryString={setGenreQueryString} />
 
-        // onSelect={handleSortBooks}
-
-        />
+        <RangeSlider rangeState={rangeState} setRangeState={setRangeState} rangeStateMin={rangeState[0]} rangeStateMax={rangeState[1]} />
+        <SortByOptions setSortString={setSortString} />
         <View style={CatalogStyles.catalogList}>
-          {/* <ScrollView horizontal={true} style={{ flexGrow: 1, gap: 20 }}> */}
           <FlatList
             data={paginationResults}
             renderItem={({ item }: ListRenderItemInfo<BookType>) => (
@@ -188,7 +80,6 @@ const Catalog: React.FC<Props> = () => {
             contentContainerStyle={CatalogStyles.content_container}
             columnWrapperStyle={CatalogStyles.column_wrapper}
           />
-          {/* </ScrollView> */}
         </View>
         <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} />
 
