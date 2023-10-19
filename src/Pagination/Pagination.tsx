@@ -2,7 +2,7 @@ import React from 'react';
 import DotsPagination from 'react-native-dots-pagination';
 import { View, TouchableOpacity, Image } from 'react-native';
 
-import paginationStyle from './paginationStyle';
+import paginationStyle from './PaginationStyle';
 
 type Props = {
   totalPages: number,

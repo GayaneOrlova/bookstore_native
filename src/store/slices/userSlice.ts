@@ -5,6 +5,8 @@ export type User = {
   id: string;
   username: string;
   cart_items_count: number;
+  cart_items_books: [];
+  favorites_count: number;
 };
 
 export type UserAvatar = {
@@ -27,6 +29,8 @@ const initialState: UserSliceType = {
     email: '',
     username: '',
     cart_items_count: 0,
+    cart_items_books: [],
+    favorites_count: 0,
   },
   userAvatar: {
     avatar: '',

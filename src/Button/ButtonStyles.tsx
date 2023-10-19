@@ -11,6 +11,9 @@ const buttonStyles = StyleSheet.create({
     color: '#F0F4EF',
     fontWeight: '500',
   },
+  button_on_cart: {
+    color: '#0D1821',
+  }
 });
 
 export default buttonStyles;

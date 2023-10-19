@@ -23,20 +23,24 @@ type Props = {
 }
 
 const BookComments: React.FC<Props> = (props) => {
-  const { control, handleSubmit, formState: { errors } } = useForm({
+  const { control, handleSubmit, setValue, formState: { errors } } = useForm({
     resolver: yupResolver(bodySchema),
   });
   const isUser = useAppSelector(state => state.user.user);
   const [comments, setComments] = useState<CommentsType[]>(props.commentList);
   
+  // const [value, setValue] = useState('')  
+  
   const onCommentSubmit = async (body: { body: string; }) => {
     try {
       const response = await createBookComment(body.body, props.id);
       comments.unshift(response.data);
+      setValue('')
     }
     catch (err: any) {
       const errorText = Object.values(err.response.data)[0];
       toast(errorText)
+      setValue('')
     }
   };
   

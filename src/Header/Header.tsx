@@ -28,7 +28,7 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 const Header: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const isUser = useAppSelector(state => state.user.user);
-
+  
   const onLoginPage = () => {
     navigation.navigate('Login');
   };
@@ -78,11 +78,16 @@ const Header: React.FC<Props> = () => {
               onPress={onCartPage}
             />
             {isUser.cart_items_count &&
-              <View style={UserButtonStyles.button_index}>
+              <View style={UserButtonStyles.cart_index}>
                 <Text style={UserButtonStyles.button_index_count}>{isUser.cart_items_count}</Text>
               </View>
             }
             <UserButton onPress={onFavoritePage} image_source={require('../../images/icons/heart.png')} />
+            {isUser.favorites_count !==0 &&
+              <View style={UserButtonStyles.favorite_index}>
+                <Text style={UserButtonStyles.button_index_count}>{isUser.favorites_count}</Text>
+              </View>
+            }
             <UserButton
               image_source={require('../../images/icons/userrprofile.png')}
               onPress={onUserProfilePage}

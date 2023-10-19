@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { Rating } from '@kolking/react-native-rating';
 
@@ -20,20 +20,22 @@ type Props = {
 };
 
 const RenderBookItem: React.FC<Props> = (props) => {
+  const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
-const dispatch = useAppDispatch();
+  const isBookOnCart = isUser.cart_items_books?.includes(props.item?.id);
+
   const onBookDetailPage = (id: number) => {
     props.navigation.navigate('BookDetail', { id });
   };
-  
+
   const onClickToCart = async () => {
     try {
       const response = await createCartItem(props.item.id);
       dispatch(changeCartItem(response.data))
       toast('Book was successfully added!')
-    } catch (err) {
+    } catch (err: any) {
       const errorText = Object.values(err.response.data)[0];
-      toast( errorText)
+      toast(errorText)
     }
   };
 
@@ -41,8 +43,8 @@ const dispatch = useAppDispatch();
     <TouchableOpacity onPress={() => onBookDetailPage(props.item.id)}>
       <View style={renderBookItemStyles.book_container}>
         <View style={renderBookItemStyles.book_image_container}>
-          {isUser.email && <FavoriteIcon id={props.item.id} like={props.item.like} onFavoritePress={props.onFavoritePress}/>}
-          {props.item.bestseller && <Button style={renderBookItemStyles.bestseller_flag} text={'Bestseller'} />}
+          {isUser.email && <FavoriteIcon id={props.item.id} like={props.item.like} onFavoritePress={props.onFavoritePress} />}
+          {props.item.bestseller && <Button style={renderBookItemStyles.bestseller_flag} text={'Bestseller'}/>}
           {props.item.new && <Button style={renderBookItemStyles.new_flag} text={'New'} />}
           <Image style={renderBookItemStyles.book_image} source={{ uri: props.item.image }} />
         </View>
@@ -52,7 +54,13 @@ const dispatch = useAppDispatch();
           <Rating size={20} rating={props.item.overall_rating} fillColor={'#BFCC94'} />
           <Text style={renderBookItemStyles.rating_text}>{props.item.overall_rating}</Text>
         </View>
-        <Button style={props.item.available ? renderBookItemStyles.price_button : renderBookItemStyles.available_button} text={props.item.available ? `$${props.item.price} USD` : 'Not available'} onPress={onClickToCart} />
+        <Button
+          item = {props.item}
+          style={isBookOnCart ? renderBookItemStyles.button_on_cart :  props.item.available ? renderBookItemStyles.price_button : renderBookItemStyles.available_button}
+          text={props.item.available ?
+            (isBookOnCart ? 'Added to cart' : `$${props.item.price} USD`)
+            : 'Not available'}
+          onPress={onClickToCart} />
       </View>
     </TouchableOpacity>
   );

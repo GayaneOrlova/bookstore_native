@@ -102,11 +102,15 @@ const bookSlice = createSlice({
       state.currentPage = action.payload
     },
     changeBookFavorite(state, action:PayloadAction<number>) {
+      console.log('state1', state.pagination)
+
       const book = state?.pagination.results?.findIndex(
         (item) => item.id === action.payload,
       );
       state.pagination.results[book].like =
         !state.pagination.results[book].like;
+        
+        console.log('state2', state.pagination)
     },
 
     setFavoriteList(state, action: PayloadAction<BookType[]>) {

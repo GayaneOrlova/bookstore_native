@@ -9,11 +9,22 @@ const userButtonStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  button_index: {
+  cart_index: {
     width: 16,
     height: 15,
     top: -4,
     left: 23,
+    borderRadius: 16,
+    backgroundColor: '#BFCC94',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+  },
+  favorite_index: {
+    width: 16,
+    height: 15,
+    top: -4,
+    left: 76,
     borderRadius: 16,
     backgroundColor: '#BFCC94',
     justifyContent: 'center',

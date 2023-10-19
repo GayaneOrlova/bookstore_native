@@ -43,6 +43,14 @@ const renderBookItemStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#344966',
   },
+ button_on_cart: {
+    minWidth: 135,
+    height: 34,
+    marginVertical: 10,
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  
   available_button: {
     minWidth: 135,
     height: 34,

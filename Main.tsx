@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useAppDispatch, useAppSelector } from './src/store/hooks';
 import { getUser } from './src/api/user.api/user.api';
 import { setUser } from './src/store/slices/userSlice';
+
 import Homepage from './src/Homepage';
 import Login from './src/Login/Login';
 import UserProfile from './src/UserProfile/UserProfile';
@@ -13,6 +14,7 @@ import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
 import BookDetail from './src/BookDetail/BookDetail';
 import FavoritesPage from './src/FavoritesPage/FavoritesPage';
+
 import { toast } from './src/utils/utils';
 
 
@@ -22,6 +24,8 @@ const Main: React.FC = () => {
   const [initialization, setInitialization] = useState(false);
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
+  const favoriteList = useAppSelector(state => state.book.favoriteBooks);
+  const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
   const dispatch = useAppDispatch();
 
   const getToken = async () => {
@@ -32,8 +36,8 @@ const Main: React.FC = () => {
       const response = await getUser();
       const user = response.data;
       dispatch(setUser(user));
-    } catch (er) {
-      const errorText = Object.values(er.response.data)[0];
+    } catch (err: any) {
+      const errorText = Object.values(err.response.data)[0];
       toast( errorText)
     } finally {
       setInitialization(true);
@@ -42,7 +46,8 @@ const Main: React.FC = () => {
 
   useEffect(() => {
     getToken();
-  }, [cartList]);
+  }, [cartList, favoriteList, paginationResults]);
+
 
   if (!initialization) { return null; }
 

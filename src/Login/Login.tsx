@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Controller, useForm } from "react-hook-form";
 import { View, Image, Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -7,11 +7,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useAppDispatch } from '../store/hooks';
 import {setUser } from '../store/slices/userSlice';
 import {userLogin } from '../api/user.api/user.api';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import loginStyles from './loginStyles';
+import loginStyles from './LoginStyles';
+
 import { toast } from '../utils/utils';
 import { loginSchema } from '../utils/shemas';
 

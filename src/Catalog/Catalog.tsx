@@ -6,7 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { changeFavoriteById, getPage } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 
-import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
+import { BookType, changeBookFavorite, changeFavoriteList, setCurrentPage, setPagination } from '../store/slices/bookSlice';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import Pagination from '../Pagination/Pagination';
 import RangeSlider from './Sort&Filters/PriceRangeSlider/PriceRangeSlider';
@@ -16,6 +16,7 @@ import SortByOptions from './Sort&Filters/SortByOptions/SortByOptions';
 import catalogStyles from './CatalogStyle';
 
 import { toast } from '../utils/utils';
+import { number } from 'yup';
 
 type Props = {};
 
@@ -30,7 +31,7 @@ const Catalog: React.FC<Props> = () => {
   const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
   const currentPage = useAppSelector((state) => state.book.currentPage)
   const dispatch = useAppDispatch();
-
+  
   const [rangeState, setRangeState] = useState([0, 100])
   const [genreQueryString, setGenreQueryString] = useState('');
   const [sortString, setSortString] = useState('');
@@ -58,7 +59,7 @@ const Catalog: React.FC<Props> = () => {
     }
   };
 
-  console.log(genreQueryString, 'genreQueryString')
+
   useEffect(() => {
     changePageHandler(currentPage);
   }, [genreQueryString, sortString, rangeState, queryParams]);

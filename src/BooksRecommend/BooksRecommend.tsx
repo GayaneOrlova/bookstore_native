@@ -24,7 +24,6 @@ type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const BooksRecommend: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const favoriteList = useAppSelector(state => state.book.favoriteBooks);
   const navigation = useNavigation<NavigationProps>();
   
   const [recommended, setRecommended] = useState<BookType[]>();
