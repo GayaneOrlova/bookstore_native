@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const SignupStyles = StyleSheet.create({
+const signupStyles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -53,4 +53,4 @@ const SignupStyles = StyleSheet.create({
   },
 });
 
-export default SignupStyles
+export default signupStyles

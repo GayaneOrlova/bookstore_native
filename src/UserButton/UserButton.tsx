@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image, ImageSourcePropType, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
-import UserButtonStyles from './UserButtonStyles';
+import { Image, ImageSourcePropType, TouchableOpacity, ViewStyle } from 'react-native';
+
+import userButtonStyles from './UserButtonStyles';
 
 type Props = {
   style?: ViewStyle;
@@ -9,10 +10,10 @@ type Props = {
   amount?: number,
 };
 
-const UserButton: React.FC<Props> = props => {
+const UserButton: React.FC<Props> = (props) => {
   return (
     <TouchableOpacity
-      style={{ ...UserButtonStyles.button, ...props.style }}
+      style={{ ...userButtonStyles.button, ...props.style }}
       onPress={props.onPress}>
       <Image source={props.image_source} />
     </TouchableOpacity>

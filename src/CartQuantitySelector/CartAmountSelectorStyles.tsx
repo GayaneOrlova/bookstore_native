@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const CartAmountSelectorStyles = StyleSheet.create({
+const cartAmountSelectorStyles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     gap: 10,
@@ -31,4 +31,4 @@ buttons_number: {
   },
 });
 
-export default CartAmountSelectorStyles;
+export default cartAmountSelectorStyles;

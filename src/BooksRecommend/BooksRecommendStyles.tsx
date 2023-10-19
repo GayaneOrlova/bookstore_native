@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const BooksRecommendStyle = StyleSheet.create({
+const booksRecommendStyle = StyleSheet.create({
   container: {
     marginVertical: 30,
     marginHorizontal: 15,
@@ -75,4 +75,4 @@ const BooksRecommendStyle = StyleSheet.create({
   },
 });
 
-export default BooksRecommendStyle;
+export default booksRecommendStyle;

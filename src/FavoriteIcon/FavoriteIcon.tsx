@@ -2,7 +2,8 @@ import React from 'react';
 import { TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
-import RenderBookItemStyles from './FavoriteIconStyles';
+
+import favoriteIconStyles from './FavoriteIconStyles';
 
 type Props = {
   id: number;
@@ -13,7 +14,7 @@ type Props = {
 const FavoriteIcon: React.FC<Props> = (props) => {
   return (
       <TouchableOpacity
-        style={[RenderBookItemStyles.favorite_button, props.like && RenderBookItemStyles.favorite_button_liked]}
+        style={[favoriteIconStyles.favorite_button, props.like && favoriteIconStyles.favorite_button_liked]}
         onPress={props.onFavoritePress}
       >
         <FontAwesomeIcon icon={faHeart} color={'#ffffff'} />

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const CartStyles = StyleSheet.create({
+const cartStyles = StyleSheet.create({
   cart_page: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -93,7 +93,7 @@ const CartStyles = StyleSheet.create({
   },
 });
 
-export default CartStyles;
+export default cartStyles;
 
 
 const COLORS = {

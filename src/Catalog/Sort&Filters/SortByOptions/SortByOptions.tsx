@@ -1,7 +1,8 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Text, View } from 'react-native';
+import React, { Dispatch, SetStateAction } from 'react';
+import { View } from 'react-native';
 import { SelectList } from 'react-native-dropdown-select-list';
-import SortByOptionsStyle from './SortByOptionsStyle';
+
+import sortByOptionsStyle from './SortByOptionsStyle';
 
 type Props = {
   setSortString: Dispatch<SetStateAction<string>>;
@@ -31,10 +32,10 @@ const SortByOptions: React.FC<Props> = (props) => {
         data={sortData}
         maxHeight={666}
         search={false}
-        boxStyles={SortByOptionsStyle.box}
-        inputStyles={SortByOptionsStyle.selectTitle}
-        dropdownStyles={SortByOptionsStyle.dropdown}
-        dropdownTextStyles={SortByOptionsStyle.selectTitle}
+        boxStyles={sortByOptionsStyle.box}
+        inputStyles={sortByOptionsStyle.selectTitle}
+        dropdownStyles={sortByOptionsStyle.dropdown}
+        dropdownTextStyles={sortByOptionsStyle.selectTitle}
       />
     </View>
   );

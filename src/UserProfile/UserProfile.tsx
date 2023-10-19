@@ -1,19 +1,20 @@
 import React from 'react';
 import { View, ScrollView } from 'react-native';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import UserProfileStyles from './UserProfileStyles';
 import InputPassword from './InputPassword/InputPassword';
 import InputProfile from './InputProfile/InputProfile';
+import userProfileStyles from './UserProfileStyles';
 
+type Props = {}
 
-
-const UserProfile = () => {
+const UserProfile: React.FC<Props> = () => {
 
   return (
     <ScrollView>
       <Header />
-      <View style={UserProfileStyles.container}>
+      <View style={userProfileStyles.container}>
         <InputProfile />
         <InputPassword text={{
           password: '',

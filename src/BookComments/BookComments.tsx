@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
 import { View, Image, Text, FlatList, ListRenderItemInfo, TextInput, } from 'react-native';
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { CommentsType } from '../store/slices/bookSlice';
 import { createBookComment } from '../api/book.api';
 import { useAppSelector } from '../store/hooks';
-import { toast } from '../utils/utils';
-import { Controller, useForm } from 'react-hook-form';
-import BookCommentsStyle from './BookCommentsStyle';
-import { bodySchema } from '../utils/shemas';
-import BookDetailStyle from '../BookDetail/BookDetailStyle';
+
 import Button from '../Button/Button';
-import LoginStyles from '../Login/LoginStyles';
+import bookCommentsStyle from './BookCommentsStyle';
+import bookDetailStyle from '../BookDetail/BookDetailStyle';
+import loginStyles from '../Login/LoginStyles';
+
+import { bodySchema } from '../utils/shemas';
+import { toast } from '../utils/utils';
+
 
 
 type Props = {
@@ -18,31 +22,31 @@ type Props = {
   commentList: []
 }
 
-const BookComments: React.FC<Props> = ({ commentList, id }) => {
+const BookComments: React.FC<Props> = (props) => {
   const { control, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(bodySchema),
   });
   const isUser = useAppSelector(state => state.user.user);
-  const [comments, setComments] = useState<CommentsType[]>(commentList);
+  const [comments, setComments] = useState<CommentsType[]>(props.commentList);
   
   const onCommentSubmit = async (body: { body: string; }) => {
     try {
-      const response = await createBookComment(body.body, id);
+      const response = await createBookComment(body.body, props.id);
       comments.unshift(response.data);
     }
-    catch (er) {
-      const errorText = Object.values(er.response.data)[0];
+    catch (err: any) {
+      const errorText = Object.values(err.response.data)[0];
       toast(errorText)
     }
   };
   
   const renderItem = ({ item }: ListRenderItemInfo<CommentsType>) => (
-    <View style={BookCommentsStyle.comment_item}>
-      <View style={BookCommentsStyle.detail_info_group}>
-        <Image source={{ uri: item.avatar_url }} style={BookCommentsStyle.avatar_image} />
+    <View style={bookCommentsStyle.comment_item}>
+      <View style={bookCommentsStyle.detail_info_group}>
+        <Image source={{ uri: item.avatar_url }} style={bookCommentsStyle.avatar_image} />
         <View >
-          <Text style={BookCommentsStyle.comment_author}>{item.author}</Text>
-          <Text style={BookCommentsStyle.comment_time}>{item.created_at}</Text>
+          <Text style={bookCommentsStyle.comment_author}>{item.author}</Text>
+          <Text style={bookCommentsStyle.comment_time}>{item.created_at}</Text>
         </View>
       </View>
       <Text>{item.body}</Text>
@@ -53,7 +57,7 @@ const BookComments: React.FC<Props> = ({ commentList, id }) => {
     <>
       {!!comments.length ? (
         <FlatList
-          style={BookCommentsStyle.comments_container}
+          style={bookCommentsStyle.comments_container}
           data={comments}
           renderItem={renderItem}
           keyExtractor={(item) => item.created_at}
@@ -68,7 +72,7 @@ const BookComments: React.FC<Props> = ({ commentList, id }) => {
               rules={{ required: true, }}
               render={({ field: { onChange, value } }) => (
                 <TextInput
-                  style={BookDetailStyle.comment_input}
+                  style={bookDetailStyle.comment_input}
                   placeholder="Share a comment"
                   onChangeText={onChange}
                   defaultValue={value}
@@ -76,8 +80,8 @@ const BookComments: React.FC<Props> = ({ commentList, id }) => {
               )}
               name="body"
             />
-            {errors.body && <Text style={LoginStyles.error}>{errors.body.message}</Text>}
-            <Button text="Post a comment" style={BookDetailStyle.price_button} onPress={handleSubmit(onCommentSubmit)} />
+            {errors.body && <Text style={loginStyles.error}>{errors.body.message}</Text>}
+            <Button text="Post a comment" style={bookDetailStyle.price_button} onPress={handleSubmit(onCommentSubmit)} />
           </View>
         }
 

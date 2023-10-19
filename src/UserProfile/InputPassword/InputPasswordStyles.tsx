@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const InputPasswordStyles = StyleSheet.create({
+const inputPasswordStyles = StyleSheet.create({
   change_text: {
     fontSize: 12,
     color: '#8D9F4F',
@@ -32,4 +32,4 @@ const InputPasswordStyles = StyleSheet.create({
   },
 });
 
-export default InputPasswordStyles;
+export default inputPasswordStyles;

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const BookDetailStyle = StyleSheet.create({
+const bookDetailStyle = StyleSheet.create({
   container: {
     marginVertical: 30,
     marginHorizontal: 15,
@@ -85,4 +85,4 @@ const BookDetailStyle = StyleSheet.create({
   },
 });
 
-export default BookDetailStyle;
+export default bookDetailStyle;

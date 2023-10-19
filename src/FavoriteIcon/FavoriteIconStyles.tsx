@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const FavoriteIconStyles = StyleSheet.create({
+const favoriteIconStyles = StyleSheet.create({
   favorite_button: {
     position: 'absolute',
     top: 10,
@@ -19,4 +19,4 @@ const FavoriteIconStyles = StyleSheet.create({
   },
 });
 
-export default FavoriteIconStyles;
+export default favoriteIconStyles;

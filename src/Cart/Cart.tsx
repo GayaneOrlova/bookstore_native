@@ -11,18 +11,19 @@ import { setCart } from '../store/slices/bookSlice';
 import Button from '../Button/Button';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import CartStyles from './CartStyles';
 import CartQuantitySelector from '../CartQuantitySelector/CartAmountSelector';
+import cartStyles from './CartStyles';
 
 import { toast } from '../utils/utils';
 import { isAxiosError } from 'axios';
 
+type Props = {}
 type RootStackParamList = {
   Homepage: undefined;
 };
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-const Cart:React.FC = () => {
+const Cart:React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
@@ -40,7 +41,7 @@ const Cart:React.FC = () => {
     }
     catch (err: any) {
       if (isAxiosError(err)) {
-      const errorText = Object.values(err.response.data)[0];
+      const errorText = Object.values(err.response?.data)[0];
       toast(errorText);
     }
     else {
@@ -57,45 +58,45 @@ const Cart:React.FC = () => {
     <ScrollView>
       <Header />
       {cartList?.total_price ? (
-        <View style={CartStyles.cart_page}>
+        <View style={cartStyles.cart_page}>
           <FlatList
-            contentContainerStyle={CartStyles.cart_item}
+            contentContainerStyle={cartStyles.cart_item}
             data={cartList.items}
             keyExtractor={(item) => item.book_name}
             renderItem={({ item, index }) => (
-              <View style={index === (cartList.items.length - 1) ? CartStyles.render_item_last : CartStyles.render_item}>
-                <Image style={CartStyles.cart_item_image} source={{ uri: `${item.book_image}` }} />
-                <View style={CartStyles.cart_item_detail}>
-                  <View style={CartStyles.cart_texts}>
-                    <Text style={CartStyles.cart_text}>{item.book_name}</Text>
+              <View style={index === (cartList.items.length - 1) ? cartStyles.render_item_last : cartStyles.render_item}>
+                <Image style={cartStyles.cart_item_image} source={{ uri: `${item.book_image}` }} />
+                <View style={cartStyles.cart_item_detail}>
+                  <View style={cartStyles.cart_texts}>
+                    <Text style={cartStyles.cart_text}>{item.book_name}</Text>
                     <Text>{item.book_author}</Text>
                   </View>
                   <CartQuantitySelector id={item.id} amount={item!.amount} />
-                  <Text style={CartStyles.item_price}>{`$${item.price} USD`}</Text>
+                  <Text style={cartStyles.item_price}>{`$${item.price} USD`}</Text>
                 </View>
               </View>
             )}
           />
-          <Text style={CartStyles.total_text}>Total: <Text style={CartStyles.total_text}>{cartList.total_price}</Text></Text>
-          <TouchableOpacity style={CartStyles.continue_button}>
+          <Text style={cartStyles.total_text}>Total: <Text style={cartStyles.total_text}>{cartList.total_price}</Text></Text>
+          <TouchableOpacity style={cartStyles.continue_button}>
             <Text>Continue shopping</Text>
           </TouchableOpacity>
           <Button
             text="Chekout"
-            style={CartStyles.cart_button}
+            style={cartStyles.cart_button}
           />
         </View>
       ) : (
-        <View style={CartStyles.cart_container}>
-          <Text style={CartStyles.cart_text}>Your cart is empty</Text>
-          <Text style={CartStyles.cart_text_description}>Add items to cart to make a purchase.Go to the catalogue no.</Text>
+        <View style={cartStyles.cart_container}>
+          <Text style={cartStyles.cart_text}>Your cart is empty</Text>
+          <Text style={cartStyles.cart_text_description}>Add items to cart to make a purchase.Go to the catalogue no.</Text>
           <Button
             text="Go to catalog"
-            style={CartStyles.cart_button}
+            style={cartStyles.cart_button}
             onPress={onHomepage}
           />
           <Image
-            style={CartStyles.cart_image}
+            style={cartStyles.cart_image}
             source={require('../../images/books.png')}
           />
         </View>

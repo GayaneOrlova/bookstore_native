@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const BookCommentsStyle = StyleSheet.create({
+const bookCommentsStyle = StyleSheet.create({
   comments_container: {
   marginBottom: 10,
   },
@@ -31,4 +31,4 @@ const BookCommentsStyle = StyleSheet.create({
   },
 });
 
-export default BookCommentsStyle;
+export default bookCommentsStyle;

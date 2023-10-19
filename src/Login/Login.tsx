@@ -11,12 +11,13 @@ import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import LoginStyles from './LoginStyles';
+import loginStyles from './loginStyles';
 import { toast } from '../utils/utils';
 import { loginSchema } from '../utils/shemas';
 
+type Props = {}
 
-const Login = () => {
+const Login: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   
   const { control, handleSubmit, formState: { errors } } = useForm({
@@ -30,8 +31,8 @@ const Login = () => {
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));  
     }
-    catch (er) {
-      const errorText = Object.values(er.response.data)[0];
+    catch (err: any) {
+      const errorText = Object.values(err.response.data)[0];
       toast(errorText)
     }
   };
@@ -39,13 +40,13 @@ const Login = () => {
   return (
     <ScrollView>
       <Header />
-      <View style={LoginStyles.container}>
-        <Text style={LoginStyles.title}>Log In</Text>
+      <View style={loginStyles.container}>
+        <Text style={loginStyles.title}>Log In</Text>
         <Controller
           control={control}
           rules={{ required: true, }}
           render={({ field: { onChange, value } }) => (
-            <View style={LoginStyles.input_group}>
+            <View style={loginStyles.input_group}>
               <Input
                 image_source={require('../../images/icons/mail.png')}
                 onChangeText={onChange}
@@ -53,8 +54,8 @@ const Login = () => {
                 placeholder='Email'
                 placeholderTextColor='#B9BAC3'
               />
-              {errors.email ? (<Text style={LoginStyles.error}>{errors.email.message}</Text>) :(
-              <Text style={LoginStyles.input_description}>Enter your email</Text>)
+              {errors.email ? (<Text style={loginStyles.error}>{errors.email.message}</Text>) :(
+              <Text style={loginStyles.input_description}>Enter your email</Text>)
               }
             </View>
           )}
@@ -64,7 +65,7 @@ const Login = () => {
           control={control}
           rules={{ maxLength: 15, }}
           render={({ field: { onChange, onBlur, value } }) => (
-            <View style={LoginStyles.input_group}>
+            <View style={loginStyles.input_group}>
               <Input
                 image_source={require('../../images/icons/hide.png')}
                 onChangeText={onChange}
@@ -74,17 +75,17 @@ const Login = () => {
                 secureTextEntry
                 onBlur={onBlur}
               />
-              {errors.password ? (<Text style={LoginStyles.error}>{errors.password.message}</Text>)
+              {errors.password ? (<Text style={loginStyles.error}>{errors.password.message}</Text>)
               : (
-              <Text style={LoginStyles.input_description}>Enter your password</Text>
+              <Text style={loginStyles.input_description}>Enter your password</Text>
               )}
             </View>
           )}
           name="password"
         />
-        <Button text="Log In" style={LoginStyles.button} onPress={handleSubmit(onSubmit)} />
+        <Button text="Log In" style={loginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
-      <Image style={LoginStyles.image} source={require('../../images/man-reader.png')} />
+      <Image style={loginStyles.image} source={require('../../images/man-reader.png')} />
       <Footer />
     </ScrollView>
   );

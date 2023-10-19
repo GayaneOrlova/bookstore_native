@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList, ListRenderItemInfo, Text } from 'react-native';
-import { useNavigation, useRoute } from '@react-navigation/native';
-import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { BookType, changeFavoriteList } from '../store/slices/bookSlice';
-import BookDetailStyle from './BooksRecommendStyles';
-import CatalogStyles from '../Catalog/CatalogStyle';
-import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import { changeFavoriteById, getRecommended } from '../api/book.api';
+
+import booksRecommendStyle from './BooksRecommendStyles';
+import catalogStyles from '../Catalog/CatalogStyle';
+import RenderBookItem from '../RenderBookItem/RenderBookItem';
+
 import { toast } from '../utils/utils';
 
 type Props = {
@@ -41,8 +44,8 @@ const BooksRecommend: React.FC<Props> = () => {
       const responce = await changeFavoriteById(id);
       dispatch(changeFavoriteList(id));
     }
-    catch (er) {
-      const errorText = Object.values(er.response.data);
+    catch (err: any) {
+      const errorText = Object.values(err.response.data);
       toast(errorText);
     }
   };
@@ -54,7 +57,7 @@ const BooksRecommend: React.FC<Props> = () => {
 
   return (
     <View>
-        <Text style={BookDetailStyle.title_text}>Recommendations</Text>
+        <Text style={booksRecommendStyle.title_text}>Recommendations</Text>
         <FlatList
           data={recommended}
           renderItem={({ item }: ListRenderItemInfo<BookType>) => (
@@ -62,8 +65,8 @@ const BooksRecommend: React.FC<Props> = () => {
           )}
           keyExtractor={(item, index) => item.author}
           numColumns={2}
-          contentContainerStyle={CatalogStyles.content_container}
-          columnWrapperStyle={CatalogStyles.column_wrapper}
+          contentContainerStyle={catalogStyles.content_container}
+          columnWrapperStyle={catalogStyles.column_wrapper}
         />
       </View>
   );

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const InputProfileStyles = StyleSheet.create({
+const inputProfileStyles = StyleSheet.create({
   user_photo: {
     width: '100%',
     minWidth: 290,
@@ -92,4 +92,4 @@ const InputProfileStyles = StyleSheet.create({
   
 });
 
-export default InputProfileStyles;
+export default inputProfileStyles;

@@ -1,8 +1,9 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { View, TextInput, Image } from 'react-native';
-import SearchStyles from './SearchStyles';
+import { View } from 'react-native';
+
 import Input from '../../Input/Input';
+import SearchStyles from './SearchStyles';
 
 const Search = () => {
   const { control, handleSubmit } = useForm();

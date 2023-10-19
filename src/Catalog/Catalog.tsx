@@ -3,16 +3,17 @@ import { FlatList, ListRenderItemInfo, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
-import { changeFavoriteById } from '../api/book.api';
+import { changeFavoriteById, getPage } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { getPage } from '../api/book.api';
+
 import { BookType, changeBookFavorite, setCurrentPage, setPagination } from '../store/slices/bookSlice';
-import CatalogStyles from './CatalogStyle';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
 import Pagination from '../Pagination/Pagination';
 import RangeSlider from './Sort&Filters/PriceRangeSlider/PriceRangeSlider';
 import GenreFilter from './Sort&Filters/GenreFilter/GenreFilter';
 import SortByOptions from './Sort&Filters/SortByOptions/SortByOptions';
+
+import catalogStyles from './CatalogStyle';
 
 import { toast } from '../utils/utils';
 
@@ -51,8 +52,8 @@ const Catalog: React.FC<Props> = () => {
       const res = await changeFavoriteById(id);
       dispatch(changeBookFavorite(id));
     }
-    catch (er) {
-      const errorText = Object.values(er.response.data);
+    catch (err: any) {
+      const errorText = Object.values(err.response.data);
       toast(errorText)
     }
   };
@@ -63,13 +64,13 @@ const Catalog: React.FC<Props> = () => {
   }, [genreQueryString, sortString, rangeState, queryParams]);
 
   return (
-    <View style={CatalogStyles.catalog_container}>
-      <Text style={CatalogStyles.catalog_title}>Catalog</Text>
+    <View style={catalogStyles.catalog_container}>
+      <Text style={catalogStyles.catalog_title}>Catalog</Text>
       <View>
         <GenreFilter setGenreQueryString={setGenreQueryString} />
         <RangeSlider rangeState={rangeState} setRangeState={setRangeState} rangeStateMin={rangeState[0]} rangeStateMax={rangeState[1]} />
         <SortByOptions setSortString={setSortString} />
-        <View style={CatalogStyles.catalogList}>
+        <View style={catalogStyles.catalogList}>
           <FlatList
             data={paginationResults}
             renderItem={({ item }: ListRenderItemInfo<BookType>) => (
@@ -77,8 +78,8 @@ const Catalog: React.FC<Props> = () => {
             )}
             keyExtractor={(item) => item.author}
             numColumns={2}
-            contentContainerStyle={CatalogStyles.content_container}
-            columnWrapperStyle={CatalogStyles.column_wrapper}
+            contentContainerStyle={catalogStyles.content_container}
+            columnWrapperStyle={catalogStyles.column_wrapper}
           />
         </View>
         <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} />

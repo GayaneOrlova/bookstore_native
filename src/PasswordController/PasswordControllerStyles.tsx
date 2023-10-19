@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const PasswordControllerStyles = StyleSheet.create({
+const passwordControllerStyles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -55,4 +55,4 @@ const PasswordControllerStyles = StyleSheet.create({
   },
 });
 
-export default PasswordControllerStyles
+export default passwordControllerStyles

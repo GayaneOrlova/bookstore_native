@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const LoginStyles = StyleSheet.create({
+const loginStyles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -55,4 +55,4 @@ const LoginStyles = StyleSheet.create({
   },
 });
 
-export default LoginStyles
+export default loginStyles

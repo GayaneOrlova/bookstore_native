@@ -1,32 +1,38 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
 import { Image, Text, View } from "react-native";
-import Button from "../Button/Button";
-import AuthorizeBannerStyles from "./AuthorizeBannerStyles";
 
+import Button from "../Button/Button";
+import authorizeBannerStyles from "./AuthorizeBannerStyles";
+
+type RootStackParamList = {
+  Login: undefined;
+};
+type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const AuthorizeBanner = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProps>();
 
   return (
-    <View style={AuthorizeBannerStyles.authorize_container}>
+    <View style={authorizeBannerStyles.authorize_container}>
     <Image
-      style={AuthorizeBannerStyles.fairy_image}
+      style={authorizeBannerStyles.fairy_image}
       source={require('../../images/fairy.png')}
     />
-    <View style={AuthorizeBannerStyles.text_group}>
-      <Text style={AuthorizeBannerStyles.text_group_title}>Authorize now</Text>
-      <Text style={AuthorizeBannerStyles.text_group_description}>
+    <View style={authorizeBannerStyles.text_group}>
+      <Text style={authorizeBannerStyles.text_group_title}>Authorize now</Text>
+      <Text style={authorizeBannerStyles.text_group_description}>
         Authorize now and discover the fabulous world of books
       </Text>
       <Button
         text="Log In/ Sing Up"
-        style={AuthorizeBannerStyles.authorize_button}
+        style={authorizeBannerStyles.authorize_button}
         onPress={() => navigation.navigate('Login')}
       />
     </View>
     <Image
-      style={AuthorizeBannerStyles.castle_image}
+      style={authorizeBannerStyles.castle_image}
       source={require('../../images/castle.png')}
     />
   </View>

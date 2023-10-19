@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const PaginationStyle = StyleSheet.create({
+const paginationStyle = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -11,7 +11,6 @@ const PaginationStyle = StyleSheet.create({
   button: {
     fontWeight: 'bold',
   },
-
 });
 
-export default PaginationStyle;
+export default paginationStyle;

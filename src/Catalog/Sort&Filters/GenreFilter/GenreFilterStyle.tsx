@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const GenreFilterStyle = StyleSheet.create({
+const genreFilterStyle = StyleSheet.create({
   box: {
     minWidth: 290,
     borderRadius: 16,
@@ -29,4 +29,4 @@ const GenreFilterStyle = StyleSheet.create({
   },
 });
 
-export default GenreFilterStyle;
+export default genreFilterStyle;

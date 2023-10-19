@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
-import PriceRangeSliderStyles from './PriceRangeSliderStyle';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+
+import priceRangeSliderStyles from './PriceRangeSliderStyle';
 
 type Props = {
   rangeState: number[];
@@ -23,27 +24,27 @@ const RangeSlider: React.FC<Props> = (props) => {
 
   return (
       <View style={{ alignItems: 'center' }}>
-        <View style={PriceRangeSliderStyles.box}>
-          <Text style={PriceRangeSliderStyles.text}>Price</Text>
-          <TouchableOpacity onPress={handleButtonClick} style={PriceRangeSliderStyles.dropdown_button}>
-            <Image source={require('..//..//..//../images/icons/downt.png')} style={PriceRangeSliderStyles.dropdown_button_image} />
+        <View style={priceRangeSliderStyles.box}>
+          <Text style={priceRangeSliderStyles.text}>Price</Text>
+          <TouchableOpacity onPress={handleButtonClick} style={priceRangeSliderStyles.dropdown_button}>
+            <Image source={require('..//..//..//../images/icons/downt.png')} style={priceRangeSliderStyles.dropdown_button_image} />
           </TouchableOpacity>
         </View>
         {showSecondView && (
-          <View style={PriceRangeSliderStyles.dropdown}>
+          <View style={priceRangeSliderStyles.dropdown}>
             <MultiSlider
-              containerStyle={PriceRangeSliderStyles.slider_container}
+              containerStyle={priceRangeSliderStyles.slider_container}
               values={props.rangeState}
               sliderLength={260}
               min={0}
               max={100}
               step={1}
               onValuesChange={onValuesChange}
-              trackStyle={PriceRangeSliderStyles.track}
-              selectedStyle={PriceRangeSliderStyles.selectedTrack}
-              markerStyle={PriceRangeSliderStyles.markers}
+              trackStyle={priceRangeSliderStyles.track}
+              selectedStyle={priceRangeSliderStyles.selectedTrack}
+              markerStyle={priceRangeSliderStyles.markers}
             />
-            <View style={PriceRangeSliderStyles.rangeValues}>
+            <View style={priceRangeSliderStyles.rangeValues}>
               <Text>${props.rangeStateMin}</Text>
               <Text>${props.rangeStateMax}</Text>
             </View>

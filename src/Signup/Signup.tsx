@@ -1,20 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Controller, useForm } from "react-hook-form";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScrollView } from 'react-native-gesture-handler';
 import { View, Image, Text } from 'react-native';
 import { yupResolver } from "@hookform/resolvers/yup";
+
 import { useAppDispatch } from '../store/hooks';
 import { setUser } from '../store/slices/userSlice';
 import { userSignUp } from '../api/user.api/user.api';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import SignupStyles from './SignupStyles';
-import { ScrollView } from 'react-native-gesture-handler';
+
+import signupStyles from './SignupStyles';
+
 import { toast } from '../utils/utils';
 import { signupSchema } from '../utils/shemas';
 
+type Props = {}
 
 type UserRegistrationType = {
   email: string;
@@ -22,11 +27,8 @@ type UserRegistrationType = {
   confirm_password: string;
 };
 
-const Signup = () => {
+const Signup: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
-
-
-
   const { control, handleSubmit, formState: { errors } } = useForm<UserRegistrationType>({
     resolver: yupResolver(signupSchema),
   });
@@ -36,9 +38,9 @@ const Signup = () => {
       const response = await userSignUp(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));
-    } catch (er) {
-      const errorText = Object.values(er.response.data)[0];
-      toast( errorText)
+    } catch (err: any) {
+      const errorText = Object.values(err.response.data)[0];
+      toast(errorText)
     }
   };
 
@@ -46,13 +48,13 @@ const Signup = () => {
   return (
     <ScrollView>
       <Header />
-      <View style={SignupStyles.container}>
-        <Text style={SignupStyles.title}>Sign Up</Text>
+      <View style={signupStyles.container}>
+        <Text style={signupStyles.title}>Sign Up</Text>
         <Controller
           control={control}
           rules={{ required: true, }}
           render={({ field: { onChange, value } }) => (
-            <View style={SignupStyles.input_group}>
+            <View style={signupStyles.input_group}>
               <Input
                 image_source={require('../../images/icons/mail.png')}
                 onChangeText={onChange}
@@ -60,10 +62,10 @@ const Signup = () => {
                 placeholder='Email'
                 placeholderTextColor='#B9BAC3'
               />
-              {errors.email ? (<Text style={SignupStyles.error}>{errors.email.message}</Text>) :(
-              <Text style={SignupStyles.input_description}>Enter your email</Text>)
+              {errors.email ? (<Text style={signupStyles.error}>{errors.email.message}</Text>) : (
+                <Text style={signupStyles.input_description}>Enter your email</Text>)
               }
-              </View>
+            </View>
           )}
           name="email"
         />
@@ -71,7 +73,7 @@ const Signup = () => {
           control={control}
           rules={{ maxLength: 15, }}
           render={({ field: { onChange, value } }) => (
-            <View style={SignupStyles.input_group}>
+            <View style={signupStyles.input_group}>
               <Input
                 image_source={require('../../images/icons/hide.png')}
                 onChangeText={onChange}
@@ -80,10 +82,10 @@ const Signup = () => {
                 placeholderTextColor='#B9BAC3'
                 secureTextEntry
               />
-              {errors.password ? (<Text style={SignupStyles.error}>{errors.password.message}</Text>)
-              : (
-              <Text style={SignupStyles.input_description}>Enter your password</Text>
-              )}
+              {errors.password ? (<Text style={signupStyles.error}>{errors.password.message}</Text>)
+                : (
+                  <Text style={signupStyles.input_description}>Enter your password</Text>
+                )}
             </View>
           )}
           name="password"
@@ -92,7 +94,7 @@ const Signup = () => {
           control={control}
           rules={{ maxLength: 15, }}
           render={({ field: { onChange, value } }) => (
-            <View style={SignupStyles.input_group}>
+            <View style={signupStyles.input_group}>
               <Input
                 image_source={require('../../images/icons/hide.png')}
                 onChangeText={onChange}
@@ -101,17 +103,17 @@ const Signup = () => {
                 placeholderTextColor='#B9BAC3'
                 secureTextEntry
               />
-              {errors.confirm_password ? (<Text style={SignupStyles.error}>{errors.confirm_password.message}</Text>)
-              : (
-                <Text style={SignupStyles.input_description}>Repeat your password without errors</Text>
-              )}
+              {errors.confirm_password ? (<Text style={signupStyles.error}>{errors.confirm_password.message}</Text>)
+                : (
+                  <Text style={signupStyles.input_description}>Repeat your password without errors</Text>
+                )}
             </View>
           )}
           name="confirm_password"
         />
-        <Button text="Sign Up" style={SignupStyles.button} onPress={handleSubmit(onSubmit)} />
+        <Button text="Sign Up" style={signupStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
-      <Image style={SignupStyles.image} source={require('../../images/man-reader.png')} />
+      <Image style={signupStyles.image} source={require('../../images/man-reader.png')} />
       <Footer />
     </ScrollView>
   );

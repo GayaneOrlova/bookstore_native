@@ -2,12 +2,17 @@ import React from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+
 import { useAppSelector } from '../store/hooks';
-import HeaderStyles from './HeaderStyles';
+
+import headerStyles from './HeaderStyles';
 import Search from './Search/Search';
 import Button from '../Button/Button';
 import UserButton from '../UserButton/UserButton';
 import UserButtonStyles from '../UserButton/UserButtonStyles';
+
+type Props = {
+};
 
 type RootStackParamList = {
   Login: undefined;
@@ -20,7 +25,7 @@ type RootStackParamList = {
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-const Header = () => {
+const Header: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const isUser = useAppSelector(state => state.user.user);
 
@@ -45,29 +50,29 @@ const Header = () => {
 
   return (
     <>
-      <View style={HeaderStyles.header_container}>
+      <View style={headerStyles.header_container}>
         <Image
           source={require('../../images/icons/logo.png')}
-          style={HeaderStyles.header_logo}
+          style={headerStyles.header_logo}
         />
         <TouchableOpacity onPress={onHomepage}>
-          <Text style={HeaderStyles.header_text}>Catalog</Text>
+          <Text style={headerStyles.header_text}>Catalog</Text>
         </TouchableOpacity>
         {!isUser.email ? (
-          <View style={HeaderStyles.header_button_container}>
+          <View style={headerStyles.header_button_container}>
             <Button
               text="Log In"
-              style={HeaderStyles.header_button}
+              style={headerStyles.header_button}
               onPress={onLoginPage}
             />
             <Button
               text="Sing Up"
-              style={HeaderStyles.header_button}
+              style={headerStyles.header_button}
               onPress={onSignupPage}
             />
           </View>
         ) : (
-          <View style={HeaderStyles.header_user_button}>
+          <View style={headerStyles.header_user_button}>
             <UserButton
               image_source={require('../../images/icons/cart.png')}
               onPress={onCartPage}

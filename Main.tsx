@@ -13,7 +13,7 @@ import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
 import BookDetail from './src/BookDetail/BookDetail';
 import FavoritesPage from './src/FavoritesPage/FavoritesPage';
-import { toastic } from './src/utils/utils';
+import { toast } from './src/utils/utils';
 
 
 const Stack = createStackNavigator();
@@ -34,7 +34,7 @@ const Main: React.FC = () => {
       dispatch(setUser(user));
     } catch (er) {
       const errorText = Object.values(er.response.data)[0];
-      toastic( errorText)
+      toast( errorText)
     } finally {
       setInitialization(true);
     }

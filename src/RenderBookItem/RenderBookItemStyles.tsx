@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const RenderBookItemStyles = StyleSheet.create({
+const renderBookItemStyles = StyleSheet.create({
   book_container: {
     gap: 10,
     marginTop: 10,
@@ -92,4 +92,4 @@ const RenderBookItemStyles = StyleSheet.create({
   },
 });
 
-export default RenderBookItemStyles;
+export default renderBookItemStyles;

@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const FavoritesPageStyles = StyleSheet.create({
+const favoritesPageStyles = StyleSheet.create({
   catalog_container: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -20,4 +20,4 @@ const FavoritesPageStyles = StyleSheet.create({
   },
 });
 
-export default FavoritesPageStyles;
+export default favoritesPageStyles;

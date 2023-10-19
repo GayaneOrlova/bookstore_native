@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const SortByOptionsStyle = StyleSheet.create({
+const sortByOptionsStyle = StyleSheet.create({
   box: {
     minWidth: 290,
     borderRadius: 16,
@@ -26,4 +26,4 @@ const SortByOptionsStyle = StyleSheet.create({
   },
 });
 
-export default SortByOptionsStyle;
+export default sortByOptionsStyle;

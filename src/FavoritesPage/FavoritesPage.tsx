@@ -1,15 +1,18 @@
 import React, { useEffect } from 'react';
 import { FlatList, View, Text } from 'react-native';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ScrollView } from 'react-native-gesture-handler';
+
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { changeFavoriteById, getFavoritesBooks } from '../api/book.api';
+import { changeFavoriteList, setFavoriteList } from '../store/slices/bookSlice';
+
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import { changeFavoriteList, setFavoriteList } from '../store/slices/bookSlice';
 import RenderBookItem from '../RenderBookItem/RenderBookItem';
-import FavoritesPageStyles from './FavoritesPageStyle';
-import { changeFavoriteById, getFavoritesBooks } from '../api/book.api';
+import favoritesPageStyles from './FavoritesPageStyle';
+
 import { toast } from '../utils/utils';
 
 type Props = {};
@@ -41,8 +44,8 @@ const FavoritesPage: React.FC<Props> = () => {
       const responce = await changeFavoriteById(id);
       dispatch(changeFavoriteList(id));
     }
-    catch (er) {
-      const errorText = Object.values(er.response.data);
+    catch (err: any) {
+      const errorText = Object.values(err.response.data);
       toast(errorText);
     }
   };
@@ -51,7 +54,7 @@ const FavoritesPage: React.FC<Props> = () => {
     <ScrollView>
       <Header />
       {favoriteList?.length ? (
-        <View style={FavoritesPageStyles.catalog_container}>
+        <View style={favoritesPageStyles.catalog_container}>
           <FlatList
             data={favoriteList}
             renderItem={({ item }) => (
@@ -59,12 +62,12 @@ const FavoritesPage: React.FC<Props> = () => {
             )}
             keyExtractor={(item) => item.image}
             numColumns={2}
-            contentContainerStyle={FavoritesPageStyles.content_container}
-            columnWrapperStyle={FavoritesPageStyles.column_wrapper}
+            contentContainerStyle={favoritesPageStyles.content_container}
+            columnWrapperStyle={favoritesPageStyles.column_wrapper}
           />
         </View>
       ) : (
-        <Text style={FavoritesPageStyles.noFavoriteText}>There are no favorite books yet...</Text>
+        <Text style={favoritesPageStyles.noFavoriteText}>There are no favorite books yet...</Text>
       )
       }
       <Footer />

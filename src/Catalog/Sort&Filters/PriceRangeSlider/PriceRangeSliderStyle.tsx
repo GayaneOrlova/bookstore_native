@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const PriceRangeSliderStyles = StyleSheet.create({
+const priceRangeSliderStyles = StyleSheet.create({
   box: {
     width: '100%',
     alignItems: 'center',
@@ -71,4 +71,4 @@ const PriceRangeSliderStyles = StyleSheet.create({
   },
 });
 
-export default PriceRangeSliderStyles;
+export default priceRangeSliderStyles;

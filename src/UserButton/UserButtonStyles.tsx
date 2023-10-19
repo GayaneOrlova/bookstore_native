@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const UserButtonStyles = StyleSheet.create({
+const userButtonStyles = StyleSheet.create({
   button: {
     width: 33,
     height: 33,
@@ -27,4 +27,4 @@ const UserButtonStyles = StyleSheet.create({
   },
 });
 
-export default UserButtonStyles;
+export default userButtonStyles;

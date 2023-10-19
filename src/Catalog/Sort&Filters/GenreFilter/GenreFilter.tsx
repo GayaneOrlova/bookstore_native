@@ -1,9 +1,11 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { View } from 'react-native';
-import { getAllGenres } from '../../../api/book.api';
 import { MultipleSelectList } from 'react-native-dropdown-select-list';
+
+import { getAllGenres } from '../../../api/book.api';
+import genreFilterStyle from './GenreFilterStyle';
+
 import { toast } from '../../../utils/utils';
-import GenreFilterStyle from './GenreFilterStyle';
 
 type Props = {
   setGenreQueryString: Dispatch<SetStateAction<string>>;
@@ -18,8 +20,8 @@ const GenreFilter: React.FC<Props> = (props) => {
       const response = await getAllGenres();
       const genresList = response.data.map(item => ({ key: item.id, value: item.name }))
       setGenres(genresList)
-    } catch (er) {
-      const errorText = Object.values(er.response.data)[0];
+    } catch (err: any) {
+      const errorText = Object.values(err.response.data)[0];
       toast(errorText)
     }
   };
@@ -54,12 +56,12 @@ const GenreFilter: React.FC<Props> = (props) => {
         search={false}
         data={genres!}
         label='Selected genres:'
-        boxStyles={GenreFilterStyle.box}
-        inputStyles={GenreFilterStyle.selectTitle}
-        checkBoxStyles={GenreFilterStyle.checkBox}
-        dropdownStyles={GenreFilterStyle.dropdown}
-        dropdownTextStyles={GenreFilterStyle.selectTitle}
-        badgeStyles={GenreFilterStyle.badge}
+        boxStyles={genreFilterStyle.box}
+        inputStyles={genreFilterStyle.selectTitle}
+        checkBoxStyles={genreFilterStyle.checkBox}
+        dropdownStyles={genreFilterStyle.dropdown}
+        dropdownTextStyles={genreFilterStyle.selectTitle}
+        badgeStyles={genreFilterStyle.badge}
       />
     </View>
   );

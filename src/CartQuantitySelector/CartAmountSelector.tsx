@@ -1,10 +1,13 @@
 import React, { } from 'react';
 import { Image, Text, TouchableOpacity, View } from "react-native";
+
 import { changeCart } from '../api/book.api';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { changeCartItem, deleteCartItem } from '../store/slices/bookSlice';
+
+import cartAmountSelectorStyles from './CartAmountSelectorStyles';
+
 import { toast } from '../utils/utils';
-import CartAmountSelectorStyles from './CartAmountSelectorStyles';
 
 type Props = {
   id: number | null;
@@ -52,18 +55,18 @@ const CartQuantitySelector: React.FC<Props> = (props) => {
   };
 
   return (
-    <View style={CartAmountSelectorStyles.container}>
-      <TouchableOpacity onPress={() => handleMinus(props.id!)} style={CartAmountSelectorStyles.buttons}>
-        <Text style={CartAmountSelectorStyles.buttons_text}>-</Text>
+    <View style={cartAmountSelectorStyles.container}>
+      <TouchableOpacity onPress={() => handleMinus(props.id!)} style={cartAmountSelectorStyles.buttons}>
+        <Text style={cartAmountSelectorStyles.buttons_text}>-</Text>
       </TouchableOpacity>
-      <Text style={[CartAmountSelectorStyles.buttons_text && CartAmountSelectorStyles.buttons_number]}>{props.amount}</Text>
-      <TouchableOpacity onPress={() => handlePlus(props.id!)} style={CartAmountSelectorStyles.buttons}>
-        <Text style={CartAmountSelectorStyles.buttons_text}>+</Text>
+      <Text style={[cartAmountSelectorStyles.buttons_text && cartAmountSelectorStyles.buttons_number]}>{props.amount}</Text>
+      <TouchableOpacity onPress={() => handlePlus(props.id!)} style={cartAmountSelectorStyles.buttons}>
+        <Text style={cartAmountSelectorStyles.buttons_text}>+</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleDeleteCart(props.id!)} style={CartAmountSelectorStyles.delete_button}>
+      <TouchableOpacity onPress={() => handleDeleteCart(props.id!)} style={cartAmountSelectorStyles.delete_button}>
         <Image
           source={require('../../images/icons/delete.png')}
-          style={CartAmountSelectorStyles.delete_icon}
+          style={cartAmountSelectorStyles.delete_icon}
         />
       </TouchableOpacity>
     </View>

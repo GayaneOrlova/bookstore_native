@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-const AuthorizeBannerStyles = StyleSheet.create({
+const authorizeBannerStyles = StyleSheet.create({
   authorize_container: {
     height: 501,
     backgroundColor: '#F0F4EF',
@@ -47,4 +47,4 @@ const AuthorizeBannerStyles = StyleSheet.create({
   },
 })
 
-export default AuthorizeBannerStyles;
+export default authorizeBannerStyles;

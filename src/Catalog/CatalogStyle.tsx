@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-const CatalogStyles = StyleSheet.create({
+const catalogStyles = StyleSheet.create({
   catalog_container: {
     flexDirection: 'column',
     gap: 20,
@@ -12,7 +12,6 @@ const CatalogStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '700',
   },
-  
   catalogList: {
     zIndex: -1,
     position: 'relative',
@@ -27,4 +26,4 @@ const CatalogStyles = StyleSheet.create({
   },
 });
 
-export default CatalogStyles;
+export default catalogStyles;

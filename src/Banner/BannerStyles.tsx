@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const BannerStyles = StyleSheet.create({
+const bannerStyles = StyleSheet.create({
   container: {
     backgroundColor: '#F0F4EF',
     borderWidth: 1,
@@ -51,4 +51,4 @@ const BannerStyles = StyleSheet.create({
   },
 });
 
-export default BannerStyles;
+export default bannerStyles;

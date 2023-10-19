@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 
-const FooterStyle = StyleSheet.create({
+const footerStyle = StyleSheet.create({
   footer: {
    backgroundColor: '#0D1821',
    height: 650,
@@ -37,4 +37,4 @@ const FooterStyle = StyleSheet.create({
   },
 });
 
-export default FooterStyle;
+export default footerStyle;
