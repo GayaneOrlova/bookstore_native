@@ -51,13 +51,12 @@ export const getUser = () => {
 };
 
 export const changeUserinfo = ({
-  email,
   username,
 } : {
-  email: string;
   username?: string,
 }) => {
-  return axios.put('/change-userinfo/', {email, username});
+console.log(username, "username")
+  return axios.put('/change-userinfo/', { username });
 };
 
 export const getAvatar = () => {

@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const bookCommentsStyle = StyleSheet.create({
   comments_container: {
@@ -21,12 +22,12 @@ const bookCommentsStyle = StyleSheet.create({
     borderRadius: 25,
   },  
   comment_author: {
-    color: '#0D1821',
+    color: COLORS.dark,
     fontWeight: '600',
     paddingBottom: 5,
   },
   comment_time: {
-    color: '#B9BAC3',
+    color: COLORS.dark_grey,
     fontSize: 10,
   },
 });

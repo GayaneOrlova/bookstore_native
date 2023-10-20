@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View, Image, Text, FlatList, ListRenderItemInfo, TextInput, } from 'react-native';
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -15,8 +15,6 @@ import loginStyles from '../Login/LoginStyles';
 import { bodySchema } from '../utils/shemas';
 import { toast } from '../utils/utils';
 
-
-
 type Props = {
   id: number,
   commentList: []
@@ -29,18 +27,16 @@ const BookComments: React.FC<Props> = (props) => {
   const isUser = useAppSelector(state => state.user.user);
   const [comments, setComments] = useState<CommentsType[]>(props.commentList);
   
-  // const [value, setValue] = useState('')  
-  
   const onCommentSubmit = async (body: { body: string; }) => {
     try {
       const response = await createBookComment(body.body, props.id);
       comments.unshift(response.data);
-      setValue('')
+      setValue('body', '');
     }
     catch (err: any) {
       const errorText = Object.values(err.response.data)[0];
       toast(errorText)
-      setValue('')
+      setValue('body', '');
     }
   };
   

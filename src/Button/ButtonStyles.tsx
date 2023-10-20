@@ -1,18 +1,19 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const buttonStyles = StyleSheet.create({
   button: {
     justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: '#344966',
+    // backgroundColor: COLORS.dark_blue,
     borderRadius: 16,
   },
   text_button: {
-    color: '#F0F4EF',
+    color: COLORS.white,
     fontWeight: '500',
   },
   button_on_cart: {
-    color: '#0D1821',
+    color: COLORS.dark,
   }
 });
 

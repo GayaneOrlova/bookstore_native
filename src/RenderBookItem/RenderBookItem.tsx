@@ -11,6 +11,7 @@ import FavoriteIcon from '../FavoriteIcon/FavoriteIcon';
 import renderBookItemStyles from './RenderBookItemStyles';
 
 import { toast } from '../utils/utils';
+import { COLORS } from '../utils/colors';
 
 
 type Props = {
@@ -51,7 +52,7 @@ const RenderBookItem: React.FC<Props> = (props) => {
         <Text style={renderBookItemStyles.book_title}>{props.item.title}</Text>
         <Text style={renderBookItemStyles.book_author}>{props.item.author}</Text>
         <View style={renderBookItemStyles.rating_container}>
-          <Rating size={20} rating={props.item.overall_rating} fillColor={'#BFCC94'} />
+          <Rating size={20} rating={props.item.overall_rating} fillColor={COLORS.green} />
           <Text style={renderBookItemStyles.rating_text}>{props.item.overall_rating}</Text>
         </View>
         <Button

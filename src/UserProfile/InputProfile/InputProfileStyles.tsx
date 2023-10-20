@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../utils/colors';
 
 const inputProfileStyles = StyleSheet.create({
   user_photo: {
@@ -11,7 +12,7 @@ const inputProfileStyles = StyleSheet.create({
 
   },
   user_avatar_container: {
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     borderWidth: 1,
     borderRadius: 16,
     marginVertical: 50,
@@ -29,7 +30,7 @@ const inputProfileStyles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: '#0D1821',
+    color: COLORS.dark,
     marginBottom: 10,
   },
   change_text: {
@@ -51,7 +52,7 @@ const inputProfileStyles = StyleSheet.create({
     width: 170,
     height: 44,
     marginTop: 30,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
 
   },
   buttons_container: {
@@ -64,13 +65,11 @@ const inputProfileStyles = StyleSheet.create({
     height: 40,
     maxWidth: '100%',
     borderRadius: 16,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
     justifyContent: 'center',
     alignItems: 'center',
     },
   change_photo_button: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
     position: 'absolute',
     right: 10,
     bottom: 60,
@@ -78,15 +77,12 @@ const inputProfileStyles = StyleSheet.create({
   error: {
     color: 'red',
     fontWeight: '700',
-  },
-  modal_container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    fontSize: 12,
+    left: 60,
+    top: -15,    
   },
   modal_text: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     padding: 20,
   }
   

@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const footerStyle = StyleSheet.create({
   footer: {
-   backgroundColor: '#0D1821',
+   backgroundColor: COLORS.dark,
    height: 650,
   },
   footer_container: {
@@ -18,7 +19,7 @@ const footerStyle = StyleSheet.create({
   footer_text: {
     fontSize: 16,
     fontWeight: '500',
-    color: '#F0F4EF',
+    color: COLORS.white,
   },
   footer_contacts: {
     flexDirection: 'column',

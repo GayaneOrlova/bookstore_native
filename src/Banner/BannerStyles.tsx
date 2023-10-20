@@ -1,8 +1,9 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const bannerStyles = StyleSheet.create({
   container: {
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     borderWidth: 1,
     borderColor: 'gray',
     marginTop: 39,
@@ -11,7 +12,6 @@ const bannerStyles = StyleSheet.create({
     borderRadius: 16,
     height: 505,
   },
-
   text_group: {
     flexDirection: 'column',
     gap: 20,
@@ -22,17 +22,17 @@ const bannerStyles = StyleSheet.create({
   text_group_title: {
     fontWeight: '700',
     fontSize: 18,
-    color: '#0D1821',
+    color: COLORS.dark,
   },
   text_group_description: {
     fontWeight: '500',
     fontSize: 14,
-    color: '#344966',
+    color: COLORS.dark_blue,
   },
   text_group_button: {
     width: 200,
     height: 38,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
   },
 
   background_image: {

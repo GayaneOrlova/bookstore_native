@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const booksRecommendStyle = StyleSheet.create({
   container: {
@@ -15,12 +16,12 @@ const booksRecommendStyle = StyleSheet.create({
   },
   title_text: {
     marginTop: 20,
-    color: '#0D1821',
+    color: COLORS.dark,
     fontWeight: '700',
     fontSize: 17,
   },
   text_author: {
-    color: '#0D1821',
+    color: COLORS.dark,
     fontSize: 14,
   },
   rate_image: {
@@ -29,7 +30,7 @@ const booksRecommendStyle = StyleSheet.create({
     marginTop: 10
   },
   text: {
-    color: '#B9BAC3',
+    color: COLORS.dark_grey,
     fontSize: 14,
     marginTop: 10,
   },
@@ -40,22 +41,22 @@ const booksRecommendStyle = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modal_text: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     padding: 40
   },
   rate_text: {
-    color: '#BFCC94',
+    color: COLORS.green,
     fontWeight: '700',
     fontSize: 18,
   },
   description_text: {
     fontSize: 14,
-    color: '#0D1821',
+    color: COLORS.dark,
     marginVertical: 20,
   },
   book_body: {
     fontSize: 12,
-    color: '#344966',
+    color: COLORS.dark_blue,
     marginBottom: 20,
   },
   price_button: {
@@ -63,7 +64,7 @@ const booksRecommendStyle = StyleSheet.create({
     height: 38,
     marginBottom:40,
     alignItems: 'center',
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
 
   },
   comment_input: {

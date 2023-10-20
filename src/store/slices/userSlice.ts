@@ -47,19 +47,21 @@ export const userSlice = createSlice({
     setUser(state, action: PayloadAction<User>) {
       state.user = action.payload;
     },
+    setUsername(state, action: PayloadAction<string>) {
+      state.user.username = action.payload;
+    },
     setAvatar(state, action){
       state.userAvatar.avatar = action.payload;
     },
     setNewPassword(state, action){
       state.UserPasswordChange.success = action.payload;
     },
-    
     logout(state) {
       (state.user.email = ''), (state.user.id = ''), (state.user.username = '');
     },
   },
 });
 
-export const {setUser, setAvatar, setNewPassword, logout} = userSlice.actions;
+export const {setUser, setUsername, setAvatar, setNewPassword, logout} = userSlice.actions;
 
 export default userSlice.reducer;

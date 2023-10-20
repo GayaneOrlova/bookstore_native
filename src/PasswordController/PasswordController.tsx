@@ -15,6 +15,7 @@ import loginStyles from './PasswordControllerStyles';
 
 import { toast } from '../utils/utils';
 import { loginSchema } from '../utils/shemas';
+import { COLORS } from '../utils/colors';
 
 
 const PasswordController = () => {
@@ -52,7 +53,7 @@ const PasswordController = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Email'
-                placeholderTextColor='#B9BAC3'
+                placeholderTextColor={COLORS.dark_grey}
               />
               {errors.email ? (<Text style={loginStyles.error}>{errors.email.message}</Text>) : (
                 <Text style={loginStyles.input_description}>Enter your email</Text>)
@@ -71,7 +72,7 @@ const PasswordController = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password'
-                placeholderTextColor='#B9BAC3'
+                placeholderTextColor=COLORS.dark_grey
                 secureTextEntry
                 onBlur={onBlur}
               />

@@ -11,7 +11,7 @@ const favoriteIconStyles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
     opacity: 0.5,
   },
   favorite_button_liked: {

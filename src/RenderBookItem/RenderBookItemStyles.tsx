@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const renderBookItemStyles = StyleSheet.create({
   book_container: {
@@ -22,10 +23,10 @@ const renderBookItemStyles = StyleSheet.create({
     zIndex: 1,
   },
   book_title: {
-    color: '#344966',
+    color: COLORS.dark_blue,
   },
   book_author: {
-    color: '#B9BAC3',
+    color: COLORS.dark_grey,
   },
   rating_container: {
     flexDirection: 'row',
@@ -34,21 +35,21 @@ const renderBookItemStyles = StyleSheet.create({
   },
   rating_text: {
     fontSize: 16,
-    color: '#B9BAC3',
+    color: COLORS.dark_grey,
   },
   price_button: {
     minWidth: 135,
     height: 34,
     marginVertical: 10,
     alignItems: 'center',
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
   },
  button_on_cart: {
     minWidth: 135,
     height: 34,
     marginVertical: 10,
     alignItems: 'center',
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
   },
   
   available_button: {
@@ -56,7 +57,7 @@ const renderBookItemStyles = StyleSheet.create({
     height: 34,
     marginVertical: 10,
     alignItems: 'center',
-    backgroundColor: '#B9BAC3',
+    backgroundColor: COLORS.dark_grey,
   },
   new_flag: {
     position: 'absolute',
@@ -65,7 +66,7 @@ const renderBookItemStyles = StyleSheet.create({
     zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#BFCC94',
+    backgroundColor: COLORS.green,
     minWidth: 113,
     height: 30,
   },
@@ -77,7 +78,7 @@ const renderBookItemStyles = StyleSheet.create({
     zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
     minWidth: 113,
     height: 30,
   },
@@ -92,7 +93,7 @@ const renderBookItemStyles = StyleSheet.create({
     borderRadius: 20,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
     opacity: 0.5,
   },
   favorite_button_liked: {

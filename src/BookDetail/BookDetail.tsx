@@ -18,6 +18,7 @@ import renderBookItemStyles from '../RenderBookItem/RenderBookItemStyles';
 import bookDetailStyle from './BookDetailStyle';
 
 import { toast } from '../utils/utils';
+import { COLORS } from '../utils/colors';
 
 type Props = {};
 
@@ -96,7 +97,7 @@ const BookDetail: React.FC<Props> = () => {
             }
             {isUser.email && !bookDetail.rating &&
               <View>
-                <Rating onChange={addBookRating} maxRating={5} size={20} rating={userNewRating} fillColor={'#BFCC94'} />
+                <Rating onChange={addBookRating} maxRating={5} size={20} rating={userNewRating} fillColor={COLORS.green} />
                 <Text style={bookDetailStyle.text}>Rate this book</Text>
               </View>
             }

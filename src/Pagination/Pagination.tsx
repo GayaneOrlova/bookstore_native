@@ -3,6 +3,7 @@ import DotsPagination from 'react-native-dots-pagination';
 import { View, TouchableOpacity, Image } from 'react-native';
 
 import paginationStyle from './PaginationStyle';
+import { COLORS } from '../utils/colors';
 
 type Props = {
   totalPages: number,
@@ -31,7 +32,7 @@ const Pagination: React.FC<Props> = (props) => {
         activeDotWidth={14}
         activeDotHeight={14}
         active={props.currentPage - 1}
-        activeColor={'#0D1821'}
+        activeColor={COLORS.dark}
         passiveColor={'gray'}
         marginHorizontal={30}
       />

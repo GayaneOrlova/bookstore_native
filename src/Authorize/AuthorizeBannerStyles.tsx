@@ -1,9 +1,10 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../utils/colors";
 
 const authorizeBannerStyles = StyleSheet.create({
   authorize_container: {
     height: 501,
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     marginHorizontal: 15,
     marginTop: 73,
     marginBottom: 73,
@@ -21,17 +22,17 @@ const authorizeBannerStyles = StyleSheet.create({
   text_group_title: {
     fontWeight: '700',
     fontSize: 18,
-    color: '#0D1821',
+    color: COLORS.dark,
   },
   text_group_description: {
     fontWeight: '500',
     fontSize: 14,
-    color: '#0D1821',
+    color: COLORS.dark,
   },
   authorize_button: {
     width: 231,
     height: 44,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
   },
   castle_image: {
     minWidth: 282,

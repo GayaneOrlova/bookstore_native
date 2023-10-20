@@ -11,13 +11,14 @@ type Props = {
   placeholderTextColor?: string;
   secureTextEntry?: boolean;
   editable?: boolean;
-  onChangeText: (text: string) => void;
+  value?: string;
+  onChangeText?: (text: string) => void;
   onBlur?: (text: string) => void;
 };
 
 const Input: React.FC<Props> = props => {
   const onChange = (text: string): void => {
-    props.onChangeText(text);
+    props.onChangeText!(text);
   }
   return (
     <View style={InputStyles.input_form}>
@@ -25,6 +26,7 @@ const Input: React.FC<Props> = props => {
       <TextInput
         style={InputStyles.input}
         onChangeText={onChange}
+        value={props.value}
         defaultValue={props.defaultValue}
         placeholder={props.placeholder}
         placeholderTextColor={props.placeholderTextColor}

@@ -1,10 +1,11 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../../utils/colors';
 
 const priceRangeSliderStyles = StyleSheet.create({
   box: {
     width: '100%',
     alignItems: 'center',
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     borderRadius: 16,
     borderColor: 'grey',
     borderWidth: 1,
@@ -15,7 +16,7 @@ const priceRangeSliderStyles = StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    color: '#344966',
+    color: COLORS.dark_blue,
     marginLeft: 22,
   },
   dropdown_button: {
@@ -32,7 +33,7 @@ const priceRangeSliderStyles = StyleSheet.create({
   },
   dropdown: {
     width: '100%',
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     borderRadius: 16,
     borderColor: 'grey',
     borderWidth: 1,
@@ -52,15 +53,15 @@ const priceRangeSliderStyles = StyleSheet.create({
     borderRadius: 16,
   },
   selectedTrack: {
-    backgroundColor: '#BFCC94',
+    backgroundColor: COLORS.green,
   },
   markers: {
     height: 32,
     width: 32,
     marginBottom: -12,
     borderRadius: 16,
-    backgroundColor: 'white',
-    borderColor: '#BFCC94',
+    backgroundColor: COLORS.white,
+    borderColor: COLORS.green,
     borderWidth: 2,
   },
   rangeValues: {

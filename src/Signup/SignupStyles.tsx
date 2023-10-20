@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../utils/colors";
 
 const signupStyles = StyleSheet.create({
   container: {
@@ -18,7 +19,7 @@ const signupStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 16,
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -30,14 +31,14 @@ const signupStyles = StyleSheet.create({
   input_description: {
     fontWeight: '500',
     fontSize: 12,
-    color: '#344966',
+    color: COLORS.dark_blue,
     marginTop: 5,
   },
   button: {
     width: 151,
     height: 44,
     marginTop: 20,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
   },
   image: {
     flexDirection: 'column',

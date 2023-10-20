@@ -1,11 +1,12 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const userButtonStyles = StyleSheet.create({
   button: {
     width: 33,
     height: 33,
     borderRadius: 16,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -15,7 +16,7 @@ const userButtonStyles = StyleSheet.create({
     top: -4,
     left: 23,
     borderRadius: 16,
-    backgroundColor: '#BFCC94',
+    backgroundColor: COLORS.green,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -26,7 +27,7 @@ const userButtonStyles = StyleSheet.create({
     top: -4,
     left: 76,
     borderRadius: 16,
-    backgroundColor: '#BFCC94',
+    backgroundColor: COLORS.green,
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
@@ -34,7 +35,7 @@ const userButtonStyles = StyleSheet.create({
   button_index_count: {
     fontWeight: '700',
     fontSize: 10,
-    color: '#344966',
+    color: COLORS.dark_blue,
   },
 });
 

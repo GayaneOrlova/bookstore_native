@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { COLORS } from "../utils/colors";
 
 const InputStyles = StyleSheet.create({
   container: {
@@ -10,7 +11,7 @@ const InputStyles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'gray',
     borderRadius: 16,
-    backgroundColor: '#F0F4EF',
+    backgroundColor: COLORS.white,
     flexDirection: 'row',
     alignItems: 'center',
   },

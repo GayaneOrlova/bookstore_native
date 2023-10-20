@@ -27,7 +27,7 @@ const inputPasswordStyles = StyleSheet.create({
     width: 170,
     height: 44,
     marginTop: 30,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
 
   },
 });

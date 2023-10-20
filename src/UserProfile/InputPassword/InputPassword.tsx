@@ -13,6 +13,7 @@ import inputPasswordStyles from './InputPasswordStyles';
 
 import { toast } from '../../utils/utils';
 import { changePasswordSchema } from '../../utils/shemas';
+import { COLORS } from '../../utils/colors';
 
 type UserLoginType = {
   password: string;
@@ -64,7 +65,7 @@ const InputPassword: React.FC<Props> = () => {
               onChangeText={onChange}
               defaultValue={value}
               placeholder='**********'
-              placeholderTextColor='#344966'
+              placeholderTextColor={COLORS.dark_blue}
               secureTextEntry
               style={inputPasswordStyles.input}
               editable={showInputChange}
@@ -91,7 +92,7 @@ const InputPassword: React.FC<Props> = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder="New password"
-                placeholderTextColor='#344966'
+                placeholderTextColor={COLORS.dark_blue}
                 secureTextEntry
                 style={inputPasswordStyles.input}
                 editable={showInputChange}
@@ -111,7 +112,7 @@ const InputPassword: React.FC<Props> = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password replay'
-                placeholderTextColor='#344966'
+                placeholderTextColor={COLORS.dark_blue}
                 secureTextEntry
                 style={inputPasswordStyles.input}
                 editable={showInputChange}

@@ -18,6 +18,7 @@ import signupStyles from './SignupStyles';
 
 import { toast } from '../utils/utils';
 import { signupSchema } from '../utils/shemas';
+import { COLORS } from '../utils/colors';
 
 type Props = {}
 
@@ -60,7 +61,7 @@ const Signup: React.FC<Props> = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Email'
-                placeholderTextColor='#B9BAC3'
+                placeholderTextColor={COLORS.dark_grey}
               />
               {errors.email ? (<Text style={signupStyles.error}>{errors.email.message}</Text>) : (
                 <Text style={signupStyles.input_description}>Enter your email</Text>)
@@ -79,7 +80,7 @@ const Signup: React.FC<Props> = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password'
-                placeholderTextColor='#B9BAC3'
+                placeholderTextColor={COLORS.dark_grey}
                 secureTextEntry
               />
               {errors.password ? (<Text style={signupStyles.error}>{errors.password.message}</Text>)
@@ -100,7 +101,7 @@ const Signup: React.FC<Props> = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password replay'
-                placeholderTextColor='#B9BAC3'
+                placeholderTextColor={COLORS.dark_grey}
                 secureTextEntry
               />
               {errors.confirm_password ? (<Text style={signupStyles.error}>{errors.confirm_password.message}</Text>)

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const cartStyles = StyleSheet.create({
   cart_page: {
@@ -53,26 +54,26 @@ const cartStyles = StyleSheet.create({
   },
   item_price: {
     fontSize: 18,
-    color: '#0D1821',
+    color: COLORS.dark,
   },
   cart_text_description: {
-    color: '#344966',
+    color: COLORS.dark_blue,
   },
   cart_button: {
     minWidth: 290,
     height: 35,
     marginVertical: 10,
-    backgroundColor: '#344966',
+    backgroundColor: COLORS.dark_blue,
   },
   continue_button: {
-    color: 'black',
+    color: COLORS.dark,
     minWidth: 290,
     height: 35,
     marginVertical: 10,
     borderWidth: 1,
     borderRadius: 16,
-    borderColor: 'black',
-    backgroundColor: 'white',
+    borderColor: COLORS.dark,
+    backgroundColor: COLORS.white,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -88,7 +89,7 @@ const cartStyles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
   },
   modal_text: {
-    backgroundColor: 'white',
+    backgroundColor: COLORS.white,
     padding: 40
   },
 });
@@ -96,6 +97,3 @@ const cartStyles = StyleSheet.create({
 export default cartStyles;
 
 
-const COLORS = {
-  primaryBorder: "#D6D8E7",
-}
