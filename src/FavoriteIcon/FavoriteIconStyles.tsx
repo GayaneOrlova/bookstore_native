@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import { COLORS } from '../utils/colors';
 
 const favoriteIconStyles = StyleSheet.create({
   favorite_button: {

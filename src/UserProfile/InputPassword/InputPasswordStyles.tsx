@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../utils/colors';
 
 const inputPasswordStyles = StyleSheet.create({
   change_text: {
