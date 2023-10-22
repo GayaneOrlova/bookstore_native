@@ -145,5 +145,16 @@ const bookSlice = createSlice({
   }
 });
 
-export const { setFavoriteList, setPagination, setCurrentPage, setCart, setBookRating, changeCartItem, deleteCartItem, changeBookFavorite, changeFavoriteList, } = bookSlice.actions;
+export const {
+  setFavoriteList,
+  setPagination,
+  setCurrentPage,
+  setCart,
+  setBookRating,
+  changeCartItem,
+  deleteCartItem,
+  changeBookFavorite,
+  changeFavoriteList,
+} = bookSlice.actions;
+
 export default bookSlice.reducer;

@@ -11,8 +11,7 @@ const priceRangeSliderStyles = StyleSheet.create({
     borderWidth: 1,
     height: 48,
     flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 10,
+    marginBottom: 10,    
   },
   text: {
     fontSize: 14,
@@ -20,11 +19,10 @@ const priceRangeSliderStyles = StyleSheet.create({
     marginLeft: 22,
   },
   dropdown_button: {
+    width: '100%',
     position: 'absolute',
-    right: 0,
-    top: '50%',
-    transform: [{ translateY: -8 }],
-    marginRight: 22,
+    right: 22,
+    alignItems: 'flex-end',
   },
   dropdown_button_image: {
     width: 14,
@@ -39,7 +37,6 @@ const priceRangeSliderStyles = StyleSheet.create({
     borderWidth: 1,
     height: 140,
     marginBottom: 10,
-    // position: 'absolute',    
   },
   slider_container: {
     marginVertical: 20,

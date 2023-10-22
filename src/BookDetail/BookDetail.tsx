@@ -13,7 +13,6 @@ import Header from '../Header/Header';
 import Button from '../Button/Button';
 import Footer from '../Footer/Footer';
 import BookComments from '../BookComments/BookComments';
-import BooksRecommend from '../BooksRecommend/BooksRecommend';
 import renderBookItemStyles from '../RenderBookItem/RenderBookItemStyles';
 import bookDetailStyle from './BookDetailStyle';
 
