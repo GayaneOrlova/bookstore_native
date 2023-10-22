@@ -6,7 +6,7 @@ import { useDebounce } from 'usehooks-ts'
 import Input from '../../Input/Input';
 import SearchStyles from './SearchStyles';
 import { getPage } from '../../api/book.api';
-import { setCurrentPage, setPagination } from '../../store/slices/bookSlice';
+import { setPagination } from '../../store/slices/bookSlice';
 import { useAppDispatch } from '../../store/hooks';
 
 const Search = () => {
@@ -25,7 +25,7 @@ const Search = () => {
       async (page = 1) => {
         try {
           const responce = await getPage(page, `search=${debouncedValue}`);
-          console.log('!!!!', debouncedValue)
+          console.log('!!!!',value, debouncedValue)
           dispatch(setPagination(responce.data));
         } catch (er) {
           console.log(er);

@@ -32,11 +32,13 @@ const Catalog: React.FC<Props> = () => {
   const currentPage = useAppSelector((state) => state.book.currentPage)
   const dispatch = useAppDispatch();
   
+  console.log('paginationResults', paginationResults.length)
   const [rangeState, setRangeState] = useState([0, 100])
   const [genreQueryString, setGenreQueryString] = useState('');
   const [sortString, setSortString] = useState('');
   const [queryParams, setQueryParams] = useState('');
 
+console.log(count, 'count')
   const changePageHandler = async (page: number) => {
     try {
       setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
@@ -83,7 +85,8 @@ const Catalog: React.FC<Props> = () => {
             columnWrapperStyle={catalogStyles.column_wrapper}
           />
         </View>
-        <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} />
+        
+        <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} paginationResults={paginationResults} />
       </View>
     </View>
   );
