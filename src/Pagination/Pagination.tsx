@@ -29,7 +29,6 @@ const Pagination: React.FC<Props> = (props) => {
   };
 
   return (
-    dotCount > 1 &&
     <View style={paginationStyle.container}>
       <TouchableOpacity onPress={() => handlePageChange(props.currentPage - 1)} disabled={props.currentPage === 1}>
         <Image source={require('../../images/icons/back.png')} />

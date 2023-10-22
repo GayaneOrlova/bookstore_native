@@ -31,14 +31,14 @@ const Catalog: React.FC<Props> = () => {
   const { results: paginationResults, count } = useAppSelector((state) => state.book.pagination)
   const currentPage = useAppSelector((state) => state.book.currentPage)
   const dispatch = useAppDispatch();
-  
+
   console.log('paginationResults', paginationResults.length)
   const [rangeState, setRangeState] = useState([0, 100])
   const [genreQueryString, setGenreQueryString] = useState('');
   const [sortString, setSortString] = useState('');
   const [queryParams, setQueryParams] = useState('');
 
-console.log(count, 'count')
+  console.log(count, 'count')
   const changePageHandler = async (page: number) => {
     try {
       setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
@@ -85,8 +85,12 @@ console.log(count, 'count')
             columnWrapperStyle={catalogStyles.column_wrapper}
           />
         </View>
-        
-        <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} paginationResults={paginationResults} />
+        {paginationResults.length? (
+        <Pagination totalPages={count} currentPage={currentPage} onPageChange={changePageHandler} count={count} paginationResults={paginationResults}/>
+        ) : (
+       <Text style={catalogStyles.no_books_text}>There are no such books.</Text>
+       )
+        }
       </View>
     </View>
   );

@@ -24,6 +24,13 @@ const catalogStyles = StyleSheet.create({
   column_wrapper: {
     justifyContent: 'space-between',
   },
+  no_books_text: {
+    fontSize: 16,
+    fontWeight: '600',
+    fontStyle: 'italic',
+    textAlign: 'center',
+    marginTop: 20,
+  },
 });
 
 export default catalogStyles;
