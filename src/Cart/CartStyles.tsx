@@ -3,8 +3,7 @@ import { COLORS } from '../utils/colors';
 
 const cartStyles = StyleSheet.create({
   cart_page: {
-    marginHorizontal: 15,
-    marginTop: 30,
+    // marginHorizontal: 15,
     marginBottom: 80,
   },
   cart_container: {
@@ -14,6 +13,7 @@ const cartStyles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 80,
     borderColor: '#D6D8E7',
+
   },
   render_item: {
     flexDirection: 'row',
@@ -21,6 +21,7 @@ const cartStyles = StyleSheet.create({
     borderBottomColor: '#D6D8E7',
     borderBottomWidth: 1,
     paddingBottom: 30,
+    marginHorizontal: 15,
   },
   render_item_last: {
     flexDirection: 'row',
@@ -30,19 +31,25 @@ const cartStyles = StyleSheet.create({
     flexDirection: 'column',
     gap: 30,
     marginVertical: 30,
+    // marginHorizontal: 15,
   },
   cart_item_image: {
     width: 135,
     height: 202,
     borderRadius: 16,
+    marginHorizontal: 15,
+
   },
   cart_item_detail: {
     gap: 20,
     justifyContent: 'space-between',
+    marginRight: 15,
   },
   cart_text: {
     fontSize: 18,
     fontWeight: '700',
+    marginRight: 15,
+    width: 165,
   },
   cart_texts: {
     gap: 10,

@@ -6,7 +6,6 @@ const headerStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    top: 33,
     marginHorizontal: 15,
   },
   header_logo: {

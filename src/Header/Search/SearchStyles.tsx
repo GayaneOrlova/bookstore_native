@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 const SearchStyles = StyleSheet.create({
   container: {
-    marginTop: 68,
+    marginTop: 30,
     marginHorizontal: 15,
   },
 });

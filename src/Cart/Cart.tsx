@@ -16,6 +16,7 @@ import cartStyles from './CartStyles';
 
 import { toast } from '../utils/utils';
 import { isAxiosError } from 'axios';
+import Banner from '../Banner/Banner';
 
 type Props = {}
 type RootStackParamList = {
@@ -23,7 +24,7 @@ type RootStackParamList = {
 };
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-const Cart:React.FC<Props> = () => {
+const Cart: React.FC<Props> = () => {
   const navigation = useNavigation<NavigationProps>();
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
@@ -41,12 +42,12 @@ const Cart:React.FC<Props> = () => {
     }
     catch (err: any) {
       if (isAxiosError(err)) {
-      const errorText = Object.values(err.response?.data)[0];
-      toast(errorText);
-    }
-    else {
-      toast('An error was occured!');
-    }
+        const errorText = Object.values(err.response?.data)[0];
+        toast(errorText);
+      }
+      else {
+        toast('An error was occured!');
+      }
     }
   };
 
@@ -55,8 +56,7 @@ const Cart:React.FC<Props> = () => {
   }, []);
 
   return (
-    <ScrollView>
-      <Header />
+    <>
       {cartList?.total_price ? (
         <View style={cartStyles.cart_page}>
           <FlatList
@@ -76,17 +76,24 @@ const Cart:React.FC<Props> = () => {
                 </View>
               </View>
             )}
-          />
-          <Text style={cartStyles.total_text}>Total: <Text style={cartStyles.total_text}>{cartList.total_price}</Text></Text>
-          <TouchableOpacity style={cartStyles.continue_button}>
-            <Text>Continue shopping</Text>
-          </TouchableOpacity>
-          <Button
-            text="Chekout"
-            style={cartStyles.cart_button}
+            ListHeaderComponent={<Header />}
+            ListFooterComponent={
+              <View style={{marginHorizontal: 15,}}>
+                <Text style={cartStyles.total_text}>Total: <Text style={cartStyles.total_text}>{cartList.total_price}</Text></Text>
+                <TouchableOpacity style={cartStyles.continue_button}>
+                  <Text>Continue shopping</Text>
+                </TouchableOpacity>
+                <Button
+                  text="Chekout"
+                  style={cartStyles.cart_button}
+                />
+                <Footer />
+              </View>}
           />
         </View>
       ) : (
+      <ScrollView>
+      <Header />
         <View style={cartStyles.cart_container}>
           <Text style={cartStyles.cart_text}>Your cart is empty</Text>
           <Text style={cartStyles.cart_text_description}>Add items to cart to make a purchase.Go to the catalogue no.</Text>
@@ -100,10 +107,10 @@ const Cart:React.FC<Props> = () => {
             source={require('../../images/books.png')}
           />
         </View>
-      )
-      }
-      <Footer />
-    </ScrollView >
+        <Footer />
+        </ScrollView>
+      )}
+    </>
   );
 };
 
