@@ -16,7 +16,7 @@ import cartStyles from './CartStyles';
 
 import { toast } from '../utils/utils';
 import { isAxiosError } from 'axios';
-import Banner from '../Banner/Banner';
+import EmptyCart from './EmptyCart/EmptyCart';
 
 type Props = {}
 type RootStackParamList = {
@@ -56,9 +56,9 @@ const Cart: React.FC<Props> = () => {
   }, []);
 
   return (
-    <>
+    <View>
       {cartList?.total_price ? (
-        <View style={cartStyles.cart_page}>
+        <View>
           <FlatList
             contentContainerStyle={cartStyles.cart_item}
             data={cartList.items}
@@ -78,7 +78,7 @@ const Cart: React.FC<Props> = () => {
             )}
             ListHeaderComponent={<Header />}
             ListFooterComponent={
-              <View style={{marginHorizontal: 15,}}>
+              <View>
                 <Text style={cartStyles.total_text}>Total: <Text style={cartStyles.total_text}>{cartList.total_price}</Text></Text>
                 <TouchableOpacity style={cartStyles.continue_button}>
                   <Text>Continue shopping</Text>
@@ -92,25 +92,9 @@ const Cart: React.FC<Props> = () => {
           />
         </View>
       ) : (
-      <ScrollView>
-      <Header />
-        <View style={cartStyles.cart_container}>
-          <Text style={cartStyles.cart_text}>Your cart is empty</Text>
-          <Text style={cartStyles.cart_text_description}>Add items to cart to make a purchase.Go to the catalogue no.</Text>
-          <Button
-            text="Go to catalog"
-            style={cartStyles.cart_button}
-            onPress={onHomepage}
-          />
-          <Image
-            style={cartStyles.cart_image}
-            source={require('../../images/books.png')}
-          />
-        </View>
-        <Footer />
-        </ScrollView>
+      <EmptyCart />
       )}
-    </>
+    </View>
   );
 };
 

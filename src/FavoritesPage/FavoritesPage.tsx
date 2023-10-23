@@ -51,10 +51,9 @@ const FavoritesPage: React.FC<Props> = () => {
   };
 
   return (
-    <ScrollView>
-      <Header />
+  <>
       {favoriteList?.length ? (
-        <View style={favoritesPageStyles.catalog_container}>
+        <View>
           <FlatList
             data={favoriteList}
             renderItem={({ item }) => (
@@ -64,14 +63,23 @@ const FavoritesPage: React.FC<Props> = () => {
             numColumns={2}
             contentContainerStyle={favoritesPageStyles.content_container}
             columnWrapperStyle={favoritesPageStyles.column_wrapper}
+            ListHeaderComponent={
+              <Header />
+            }
+            ListFooterComponent={<Footer/>}
           />
         </View>
       ) : (
+      <ScrollView>
+      <Header />
         <Text style={favoritesPageStyles.noFavoriteText}>There are no favorite books yet...</Text>
+                <Footer />
+</ScrollView>
+
       )
       }
-      <Footer />
-    </ScrollView>
+
+      </>
   )
 };
 

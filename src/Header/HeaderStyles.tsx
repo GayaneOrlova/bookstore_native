@@ -7,6 +7,7 @@ const headerStyles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginHorizontal: 15,
+    top: 30,
   },
   header_logo: {
     width: 62,

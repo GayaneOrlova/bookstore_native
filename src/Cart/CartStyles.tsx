@@ -2,18 +2,12 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from '../utils/colors';
 
 const cartStyles = StyleSheet.create({
-  cart_page: {
-    // marginHorizontal: 15,
-    marginBottom: 80,
-  },
   cart_container: {
     flexDirection: 'column',
     gap: 30,
-    marginHorizontal: 15,
-    marginTop: 20,
+    marginTop: 30,
     marginBottom: 80,
     borderColor: '#D6D8E7',
-
   },
   render_item: {
     flexDirection: 'row',
@@ -21,7 +15,6 @@ const cartStyles = StyleSheet.create({
     borderBottomColor: '#D6D8E7',
     borderBottomWidth: 1,
     paddingBottom: 30,
-    marginHorizontal: 15,
   },
   render_item_last: {
     flexDirection: 'row',
@@ -31,14 +24,12 @@ const cartStyles = StyleSheet.create({
     flexDirection: 'column',
     gap: 30,
     marginVertical: 30,
-    // marginHorizontal: 15,
   },
   cart_item_image: {
     width: 135,
     height: 202,
     borderRadius: 16,
     marginHorizontal: 15,
-
   },
   cart_item_detail: {
     gap: 20,
@@ -58,18 +49,17 @@ const cartStyles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     marginTop: 30,
+    marginHorizontal: 15,
   },
   item_price: {
     fontSize: 18,
     color: COLORS.dark,
   },
-  cart_text_description: {
-    color: COLORS.dark_blue,
-  },
   cart_button: {
     minWidth: 290,
     height: 35,
     marginVertical: 10,
+    marginHorizontal: 15,
     backgroundColor: COLORS.dark_blue,
   },
   continue_button: {
@@ -82,22 +72,8 @@ const cartStyles = StyleSheet.create({
     borderColor: COLORS.dark,
     backgroundColor: COLORS.white,
     alignItems: 'center',
-    justifyContent: 'center'
-  },
-  cart_image: {
-    width: 290,
-    height: 176,
-    alignSelf: 'center',
-  },
-  modal: {
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  },
-  modal_text: {
-    backgroundColor: COLORS.white,
-    padding: 40
+    marginHorizontal: 15,
   },
 });
 

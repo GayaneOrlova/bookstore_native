@@ -5,7 +5,7 @@ const catalogStyles = StyleSheet.create({
     flexDirection: 'column',
     gap: 20,
     // marginHorizontal: 15,
-    marginTop: 20,
+    // marginTop: 20,
     marginBottom: 20,
   },
   catalog_header: {
@@ -24,7 +24,7 @@ const catalogStyles = StyleSheet.create({
   content_container: {
     // justifyContent: 'space-between',
     gap: 10,
-    marginVertical: 20,
+    // marginVertical: 20,
   },
   column_wrapper: {
     // justifyContent: 'space-between',
