@@ -55,7 +55,6 @@ export const changeUserinfo = ({
 } : {
   username?: string,
 }) => {
-console.log(username, "username")
   return axios.put('/change-userinfo/', { username });
 };
 

@@ -1,20 +1,21 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { FC, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDebounce } from 'usehooks-ts'
 
-import Input from '../../Input/Input';
-import SearchStyles from './SearchStyles';
 import { getPage } from '../../api/book.api';
 import { setPagination } from '../../store/slices/bookSlice';
 import { useAppDispatch } from '../../store/hooks';
 
-const Search = () => {
+import Input from '../../Input/Input';
+import SearchStyles from './SearchStyles';
+
+type Props = {};
+
+const Search: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
 
   const [value, setValue] = useState<string>('')
   const debouncedValue = useDebounce<string>(value, 2000)
-  console.log(value)
 
   const handleChange = (value: React.SetStateAction<string>) => {
     setValue(value);
@@ -25,7 +26,6 @@ const Search = () => {
       async (page = 1) => {
         try {
           const responce = await getPage(page, `search=${debouncedValue}`);
-          console.log('!!!!',value, debouncedValue)
           dispatch(setPagination(responce.data));
         } catch (er) {
           console.log(er);
@@ -36,13 +36,12 @@ const Search = () => {
 
   return (
     <View style={SearchStyles.container}>
-          <Input
-            onChangeText={handleChange}
-            defaultValue={value}
-          
-            placeholder="Search"
-            image_source={require('../../../images/icons/search.png')}
-          />
+      <Input
+        onChangeText={handleChange}
+        defaultValue={value}
+        placeholder="Search"
+        image_source={require('../../../images/icons/search.png')}
+      />
     </View>
   );
 };

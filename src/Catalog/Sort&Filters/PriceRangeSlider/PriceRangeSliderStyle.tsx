@@ -23,6 +23,7 @@ const priceRangeSliderStyles = StyleSheet.create({
     position: 'absolute',
     right: 22,
     alignItems: 'flex-end',
+    paddingVertical: 10,
   },
   dropdown_button_image: {
     width: 14,

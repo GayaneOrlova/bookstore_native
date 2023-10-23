@@ -41,6 +41,7 @@ const RenderBookItem: React.FC<Props> = (props) => {
   };
 
   return (
+
     <TouchableOpacity onPress={() => onBookDetailPage(props.item.id)}>
       <View style={renderBookItemStyles.book_container}>
         <View style={renderBookItemStyles.book_image_container}>
@@ -49,8 +50,8 @@ const RenderBookItem: React.FC<Props> = (props) => {
           {props.item.new && <Button style={renderBookItemStyles.new_flag} text={'New'} />}
           <Image style={renderBookItemStyles.book_image} source={{ uri: props.item.image }} />
         </View>
-        <Text style={renderBookItemStyles.book_title}>{props.item.title}</Text>
-        <Text style={renderBookItemStyles.book_author}>{props.item.author}</Text>
+        <Text numberOfLines={1} style={renderBookItemStyles.book_title}>{props.item.title}</Text>
+        <Text numberOfLines={1} style={renderBookItemStyles.book_author}>{props.item.author}</Text>
         <View style={renderBookItemStyles.rating_container}>
           <Rating size={20} rating={props.item.overall_rating} fillColor={COLORS.green} />
           <Text style={renderBookItemStyles.rating_text}>{props.item.overall_rating}</Text>

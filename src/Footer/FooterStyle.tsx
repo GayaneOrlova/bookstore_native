@@ -4,7 +4,9 @@ import { COLORS } from '../utils/colors';
 const footerStyle = StyleSheet.create({
   footer: {
    backgroundColor: COLORS.dark,
-   height: 650,
+   minHeight: 700,
+   height: '100%',
+   marginTop: 70,
   },
   footer_container: {
     marginHorizontal: 15,

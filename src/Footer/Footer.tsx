@@ -1,10 +1,10 @@
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Image, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { logout } from '../store/slices/userSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import footerStyle from './FooterStyle';
 

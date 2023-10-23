@@ -35,6 +35,7 @@ const Login: React.FC<Props> = () => {
       dispatch(setUser(response.data.user));  
     }
     catch (err: any) {
+    // console.log('error', err.response.data, '!!!',Object.values(err.response.data), '!!!',)
       const errorText = Object.values(err.response.data)[0];
       toast(errorText)
     }

@@ -20,6 +20,7 @@ const Pagination: React.FC<Props> = (props) => {
   useEffect (() => {
     if (props.paginationResults?.length > 0) {
       setDotCount(Math.ceil(props.count / props.paginationResults.length));
+      console.log('dotCount', dotCount)
      };
   }, [props.paginationResults]);
   

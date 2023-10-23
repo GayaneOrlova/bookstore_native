@@ -6,6 +6,7 @@ import { getAllGenres } from '../../../api/book.api';
 import genreFilterStyle from './GenreFilterStyle';
 
 import { toast } from '../../../utils/utils';
+import { GenreType } from '../../../store/slices/bookSlice';
 
 type Props = {
   setGenreQueryString: Dispatch<SetStateAction<string>>;
