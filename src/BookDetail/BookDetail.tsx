@@ -18,6 +18,8 @@ import bookDetailStyle from './BookDetailStyle';
 
 import { toast } from '../utils/utils';
 import { COLORS } from '../utils/colors';
+import { io } from 'socket.io-client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type Props = {};
 
@@ -36,6 +38,7 @@ const BookDetail: React.FC<Props> = () => {
   const isUser = useAppSelector(state => state.user.user);
   const [bookDetail, setBookDetail] = useState<BookType>();
   const [userNewRating, setUserNewRating] = useState();
+
 
   const fetchBookDetail = async () => {
     if (!id) { return; }

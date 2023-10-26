@@ -1,6 +1,7 @@
-import React, {useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { View, Image, Text, FlatList, ListRenderItemInfo, TextInput, } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { CommentsType } from '../store/slices/bookSlice';
@@ -14,6 +15,7 @@ import loginStyles from '../Login/LoginStyles';
 
 import { bodySchema } from '../utils/shemas';
 import { toast } from '../utils/utils';
+import { io } from 'socket.io-client';
 
 type Props = {
   id: number,
@@ -26,12 +28,69 @@ const BookComments: React.FC<Props> = (props) => {
   });
   const isUser = useAppSelector(state => state.user.user);
   const [comments, setComments] = useState<CommentsType[]>(props.commentList);
-  
+
+  const [access, setAccess] = useState<string>('');
+
+  const token = async () => {
+    const responce = await AsyncStorage.getItem('access');
+    setAccess(responce!);
+  };
+
+  useEffect(() => {
+    token();
+  }, [])
+
+  const URL = 'http://localhost:8000/';
+
+  const socket = io(URL, {
+    auth: { access, "book_id": props.id },
+  });
+
+  useEffect(() => {
+
+    console.log(props.id, "78909876543567890")
+    // const socket = io('http://localhost:8000'); 
+
+    if (!socket.connected) {
+      socket.connect();
+    };
+
+    // const book_id = props.id;
+    // socket.emit('connected', { access, book_id: book_id });
+
+    socket.on('new_message', (comment) => {
+      setComments((prevComments) => [...prevComments, comment]);
+
+      // (comments.unshift(comment))
+
+      console.log(comment, "comment!!!", comments)
+    });
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+
+      // socket.emit(
+      // 'auth', {
+      //   token: access,
+      //   book_id: props.id,
+      // }
+      // );
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [props.id, access, comments]);
+
+
   const onCommentSubmit = async (body: { body: string; }) => {
     try {
       const response = await createBookComment(body.body, props.id);
-      comments.unshift(response.data);
+      const new_message = response.data;
+      comments.unshift(new_message);
       setValue('body', '');
+
+      socket.emit('new_message', new_message);
     }
     catch (err: any) {
       const errorText = Object.values(err.response.data)[0];
@@ -39,7 +98,8 @@ const BookComments: React.FC<Props> = (props) => {
       setValue('body', '');
     }
   };
-  
+
+
   const renderItem = ({ item }: ListRenderItemInfo<CommentsType>) => (
     <View style={bookCommentsStyle.comment_item}>
       <View style={bookCommentsStyle.detail_info_group}>
@@ -65,25 +125,25 @@ const BookComments: React.FC<Props> = (props) => {
       ) : (
         <Text>No comments yet</Text>
       )}
-       {isUser.email &&
-          <View>
-            <Controller
-              control={control}
-              rules={{ required: true, }}
-              render={({ field: { onChange, value } }) => (
-                <TextInput
-                  style={bookDetailStyle.comment_input}
-                  placeholder="Share a comment"
-                  onChangeText={onChange}
-                  defaultValue={value}
-                />
-              )}
-              name="body"
-            />
-            {errors.body && <Text style={loginStyles.error}>{errors.body.message}</Text>}
-            <Button text="Post a comment" style={bookDetailStyle.price_button} onPress={handleSubmit(onCommentSubmit)} />
-          </View>
-        }
+      {isUser.email &&
+        <View>
+          <Controller
+            control={control}
+            rules={{ required: true, }}
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={bookDetailStyle.comment_input}
+                placeholder="Share a comment"
+                onChangeText={onChange}
+                defaultValue={value}
+              />
+            )}
+            name="body"
+          />
+          {errors.body && <Text style={loginStyles.error}>{errors.body.message}</Text>}
+          <Button text="Post a comment" style={bookDetailStyle.price_button} onPress={handleSubmit(onCommentSubmit)} />
+        </View>
+      }
 
     </>
   );

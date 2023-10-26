@@ -23,7 +23,6 @@ const cartStyles = StyleSheet.create({
   cart_item: {
     flexDirection: 'column',
     gap: 30,
-    marginVertical: 30,
   },
   cart_item_image: {
     width: 135,

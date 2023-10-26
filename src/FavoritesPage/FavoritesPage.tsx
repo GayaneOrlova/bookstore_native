@@ -27,16 +27,17 @@ const FavoritesPage: React.FC<Props> = () => {
   const favoriteList = useAppSelector(state => state.book.favoriteBooks);
   const dispatch = useAppDispatch();
 
-  useEffect(() => {(
-    async () => {
-      try {
-        const responce = await getFavoritesBooks();
-        dispatch(setFavoriteList(responce.data));
-      }
-      catch (er) {
-        toast('An error occurred');
-      };
-    })();
+  useEffect(() => {
+    (
+      async () => {
+        try {
+          const responce = await getFavoritesBooks();
+          dispatch(setFavoriteList(responce.data));
+        }
+        catch (er) {
+          toast('An error occurred');
+        };
+      })();
   }, []);
 
   const onLikePress = async (id: number) => {
@@ -51,7 +52,7 @@ const FavoritesPage: React.FC<Props> = () => {
   };
 
   return (
-  <>
+    <>
       {favoriteList?.length ? (
         <View>
           <FlatList
@@ -66,20 +67,20 @@ const FavoritesPage: React.FC<Props> = () => {
             ListHeaderComponent={
               <Header />
             }
-            ListFooterComponent={<Footer/>}
+            ListFooterComponent={
+              <Footer />
+            }
           />
         </View>
       ) : (
-      <ScrollView>
-      <Header />
-        <Text style={favoritesPageStyles.noFavoriteText}>There are no favorite books yet...</Text>
-                <Footer />
-</ScrollView>
-
+        <ScrollView>
+          <Header />
+          <Text style={favoritesPageStyles.noFavoriteText}>There are no favorite books yet...</Text>
+          <Footer />
+        </ScrollView>
       )
       }
-
-      </>
+    </>
   )
 };
 
