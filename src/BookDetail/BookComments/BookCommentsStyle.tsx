@@ -18,7 +18,7 @@ const bookCommentsStyle = StyleSheet.create({
   },
   post_comment: {
   marginHorizontal: 15,
-  }
+  },
 });
 
 export default bookCommentsStyle;

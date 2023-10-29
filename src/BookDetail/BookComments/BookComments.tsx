@@ -11,6 +11,7 @@ import Footer from '../../Footer/Footer';
 import { io } from 'socket.io-client';
 import PostComment from './PostComment';
 import ListHeaderComponent from './ListHeaderComponentStyle/ListHeaderComponent';
+import bookCommentsStyle from './BookCommentsStyle';
 
 
 type Props = {
@@ -26,7 +27,7 @@ type Props = {
 const BookComments: React.FC<Props> = (props) => {
   const isUser = useAppSelector(state => state.user.user);
   const [comments, setComments] = useState<CommentsType[]>(props.commentList);
-
+console.log('!!!', comments)
   const [access, setAccess] = useState<string>('');
 
   const token = async () => {
@@ -93,7 +94,7 @@ const BookComments: React.FC<Props> = (props) => {
             userNewRating={props.userNewRating!}
             onClickToCart={props.onClickToCart}
           />
-          <Text>No comments yet</Text>
+          <Text style={bookCommentsStyle.post_comment}>No comments yet</Text>
           {isUser.email && <PostComment id={props.id} commentList={props.commentList} comments={comments} socket={socket} />}
           <Footer />
         </ScrollView>

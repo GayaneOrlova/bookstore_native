@@ -23,6 +23,7 @@ export type BookType = {
 export type CommentsType = {
   id: number;
   body: string;
+  formatted_date: string;
   created_at: string;
   createdUser: User;
   avatar_url: string;
@@ -135,9 +136,12 @@ const bookSlice = createSlice({
       });
       state.cartStore.items = updatedItems;
     },
-    deleteCartItem(state, action: PayloadAction) {
-      state.cartStore.items = [];
-      state.cartStore.total_price = null;
+    deleteCartItem(state, action: PayloadAction<number>) {
+      const deletedItem = state.cartStore.items.find(item => item.id === action.payload);
+      if (deletedItem) {
+        state.cartStore.items = state.cartStore.items.filter(item => item.id !== action.payload);
+       state.cartStore.total_price!-= deletedItem.price!;
+      }
     },
     setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
       state.ratingStore = action.payload;
@@ -146,7 +150,6 @@ const bookSlice = createSlice({
       state.bookComments.unshift(action.payload);
       console.log('!', state.bookComments)
     },
-
   }
 });
 

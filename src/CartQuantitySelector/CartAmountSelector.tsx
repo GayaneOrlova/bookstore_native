@@ -47,7 +47,7 @@ const CartQuantitySelector: React.FC<Props> = (props) => {
     const amount = 0;
     try {
       const responce = await changeCart(amount, id);
-      dispatch(deleteCartItem());
+      dispatch(deleteCartItem(id));
     }
     catch (er) {
       toast('The error occurred!');

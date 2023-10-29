@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { FlatList, Image, Text, TouchableOpacity, View } from "react-native";
-import { ScrollView } from 'react-native-gesture-handler';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
 
@@ -56,6 +55,8 @@ const Cart: React.FC<Props> = () => {
   }, []);
 
 console.log('cartList?.total_price', cartList?.total_price)
+console.log('cartList', cartList)
+
   return (
     <View>
       {cartList?.total_price ? (
