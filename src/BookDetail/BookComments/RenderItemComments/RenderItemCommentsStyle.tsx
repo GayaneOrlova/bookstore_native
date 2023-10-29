@@ -1,12 +1,10 @@
 import {StyleSheet} from 'react-native';
-import { COLORS } from '../utils/colors';
+import { COLORS } from '../../../utils/colors';
 
-const bookCommentsStyle = StyleSheet.create({
-  comments_container: {
-  marginBottom: 10,
-  },
+const renderItemCommentsStyle = StyleSheet.create({
   comment_item: {
     marginBottom: 10,
+    marginHorizontal: 15,
     padding: 10,
     backgroundColor: '#eaebea',
     borderRadius: 16,
@@ -32,4 +30,4 @@ const bookCommentsStyle = StyleSheet.create({
   },
 });
 
-export default bookCommentsStyle;
+export default renderItemCommentsStyle;

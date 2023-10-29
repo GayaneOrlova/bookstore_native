@@ -41,7 +41,6 @@ const RenderBookItem: React.FC<Props> = (props) => {
   };
 
   return (
-
     <TouchableOpacity onPress={() => onBookDetailPage(props.item.id)}>
       <View style={renderBookItemStyles.book_container}>
         <View style={renderBookItemStyles.book_image_container}>

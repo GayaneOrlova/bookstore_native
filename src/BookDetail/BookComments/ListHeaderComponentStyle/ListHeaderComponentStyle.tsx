@@ -1,7 +1,7 @@
 import {StyleSheet} from 'react-native';
-import { COLORS } from '../utils/colors';
+import { COLORS } from '../../../utils/colors';
 
-const bookDetailStyle = StyleSheet.create({
+const listHeaderComponentStyle = StyleSheet.create({
   container: {
     marginVertical: 30,
     marginHorizontal: 15,
@@ -86,4 +86,4 @@ const bookDetailStyle = StyleSheet.create({
   },
 });
 
-export default bookDetailStyle;
+export default listHeaderComponentStyle;

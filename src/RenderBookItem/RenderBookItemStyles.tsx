@@ -1,8 +1,6 @@
-import { Dimensions, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { COLORS } from '../utils/colors';
 
-
-// const {width, height} = Dimensions.get('window');
 
 const renderBookItemStyles = StyleSheet.create({
   book_container: {
@@ -10,7 +8,6 @@ const renderBookItemStyles = StyleSheet.create({
     marginTop: 10,
     flexDirection: 'column',
     marginHorizontal: 15,
-    // width: width * 0.42 ,
     width: 165,
     flex: 1,
     maxWidth: 200,
@@ -21,7 +18,6 @@ const renderBookItemStyles = StyleSheet.create({
   },
   book_image: {
     width: 135,
-    // width: "100%",
     height: 192,
     borderRadius: 16,
   },
@@ -62,14 +58,12 @@ const renderBookItemStyles = StyleSheet.create({
     borderWidth: 1,
     opacity: 0.6,
   },
-
   available_button: {
     minWidth: 135,
     height: 34,
     marginVertical: 10,
     alignItems: 'center',
     backgroundColor: COLORS.dark_grey,
-
   },
   new_flag: {
     position: 'absolute',
@@ -82,7 +76,6 @@ const renderBookItemStyles = StyleSheet.create({
     minWidth: 113,
     height: 30,
   },
-
   bestseller_flag: {
     position: 'absolute',
     bottom: 10,
@@ -94,7 +87,6 @@ const renderBookItemStyles = StyleSheet.create({
     minWidth: 113,
     height: 30,
   },
-
   favorite_button: {
     position: 'absolute',
     top: 10,

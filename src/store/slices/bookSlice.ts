@@ -142,6 +142,11 @@ const bookSlice = createSlice({
     setBookRating(state, action: PayloadAction<{ rating: number; id: number }>) {
       state.ratingStore = action.payload;
     },
+    setComments(state, action: PayloadAction<CommentsType>) {
+      state.bookComments.unshift(action.payload);
+      console.log('!', state.bookComments)
+    },
+
   }
 });
 
@@ -155,6 +160,7 @@ export const {
   deleteCartItem,
   changeBookFavorite,
   changeFavoriteList,
+  setComments,
 } = bookSlice.actions;
 
 export default bookSlice.reducer;
