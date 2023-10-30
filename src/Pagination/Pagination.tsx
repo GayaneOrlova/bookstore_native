@@ -22,8 +22,7 @@ const Pagination: React.FC<Props> = (props) => {
       setDotCount(Math.ceil(props.count / props.paginationResults.length));
       console.log('dotCount', dotCount)
      };
-  }, [props.paginationResults]);
-  
+  }, []);
 
   const handlePageChange = (page: number) => {
     props.onPageChange(page);

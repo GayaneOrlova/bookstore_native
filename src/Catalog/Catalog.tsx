@@ -37,11 +37,31 @@ const Catalog: React.FC<Props> = () => {
   const [genreQueryString, setGenreQueryString] = useState('');
   const [sortString, setSortString] = useState('');
   const [queryParams, setQueryParams] = useState('');
+  
+  // console.log('genreQueryString', genreQueryString);
+  // console.log('queryParams', queryParams);
+
 
   const changePageHandler = async (page: number) => {
+    // try {
+    //   setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
+    //   const responce = await getPage(page, queryParams);
+
+    //   dispatch(setPagination(responce.data));
+    //   dispatch(setCurrentPage(page));
+    // } catch (er) {
+    //   console.log(er);
+    // }
+  };
+
+  const changeFilter = async (page: number) => {
     try {
+      console.log('genreQueryString:', genreQueryString);
       setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
-      const responce = await getPage(page, queryParams);
+      const queryParamsTemp = genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : '');      
+      console.log('page:', page, 'queryParams:', queryParamsTemp);
+      const responce = await getPage(page, queryParamsTemp);
+      console.log('111res', responce.data)
 
       dispatch(setPagination(responce.data));
       dispatch(setCurrentPage(page));
@@ -50,9 +70,16 @@ const Catalog: React.FC<Props> = () => {
     }
   };
 
+
   useEffect(() => {
-    changePageHandler(currentPage);
-  }, [genreQueryString, sortString, rangeState, queryParams]);
+    changeFilter(currentPage);
+  }, [genreQueryString, sortString, rangeState]);
+
+
+
+  // useEffect(() => {
+  //   changePageHandler(currentPage);
+  // }, [genreQueryString, sortString, rangeState, queryParams]);
 
   const onLikePress = async (id: number) => {
     try {

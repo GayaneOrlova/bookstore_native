@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useDebounce } from 'usehooks-ts'
 
@@ -7,7 +7,7 @@ import { setPagination } from '../../store/slices/bookSlice';
 import { useAppDispatch } from '../../store/hooks';
 
 import Input from '../../Input/Input';
-import SearchStyles from './SearchStyles';
+import searchStyles from './SearchStyles';
 
 type Props = {};
 
@@ -22,20 +22,19 @@ const Search: React.FC<Props> = () => {
   }
 
   useEffect(() => {
-    (
-      async (page = 1) => {
-        try {
-          const responce = await getPage(page, `search=${debouncedValue}`);
-          dispatch(setPagination(responce.data));
-        } catch (er) {
-          console.log(er);
-        };
-      })()
+    (async (page = 1) => {
+      try {
+        const responce = await getPage(page, `search=${debouncedValue}`);
+        dispatch(setPagination(responce.data));
+      } catch (er) {
+        console.log(er);
+      };
+    })()
   }, [debouncedValue]);
 
 
   return (
-    <View style={SearchStyles.container}>
+    <View style={searchStyles.container}>
       <Input
         onChangeText={handleChange}
         defaultValue={value}

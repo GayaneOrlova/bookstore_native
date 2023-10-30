@@ -2,6 +2,8 @@ import { BookType, GenreType, Pagination } from '../store/slices/bookSlice';
 import axios from '../api/user.api/userInstance';
 
 export const getPage = (page?: number, queryString?: string) => {
+console.log('333', `/all-books/?page=${page}${queryString ? '&' + queryString : ''}`)
+
   return axios.get<Pagination>(`/all-books/?page=${page}${queryString ? '&' + queryString : ''}`);
 };
 

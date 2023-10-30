@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
 
-const SearchStyles = StyleSheet.create({
+const searchStyles = StyleSheet.create({
   container: {
     marginTop: 60,
     marginHorizontal: 15,
   },
 });
 
-export default SearchStyles;
+export default searchStyles;
