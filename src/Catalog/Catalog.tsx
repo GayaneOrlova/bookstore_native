@@ -18,6 +18,7 @@ import Footer from '../Footer/Footer';
 import catalogStyles from './CatalogStyle';
 
 import { toast } from '../utils/utils';
+import { useDebounce } from 'usehooks-ts';
 
 type Props = {};
 
@@ -33,36 +34,20 @@ const Catalog: React.FC<Props> = () => {
   const currentPage = useAppSelector((state) => state.book.currentPage)
   const dispatch = useAppDispatch();
 
-  const [rangeState, setRangeState] = useState([0, 100])
-  const [genreQueryString, setGenreQueryString] = useState('');
-  const [sortString, setSortString] = useState('');
-  const [queryParams, setQueryParams] = useState('');
-  
-  // console.log('genreQueryString', genreQueryString);
-  // console.log('queryParams', queryParams);
+  const [searchValue, setSearchValue] = useState<string>('');
+  const debouncedValue = useDebounce<string>(searchValue, 2000);
 
+  const [rangeState, setRangeState] = useState<number[]>([0, 100]);
+  const [genreQueryString, setGenreQueryString] = useState<string>('');
+  const [sortString, setSortString] = useState<string>('');
 
-  const changePageHandler = async (page: number) => {
-    // try {
-    //   setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
-    //   const responce = await getPage(page, queryParams);
-
-    //   dispatch(setPagination(responce.data));
-    //   dispatch(setCurrentPage(page));
-    // } catch (er) {
-    //   console.log(er);
-    // }
-  };
+  const [queryParams, setQueryParams] = useState<string>('');
 
   const changeFilter = async (page: number) => {
     try {
-      console.log('genreQueryString:', genreQueryString);
-      setQueryParams(genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : ''))
-      const queryParamsTemp = genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : '');      
-      console.log('page:', page, 'queryParams:', queryParamsTemp);
+      const queryParamsTemp = genreQueryString + (sortString ? '&ordering=' + sortString : '') + (rangeState.length === 2 ? `&min_price=${rangeState[0]}&max_price=${rangeState[1]}` : '') + `&search=${debouncedValue}`;
+      setQueryParams(queryParamsTemp);
       const responce = await getPage(page, queryParamsTemp);
-      console.log('111res', responce.data)
-
       dispatch(setPagination(responce.data));
       dispatch(setCurrentPage(page));
     } catch (er) {
@@ -70,16 +55,24 @@ const Catalog: React.FC<Props> = () => {
     }
   };
 
-
   useEffect(() => {
     changeFilter(currentPage);
-  }, [genreQueryString, sortString, rangeState]);
+  }, [genreQueryString, sortString, rangeState, debouncedValue]);
 
 
+  const changePageHandler = async (page: number) => {
+    try {
+      const responce = await getPage(page, queryParams);
+      dispatch(setPagination(responce.data));
+      dispatch(setCurrentPage(page));
+    } catch (er) {
+      console.log(er);
+    }
+  };
 
-  // useEffect(() => {
-  //   changePageHandler(currentPage);
-  // }, [genreQueryString, sortString, rangeState, queryParams]);
+  useEffect(() => {
+    changePageHandler(currentPage);
+  }, [genreQueryString, sortString, rangeState, queryParams]);
 
   const onLikePress = async (id: number) => {
     try {
@@ -108,7 +101,7 @@ const Catalog: React.FC<Props> = () => {
           nestedScrollEnabled
           ListHeaderComponent={
             <View>
-              <Header />
+              <Header searchValue={searchValue} setSearchValue={setSearchValue} />
               <Banner />
               <View style={catalogStyles.catalog_header}>
                 <Text style={catalogStyles.catalog_title}>Catalog</Text>

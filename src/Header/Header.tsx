@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -12,6 +12,8 @@ import UserButton from '../UserButton/UserButton';
 import UserButtonStyles from '../UserButton/UserButtonStyles';
 
 type Props = {
+  searchValue: string,
+  setSearchValue: Dispatch<SetStateAction<string>>;
 };
 
 type RootStackParamList = {
@@ -25,7 +27,7 @@ type RootStackParamList = {
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-const Header: React.FC<Props> = () => {
+const Header: React.FC<Props> = (props) => {
   const navigation = useNavigation<NavigationProps>();
   const isUser = useAppSelector(state => state.user.user);
   
@@ -95,7 +97,7 @@ const Header: React.FC<Props> = () => {
           </View>
         )}
       </View>
-      <Search />
+      <Search searchValue={props.searchValue} setSearchValue={props.setSearchValue}/>
     </>
   );
 };
