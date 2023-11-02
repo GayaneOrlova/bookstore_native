@@ -15,11 +15,8 @@ const Homepage = () => {
   const isUser = useAppSelector(state => state.user.user);
   return (
     <View>
-        {/* <Header /> */}
-        {/* <Banner /> */}
       <Catalog />
       {!isUser.email ? <AuthorizeBanner /> : null}
-      {/* <Footer /> */}
     </View>
   );
 };

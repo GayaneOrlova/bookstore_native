@@ -74,7 +74,7 @@ const FavoritesPage: React.FC<Props> = () => {
         </View>
       ) : (
         <ScrollView>
-          <Header />
+          {/* <Header /> */}
           <Text style={favoritesPageStyles.noFavoriteText}>There are no favorite books yet...</Text>
           <Footer />
         </ScrollView>

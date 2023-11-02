@@ -6,15 +6,12 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { useAppSelector } from '../store/hooks';
 
 import headerStyles from './HeaderStyles';
-import Search from './Search/Search';
+import Search from '../Search/Search';
 import Button from '../Button/Button';
 import UserButton from '../UserButton/UserButton';
 import UserButtonStyles from '../UserButton/UserButtonStyles';
 
-type Props = {
-  searchValue: string,
-  setSearchValue: Dispatch<SetStateAction<string>>;
-};
+type Props = {};
 
 type RootStackParamList = {
   Login: undefined;
@@ -97,7 +94,7 @@ const Header: React.FC<Props> = (props) => {
           </View>
         )}
       </View>
-      <Search searchValue={props.searchValue} setSearchValue={props.setSearchValue}/>
+      {/* <Search searchValue={props.searchValue} setSearchValue={props.setSearchValue}/> */}
     </>
   );
 };

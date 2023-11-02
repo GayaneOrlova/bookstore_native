@@ -19,6 +19,7 @@ import catalogStyles from './CatalogStyle';
 
 import { toast } from '../utils/utils';
 import { useDebounce } from 'usehooks-ts';
+import Search from '../Search/Search';
 
 type Props = {};
 
@@ -101,7 +102,8 @@ const Catalog: React.FC<Props> = () => {
           nestedScrollEnabled
           ListHeaderComponent={
             <View>
-              <Header searchValue={searchValue} setSearchValue={setSearchValue} />
+              <Header />
+              <Search searchValue={searchValue} setSearchValue={setSearchValue} />
               <Banner />
               <View style={catalogStyles.catalog_header}>
                 <Text style={catalogStyles.catalog_title}>Catalog</Text>

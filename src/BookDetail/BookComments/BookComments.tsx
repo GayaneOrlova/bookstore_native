@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ListRenderItemInfo, ScrollView, } from 'react-native';
+import { View, Text, FlatList, ListRenderItemInfo, ScrollView, Platform, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { BookType, CommentsType } from '../../store/slices/bookSlice';
@@ -39,7 +39,13 @@ console.log('!!!', comments)
     token();
   }, [])
 
-  const URL = 'http://localhost:8000/';
+  let URL = '';
+  
+  if (Platform.OS === 'ios') {
+    URL = 'http://localhost:8000';
+  } else if (Platform.OS === 'android') {
+    URL = 'http://10.0.2.2:8000';
+  }
 
   const socket = io(URL, {
     auth: { access, "book_id": props.id },

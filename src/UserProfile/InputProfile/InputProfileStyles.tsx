@@ -6,7 +6,7 @@ const inputProfileStyles = StyleSheet.create({
     width: '100%',
     minWidth: 290,
     minHeight: 290,
-    marginVertical: 50,
+    marginBottom: 50,
     borderRadius: 16,
     position: 'relative',
 

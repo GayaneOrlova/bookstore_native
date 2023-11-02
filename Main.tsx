@@ -45,6 +45,7 @@ const Main: React.FC = () => {
   };
 
   useEffect(() => {
+  //  fetch('http://172.0.0.1:8000/me/', {method: 'GET'}).then(r => r.json()).then(console.log).catch(err => console.log(err))
     getToken();
   }, [cartList, favoriteList, paginationResults]);
 

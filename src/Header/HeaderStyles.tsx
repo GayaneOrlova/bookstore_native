@@ -8,6 +8,7 @@ const headerStyles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: 15,
     top: 30,
+    marginBottom: 70,
   },
   header_logo: {
     width: 62,

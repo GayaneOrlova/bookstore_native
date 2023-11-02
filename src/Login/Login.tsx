@@ -29,13 +29,15 @@ const Login: React.FC<Props> = () => {
   
   const onSubmit = async (text: {email: string;
     password: string;}) => {
+      console.log('LOGIN')
+
     try {
       const response = await userLogin(text);
       await AsyncStorage.setItem('access', response.data.tokens.access);
       dispatch(setUser(response.data.user));  
     }
     catch (err: any) {
-    // console.log('error', err.response.data, '!!!',Object.values(err.response.data), '!!!',)
+    console.log('error', err.response.data, '!!!',Object.values(err.response.data), '!!!',)
       const errorText = Object.values(err.response.data)[0];
       toast(errorText)
     }
