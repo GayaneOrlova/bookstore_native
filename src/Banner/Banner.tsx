@@ -4,7 +4,7 @@ import {Image, Text, View} from 'react-native';
 import bannerStyles from './BannerStyles';
 import Button from '../Button/Button';
 import { ScrollView } from 'react-native-gesture-handler';
-import PushNotifications from '../utils/pushNotifications';
+import PushNotifications from '../utils/usePushNotifications';
 
 type Props = {};
 
@@ -23,7 +23,6 @@ const Banner: React.FC<Props> = () => {
           Buy two books and get one for {'\n'}free
         </Text>
         <Button text="Choose a book" style={bannerStyles.text_group_button} />
-        <PushNotifications />
       </View>
       <Image
         style={bannerStyles.woman_image}

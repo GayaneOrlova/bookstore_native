@@ -14,13 +14,19 @@ import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
 import BookDetail from './src/BookDetail/BookDetail';
 import FavoritesPage from './src/FavoritesPage/FavoritesPage';
+import messaging from '@react-native-firebase/messaging';
 
 import { toast } from './src/utils/utils';
-
+import usePushNotifications from './src/utils/usePushNotifications';
 
 const Stack = createStackNavigator();
 
 const Main: React.FC = () => {
+  messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Background Notification:', remoteMessage.notification)});
+
+  usePushNotifications();
+  
   const [initialization, setInitialization] = useState(false);
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
@@ -45,10 +51,8 @@ const Main: React.FC = () => {
   };
 
   useEffect(() => {
-  //  fetch('http://172.0.0.1:8000/me/', {method: 'GET'}).then(r => r.json()).then(console.log).catch(err => console.log(err))
     getToken();
   }, [cartList, favoriteList, paginationResults]);
-
 
   if (!initialization) { return null; }
 
