@@ -68,10 +68,6 @@ export const changeAvatar = (avatar: any) => {
   }});
 };
 
-// export const postToApi = (access: string, firebase: string) => {
-//   return axios.post('tokens/', { access, firebase });
-// };
-
 export const postToApi = ({
   android,
   fcmToken,

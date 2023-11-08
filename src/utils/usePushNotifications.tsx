@@ -4,6 +4,7 @@ import { Alert } from 'react-native';
 import { postToApi } from '../api/user.api/user.api';
 import notifee from '@notifee/react-native';
 import { toast } from './utils';
+import BookDetail from '../BookDetail/BookDetail';
 
 
 const usePushNotifications = () => {
@@ -38,22 +39,23 @@ const usePushNotifications = () => {
 
     //подписка на сообщения (для вывода данных):
     async function onMessageReceived(remoteMessage: any) {
-      const { type, timestamp } = remoteMessage.data;
+      console.log('111', remoteMessage)
+      const { type, timestamp, bookId } = remoteMessage.data;
 
       console.log('remoteMessage.data', remoteMessage.data);
 
-      if (type === 'order_shipped') {
+      if (type === 'comment_notification') {
         notifee.displayNotification({
-          title: 'Your order has been shipped',
-          body: `Your order was shipped at ${new Date(Number(timestamp)).toString()}!`,
+          title: 'New comment on the book',
+          body: 'Someone left a comment on the book',
           android: {
-            channelId: 'orders',
+            channelId: 'comments',
           },
         });
       }
 
-      Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
-      console.log(`Hello ${remoteMessage.data.hello}`); // Hello world!
+      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
+      // console.log(`Hello ${remoteMessage.data.hello}`); // Hello world!
     }
 
     const unsubscribe = messaging().onMessage(onMessageReceived);
@@ -61,7 +63,6 @@ const usePushNotifications = () => {
 
     return () => unsubscribe();
   }, []);
-
-};
+}
 
 export default usePushNotifications;
