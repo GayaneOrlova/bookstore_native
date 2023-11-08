@@ -72,7 +72,7 @@ const PasswordController = () => {
                 onChangeText={onChange}
                 defaultValue={value}
                 placeholder='Password'
-                placeholderTextColor=COLORS.dark_grey
+                placeholderTextColor={COLORS.dark_grey}
                 secureTextEntry
                 onBlur={onBlur}
               />

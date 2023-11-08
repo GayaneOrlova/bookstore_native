@@ -4,7 +4,6 @@ import {Image, Text, View} from 'react-native';
 import bannerStyles from './BannerStyles';
 import Button from '../Button/Button';
 import { ScrollView } from 'react-native-gesture-handler';
-import PushNotifications from '../utils/usePushNotifications';
 
 type Props = {};
 

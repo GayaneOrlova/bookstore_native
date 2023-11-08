@@ -14,19 +14,23 @@ import Cart from './src/Cart/Cart';
 import Signup from './src/Signup/Signup';
 import BookDetail from './src/BookDetail/BookDetail';
 import FavoritesPage from './src/FavoritesPage/FavoritesPage';
-import messaging from '@react-native-firebase/messaging';
 
 import { toast } from './src/utils/utils';
-import usePushNotifications from './src/utils/usePushNotifications';
 
 const Stack = createStackNavigator();
+import usePushNotifications from './src/utils/usePushNotifications';
+import messaging from '@react-native-firebase/messaging';
+import { Platform } from 'react-native';
+
 
 const Main: React.FC = () => {
-  messaging().setBackgroundMessageHandler(async remoteMessage => {
-    console.log('Background Notification:', remoteMessage.notification)});
 
+  if (Platform.OS === 'android') {
+    messaging().setBackgroundMessageHandler(async remoteMessage => {
+    console.log('Background Notification:', remoteMessage.notification)});
+  };
   usePushNotifications();
-  
+
   const [initialization, setInitialization] = useState(false);
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
