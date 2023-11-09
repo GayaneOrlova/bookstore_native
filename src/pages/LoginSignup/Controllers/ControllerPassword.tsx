@@ -3,7 +3,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { View, Text } from 'react-native';
 
 import Input from '../../Input/Input';
-import loginStyles from './PasswordControllerStyles';
+import controllersStyles from './ControllersStyles';
 
 import { COLORS } from '../../../utils/colors';
 
@@ -18,16 +18,17 @@ type Props = {
   }>,
   placeholder: string,
   input_description: string,
+  name: "email" | "password",
 }
 
-const PasswordController: React.FC<Props> = (props) => {
+const ControllerPassword: React.FC<Props> = (props) => {
 
   return (
     <Controller
       control={props.control}
       rules={{ maxLength: 15, }}
       render={({ field: { onChange, onBlur, value } }) => (
-        <View style={loginStyles.input_group}>
+        <View style={controllersStyles.input_group}>
           <Input
             image_source={require('../../../images/icons/hide.png')}
             onChangeText={onChange}
@@ -37,15 +38,15 @@ const PasswordController: React.FC<Props> = (props) => {
             secureTextEntry
             onBlur={onBlur}
           />
-          {props.errors.password ? (<Text style={loginStyles.error}>{props.errors.password.message}</Text>)
+          {props.errors.password ? (<Text style={controllersStyles.error}>{props.errors.password.message}</Text>)
             : (
-              <Text style={loginStyles.input_description}>{props.input_description}</Text>
+              <Text style={controllersStyles.input_description}>{props.input_description}</Text>
             )}
         </View>
       )}
-      name="password"
+      name={props.name}
     />
   );
 };
 
-export default PasswordController;
+export default ControllerPassword;

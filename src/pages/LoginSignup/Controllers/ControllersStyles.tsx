@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { COLORS } from "../../../utils/colors";
 
-const emailController = StyleSheet.create({
+const controllersStyles = StyleSheet.create({
   input_group: {
     marginBottom: 20,
     flex: 1
@@ -18,4 +18,4 @@ const emailController = StyleSheet.create({
   },
 });
 
-export default emailController
+export default controllersStyles

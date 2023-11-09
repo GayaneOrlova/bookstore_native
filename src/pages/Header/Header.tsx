@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Image, Text, TouchableOpacity, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -14,7 +14,7 @@ type Props = {};
 
 type RootStackParamList = {
   Login: undefined;
-  Signup: undefined;
+  Signup: any;
   UserProfile: undefined;
   Cart: undefined;
   Homepage: undefined;

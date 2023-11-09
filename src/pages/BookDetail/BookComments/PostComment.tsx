@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import Button from '../../Button/Button';
 import bookCommentsStyle from './BookCommentsStyle';
-import loginStyles from '../../Login/LoginStyles';
+import loginStyles from '../../LoginSignup/LoginStyles';
 
 import { bodySchema } from '../../../utils/shemas';
 import { toast } from '../../../utils/utils';

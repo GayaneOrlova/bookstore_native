@@ -4,19 +4,19 @@ import { View, Image, Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { useAppDispatch } from '../../store/hooks';
-import {setUser } from '../../store/slices/userSlice';
-import {userLogin } from '../../api/user.api/user.api';
+import { useAppDispatch } from '../../../store/hooks';
+import {setUser } from '../../../store/slices/userSlice';
+import {userLogin } from '../../../api/user.api/user.api';
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
-import Button from '../../pages/Button/Button';
+import Header from '../../Header/Header';
+import Footer from '../../Footer/Footer';
+import Button from '../../Button/Button';
 import loginStyles from './LoginStyles';
 
-import { toast } from '../../utils/utils';
-import { loginSchema } from '../../utils/shemas';
-import EmailController from './EmailController/EmailController';
-import PasswordController from './PasswordController/PasswordController';
+import { toast } from '../../../utils/utils';
+import { loginSchema } from '../../../utils/shemas';
+import ControllerEmail from '../Controllers/ControllerEmail';
+import ControllerPassword from '../Controllers/ControllerPassword';
 
 type Props = {}
 
@@ -47,8 +47,8 @@ const Login: React.FC<Props> = () => {
       <Header />
       <View style={loginStyles.container}>
         <Text style={loginStyles.title}>Log In</Text>
-        <EmailController control={control} errors={errors} />
-        <PasswordController control={control} errors={errors} placeholder={'Password'} input_description = {'Enter your password'} />
+        <ControllerEmail control={control} errors={errors} />
+        <ControllerPassword control={control} errors={errors} placeholder={'Password'} input_description = {'Enter your password'} name='password'/>
         <Button text="Log In" style={loginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
       <Image style={loginStyles.image} source={require('../../images/man-reader.png')} />

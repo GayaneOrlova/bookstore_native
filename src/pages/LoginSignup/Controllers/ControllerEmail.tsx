@@ -6,27 +6,29 @@ import { View, Text } from 'react-native';
 import Input from '../../Input/Input';
 
 import { COLORS } from '../../../utils/colors';
-import emailController from './EmailControllerStyles';
+import controllersStyles from './ControllersStyles';
 
 type Props = {
   control: Control<{
     email: string;
     password: string;
+    confirm_password?: string;
   }>,
   errors: FieldErrors<{
     email: string;
     password: string;
+    confirm_password: string;
   }>
 }
 
-const EmailController: React.FC<Props> = (props) => {
+const ControllerEmail: React.FC<Props> = (props) => {
 
   return (
     <Controller
       control={props.control}
       rules={{ required: true, }}
       render={({ field: { onChange, value } }) => (
-        <View style={emailController.input_group}>
+        <View style={controllersStyles.input_group}>
           <Input
             image_source={require('../../../images/icons/mail.png')}
             onChangeText={onChange}
@@ -34,8 +36,8 @@ const EmailController: React.FC<Props> = (props) => {
             placeholder='Email'
             placeholderTextColor={COLORS.dark_grey}
           />
-          {props.errors.email ? (<Text style={emailController.error}>{props.errors.email.message}</Text>) : (
-            <Text style={emailController.input_description}>Enter your email</Text>)
+          {props.errors.email ? (<Text style={controllersStyles.error}>{props.errors.email.message}</Text>) : (
+            <Text style={controllersStyles.input_description}>Enter your email</Text>)
           }
         </View>
       )}
@@ -44,4 +46,4 @@ const EmailController: React.FC<Props> = (props) => {
   );
 };
 
-export default EmailController;
+export default ControllerEmail;

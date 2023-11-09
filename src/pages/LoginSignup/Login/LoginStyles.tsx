@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
-import { COLORS } from "../../utils/colors";
+import { COLORS } from "../../../utils/colors";
 
-const signupStyles = StyleSheet.create({
+const loginStyles = StyleSheet.create({
   container: {
     marginHorizontal: 15,
     marginTop: 30,
@@ -13,6 +13,7 @@ const signupStyles = StyleSheet.create({
   },
   input_group: {
     marginBottom: 20,
+    flex: 1
   },
   input_form: {
     height: 48,
@@ -54,4 +55,4 @@ const signupStyles = StyleSheet.create({
   },
 });
 
-export default signupStyles
+export default loginStyles

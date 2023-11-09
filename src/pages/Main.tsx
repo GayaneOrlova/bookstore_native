@@ -8,10 +8,10 @@ import { getUser } from '../api/user.api/user.api';
 import { setUser } from '../store/slices/userSlice';
 
 import Homepage from './Homepage';
-import Login from './Login/Login';
+import Login from './LoginSignup/Login/Login';
 import UserProfile from './UserProfile/UserProfile';
 import Cart from './Cart/Cart';
-import Signup from './Signup/Signup';
+import Signup from './LoginSignup/Signup/Signup';
 import BookDetail from './BookDetail/BookDetail';
 import FavoritesPage from './FavoritesPage/FavoritesPage';
 
