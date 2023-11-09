@@ -16,8 +16,7 @@ const catalogStyles = StyleSheet.create({
     marginBottom: 20,
   },
   catalogList: {
-    zIndex: -1,
-    position: 'relative',
+    // zIndex: -1,
   },
   content_container: {
     gap: 10,

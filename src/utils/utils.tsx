@@ -9,6 +9,7 @@ export const toast = (text: string | any) => {
       50,)
 };
 
+
 // export const axiosError = (err: any) => {
 //   if (isAxiosError(err)) {
 //     const errorText = Object.values(err.response?.data)[0];

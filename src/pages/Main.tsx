@@ -16,10 +16,17 @@ import BookDetail from './BookDetail/BookDetail';
 import FavoritesPage from './FavoritesPage/FavoritesPage';
 
 import { toast } from '../utils/utils';
+import usePushNotifications from '../utils/firebasePushNotification/usePushNotifications';
 
 const Stack = createStackNavigator();
 
+type RootStackParamList = {
+  BookDetail: { id: number }
+};
+
 const Main: React.FC = () => {
+  usePushNotifications();
+
   const [initialization, setInitialization] = useState(false);
   const isUser = useAppSelector(state => state.user.user);
   const cartList = useAppSelector(state => state.book.cartStore);
@@ -50,7 +57,7 @@ const Main: React.FC = () => {
   if (!initialization) { return null; }
 
   return (
-    <NavigationContainer>
+    // <NavigationContainer>
       <Stack.Navigator>
         {!isUser.email ? (
           <>
@@ -106,7 +113,7 @@ const Main: React.FC = () => {
         )
         }
       </Stack.Navigator>
-    </NavigationContainer>
+    // </NavigationContainer>
   );
 }
 

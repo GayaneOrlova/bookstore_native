@@ -23,7 +23,7 @@ import { useDebounce } from 'usehooks-ts';
 
 type Props = {};
 
-type RootStackParamList = {
+export type RootStackParamList = {
   BookDetail: { id: number }
 };
 
