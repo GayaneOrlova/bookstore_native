@@ -11,10 +11,10 @@ const loginStyles = StyleSheet.create({
     fontWeight: '700',
     marginBottom: 30,
   },
-  input_group: {
-    marginBottom: 20,
-    flex: 1
-  },
+  // input_group: {
+  //   marginBottom: 20,
+  //   flex: 1
+  // },
   input_form: {
     height: 48,
     borderWidth: 1,
@@ -29,12 +29,12 @@ const loginStyles = StyleSheet.create({
     height: 24,
     marginHorizontal: 20,
   },
-  input_description: {
-    fontWeight: '500',
-    fontSize: 12,
-    color: COLORS.dark_blue,
-    marginTop: 5,
-  },
+  // input_description: {
+  //   fontWeight: '500',
+  //   fontSize: 12,
+  //   color: COLORS.dark_blue,
+  //   marginTop: 5,
+  // },
   button: {
     width: 151,
     height: 44,
@@ -49,10 +49,10 @@ const loginStyles = StyleSheet.create({
     marginVertical: 50,
     alignSelf: 'center',
   },
-  error: {
-    color: 'red',
-    fontWeight: '700',
-  },
+  // error: {
+  //   color: 'red',
+  //   fontWeight: '700',
+  // },
 });
 
 export default loginStyles

@@ -12,13 +12,13 @@ import { userSignUp } from '../../../api/user.api/user.api';
 import Header from '../../Header/Header';
 import Footer from '../../Footer/Footer';
 import Button from '../../Button/Button';
-
+import ControllerEmail from '../Controllers/ControllerEmail';
+import ControllerPassword from '../Controllers/ControllerPassword';
 import signupStyles from './SignupStyles';
 
 import { toast } from '../../../utils/utils';
 import { signupSchema } from '../../../utils/shemas';
-import ControllerEmail from '../Controllers/ControllerEmail';
-import ControllerPassword from '../Controllers/ControllerPassword';
+
 
 type Props = {}
 
@@ -45,7 +45,6 @@ const Signup: React.FC<Props> = () => {
     }
   };
 
-
   return (
     <ScrollView>
       <Header />
@@ -56,7 +55,7 @@ const Signup: React.FC<Props> = () => {
         <ControllerPassword control={control} errors={errors} placeholder={'Password replay'} input_description={'Repeat your password without errors'} name={'confirm_password'} />
         <Button text="Sign Up" style={signupStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
-      <Image style={signupStyles.image} source={require('../../images/man-reader.png')} />
+      <Image style={signupStyles.image} source={require('../../../images/man-reader.png')} />
       <Footer />
     </ScrollView>
   );

@@ -51,7 +51,7 @@ const Login: React.FC<Props> = () => {
         <ControllerPassword control={control} errors={errors} placeholder={'Password'} input_description = {'Enter your password'} name='password'/>
         <Button text="Log In" style={loginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
-      <Image style={loginStyles.image} source={require('../../images/man-reader.png')} />
+      <Image style={loginStyles.image} source={require('../../../images/man-reader.png')} />
       <Footer />
     </ScrollView>
   );

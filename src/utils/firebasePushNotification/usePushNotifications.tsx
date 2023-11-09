@@ -6,6 +6,7 @@ import { useAppSelector } from '../../store/hooks';
 
 import { getFcmToken, onMessageReceived } from './pushUtils';
 import usePushOpenBook from './usePushOpenBook';
+import { toast } from '../utils';
 
 
 const usePushNotifications = () => {
@@ -38,7 +39,7 @@ const usePushNotifications = () => {
           PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
         )
         const isGranted = permission === PermissionsAndroid.RESULTS.GRANTED
-        return isGranted
+        return isGranted;
       }
     }
 
@@ -49,7 +50,7 @@ const usePushNotifications = () => {
       }
     }
 
-    handleInitPushotifications()
+    handleInitPushotifications();
     const unsubscribe = messaging().onMessage(onMessageReceived);
     messaging().setBackgroundMessageHandler(onMessageReceived);
 

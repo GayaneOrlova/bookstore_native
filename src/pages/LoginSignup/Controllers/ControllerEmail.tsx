@@ -13,11 +13,11 @@ type Props = {
     email: string;
     password: string;
     confirm_password?: string;
-  }>,
+}, any>,
   errors: FieldErrors<{
     email: string;
     password: string;
-    confirm_password: string;
+    confirm_password?: string;
   }>
 }
 

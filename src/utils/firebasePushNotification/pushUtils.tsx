@@ -16,11 +16,9 @@ export async function getFcmToken() {
   return fcmToken;
 };
 
-
 export async function onMessageReceived(remoteMessage: any) {
-  const { type} = remoteMessage.data;
- 
-  if (type === 'comment_notification') {
+  const { comment_type } = remoteMessage.data; 
+  if (comment_type === 'comment_notification') {
     toast(`User ${remoteMessage.notification.title}`)
   }
 }

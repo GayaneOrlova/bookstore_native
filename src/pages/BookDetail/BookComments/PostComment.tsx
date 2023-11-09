@@ -9,7 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../../store/hooks';
 
 import Button from '../../Button/Button';
 import bookCommentsStyle from './BookCommentsStyle';
-import loginStyles from '../../LoginSignup/LoginStyles';
+import controllersStyles from '../../LoginSignup/Controllers/ControllersStyles';
 
 import { bodySchema } from '../../../utils/shemas';
 import { toast } from '../../../utils/utils';
@@ -64,7 +64,7 @@ const PostComment: React.FC<Props> = (props) => {
             )}
             name="body"
           />
-          {errors.body && <Text style={loginStyles.error}>{errors.body.message}</Text>}
+          {errors.body && <Text style={controllersStyles.error}>{errors.body.message}</Text>}
           <Button text="Post a comment" style={bookCommentsStyle.price_button} onPress={handleSubmit(onCommentSubmit)} />
         </View>
       }
