@@ -3,9 +3,9 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { View, Text } from 'react-native';
 
 
-import Input from '../Input/Input';
+import Input from '../../Input/Input';
 
-import { COLORS } from '../../utils/colors';
+import { COLORS } from '../../../utils/colors';
 import emailController from './EmailControllerStyles';
 
 type Props = {
@@ -28,7 +28,7 @@ const EmailController: React.FC<Props> = (props) => {
       render={({ field: { onChange, value } }) => (
         <View style={emailController.input_group}>
           <Input
-            image_source={require('../../images/icons/mail.png')}
+            image_source={require('../../../images/icons/mail.png')}
             onChangeText={onChange}
             defaultValue={value}
             placeholder='Email'

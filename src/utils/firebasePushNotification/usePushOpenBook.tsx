@@ -8,7 +8,7 @@ import { RootStackParamList } from "../../pages/Catalog/Catalog";
 
 type NavigationProps = StackNavigationProp<RootStackParamList>;
 
-const usePushOpened = () => {
+const usePushOpenBook = () => {
   const navigation = useNavigation<NavigationProps>();
 
   useEffect(() => {
@@ -41,5 +41,5 @@ const usePushOpened = () => {
   }, [navigation]);
 }
 
-export default usePushOpened;
+export default usePushOpenBook;
 

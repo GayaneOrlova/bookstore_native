@@ -5,7 +5,7 @@ import { PermissionsAndroid, Platform } from 'react-native';
 import { useAppSelector } from '../../store/hooks';
 
 import { getFcmToken, onMessageReceived } from './pushUtils';
-import usePushOpened from './usePushOpened';
+import usePushOpenBook from './usePushOpenBook';
 
 
 const usePushNotifications = () => {
@@ -58,7 +58,7 @@ const usePushNotifications = () => {
     };
   }, [isUser]);
 
-  usePushOpened();
+  usePushOpenBook();
 }
 
 export default usePushNotifications;

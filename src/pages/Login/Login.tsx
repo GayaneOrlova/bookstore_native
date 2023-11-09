@@ -1,5 +1,5 @@
 import React from 'react';
-import { Controller, ErrorOption, Field, FieldArray, FieldArrayPath, FieldError, FieldErrors, FieldValues, FormState, RegisterOptions, SubmitErrorHandler, SubmitHandler, UseFormRegisterReturn, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { View, Image, Text, ScrollView } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -11,13 +11,12 @@ import {userLogin } from '../../api/user.api/user.api';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Button from '../../pages/Button/Button';
-import Input from '../Input/Input';
 import loginStyles from './LoginStyles';
 
 import { toast } from '../../utils/utils';
 import { loginSchema } from '../../utils/shemas';
-import { COLORS } from '../../utils/colors';
-import EmailController from '../Login copy/EmailController';
+import EmailController from './EmailController/EmailController';
+import PasswordController from './PasswordController/PasswordController';
 
 type Props = {}
 
@@ -48,48 +47,8 @@ const Login: React.FC<Props> = () => {
       <Header />
       <View style={loginStyles.container}>
         <Text style={loginStyles.title}>Log In</Text>
-        {/* <Controller
-          control={control}
-          rules={{ required: true, }}
-          render={({ field: { onChange, value } }) => (
-            <View style={loginStyles.input_group}>
-              <Input
-                image_source={require('../../images/icons/mail.png')}
-                onChangeText={onChange}
-                defaultValue={value}
-                placeholder='Email'
-                placeholderTextColor={COLORS.dark_grey}
-              />
-              {errors.email ? (<Text style={loginStyles.error}>{errors.email.message}</Text>) :(
-              <Text style={loginStyles.input_description}>Enter your email</Text>)
-              }
-            </View>
-          )}
-          name="email"
-        /> */}
         <EmailController control={control} errors={errors} />
-        <Controller
-          control={control}
-          rules={{ maxLength: 15, }}
-          render={({ field: { onChange, onBlur, value } }) => (
-            <View style={loginStyles.input_group}>
-              <Input
-                image_source={require('../../images/icons/hide.png')}
-                onChangeText={onChange}
-                defaultValue={value}
-                placeholder='Password'
-                placeholderTextColor={COLORS.dark_grey}
-                secureTextEntry
-                onBlur={onBlur}
-              />
-              {errors.password ? (<Text style={loginStyles.error}>{errors.password.message}</Text>)
-              : (
-              <Text style={loginStyles.input_description}>Enter your password</Text>
-              )}
-            </View>
-          )}
-          name="password"
-        />
+        <PasswordController control={control} errors={errors} placeholder={'Password'} input_description = {'Enter your password'} />
         <Button text="Log In" style={loginStyles.button} onPress={handleSubmit(onSubmit)} />
       </View>
       <Image style={loginStyles.image} source={require('../../images/man-reader.png')} />
