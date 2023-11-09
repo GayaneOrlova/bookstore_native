@@ -3,8 +3,8 @@ import { View, ScrollView } from 'react-native';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import InputPassword from './InputPassword/InputPassword';
-import InputProfile from './InputProfile/InputProfile';
+import InputPassword from './UserPasswordChange/UserPasswordChange';
+import UserPersonalInfo from './UserPersonalInfo/UserPersonalInfo';
 import userProfileStyles from './UserProfileStyles';
 
 type Props = {}
@@ -15,12 +15,8 @@ const UserProfile: React.FC<Props> = () => {
     <ScrollView>
       <Header />
       <View style={userProfileStyles.container}>
-        <InputProfile />
-        <InputPassword text={{
-          password: '',
-          new_password: '',
-          confirm_password: ''
-        }} />
+        <UserPersonalInfo />
+        <InputPassword />
       </View>
       <Footer />
     </ScrollView>

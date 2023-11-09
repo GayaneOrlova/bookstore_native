@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { COLORS } from '../../../utils/colors';
 
-const inputPasswordStyles = StyleSheet.create({
+const userPasswordControllerStyles = StyleSheet.create({
   change_text: {
     fontSize: 12,
     color: '#8D9F4F',
@@ -16,7 +16,7 @@ const inputPasswordStyles = StyleSheet.create({
   input_description: {
     fontSize: 12,
     left: 60,
-    top: -48,
+    top: -50,
   },
   password_group: {
     flexDirection: 'row',
@@ -29,8 +29,13 @@ const inputPasswordStyles = StyleSheet.create({
     height: 44,
     marginTop: 30,
     backgroundColor: COLORS.dark_blue,
-
   },
+  
+  
+  error: {
+    color: 'red'
+  },
+  
 });
 
-export default inputPasswordStyles;
+export default userPasswordControllerStyles;
