@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
-import { Alert } from 'react-native';
-import { postToApi } from '../api/user.api/user.api';
 import notifee from '@notifee/react-native';
+
+import { postToApi } from '../api/user.api/user.api';
+
 import { toast } from './utils';
-import BookDetail from '../BookDetail/BookDetail';
 
 
 const usePushNotifications = () => {
