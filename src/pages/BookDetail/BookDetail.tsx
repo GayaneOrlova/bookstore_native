@@ -22,7 +22,7 @@ const BookDetail: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const navigation = useNavigation<NavigationProps>();
   const allComments = useAppSelector(state => state.book.bookComments);
-
+  
   const route = useRoute();
   const id = route.params?.id;
 

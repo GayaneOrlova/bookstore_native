@@ -58,7 +58,7 @@ const FavoritesPage: React.FC<Props> = () => {
           <FlatList
             data={favoriteList}
             renderItem={({ item }) => (
-              <RenderBookItem item={item} navigation={navigation} onFavoritePress={() => onLikePress(item.id)} />
+              <RenderBookItem item={item} onFavoritePress={() => onLikePress(item.id)} />
             )}
             keyExtractor={(item) => item.image}
             numColumns={2}

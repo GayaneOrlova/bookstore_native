@@ -5,7 +5,7 @@ export type User = {
   id: string;
   username: string;
   cart_items_count: number;
-  cart_items_books: [];
+  cart_items_books: number[];
   favorites_count: number;
 };
 

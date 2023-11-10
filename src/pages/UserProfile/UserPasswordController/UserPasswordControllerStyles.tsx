@@ -31,7 +31,6 @@ const userPasswordControllerStyles = StyleSheet.create({
     backgroundColor: COLORS.dark_blue,
   },
   
-  
   error: {
     color: 'red'
   },

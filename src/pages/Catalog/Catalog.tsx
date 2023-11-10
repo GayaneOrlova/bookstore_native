@@ -92,7 +92,7 @@ const Catalog: React.FC<Props> = () => {
         <FlatList
           data={paginationResults}
           renderItem={({ item }: ListRenderItemInfo<BookType>) => (
-            <RenderBookItem item={item} navigation={navigation} onFavoritePress={() => onLikePress(item.id)} />
+            <RenderBookItem item={item} onFavoritePress={() => onLikePress(item.id)} />
           )}
           keyExtractor={(item) => item.author}
           numColumns={2}

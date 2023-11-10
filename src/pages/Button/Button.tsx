@@ -14,7 +14,7 @@ type Props = {
 
 const Button: React.FC<Props> = props => {
   const isUser = useAppSelector(state => state.user.user);
-  const isBookOnCart = isUser.cart_items_books.includes(props.item!.id);
+  const isBookOnCart = isUser.cart_items_books.includes(props.item?.id);
 
   return (
     <TouchableOpacity

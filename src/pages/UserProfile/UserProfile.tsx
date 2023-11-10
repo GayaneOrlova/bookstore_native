@@ -3,7 +3,7 @@ import { View, ScrollView } from 'react-native';
 
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import InputPassword from './UserPasswordChange/UserPasswordChange';
+import UserPasswordChange from './UserPasswordChange/UserPasswordChange';
 import UserPersonalInfo from './UserPersonalInfo/UserPersonalInfo';
 import userProfileStyles from './UserProfileStyles';
 
@@ -16,7 +16,7 @@ const UserProfile: React.FC<Props> = () => {
       <Header />
       <View style={userProfileStyles.container}>
         <UserPersonalInfo />
-        <InputPassword />
+        <UserPasswordChange />
       </View>
       <Footer />
     </ScrollView>

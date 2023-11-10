@@ -44,8 +44,6 @@ export const userPasswordChange = ({
   return axios.post('/change-password/', { password, new_password, confirm_password });
 };
 
-
-
 export const getUser = () => {
   return axios.get<User>('/me/');
 };

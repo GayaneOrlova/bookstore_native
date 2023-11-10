@@ -12,21 +12,28 @@ import renderBookItemStyles from './RenderBookItemStyles';
 
 import { toast } from '../../utils/utils';
 import { COLORS } from '../../utils/colors';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../Catalog/Catalog';
 
 
 type Props = {
   item: BookType;
-  navigation: any;
   onFavoritePress: () => void;
 };
+type NavigationProps = StackNavigationProp<RootStackParamList>;
 
 const RenderBookItem: React.FC<Props> = (props) => {
+  const navigation = useNavigation<NavigationProps>();
+
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
-  const isBookOnCart = isUser.cart_items_books?.includes(props.item?.id);
+  console.log(32, isUser);
+  const isBookOnCart = isUser.cart_items_books.includes(props.item?.id);
 
   const onBookDetailPage = (id: number) => {
-    props.navigation.navigate('BookDetail', { id });
+  console.log(29, id);
+    navigation.navigate('BookDetail', { id });
   };
 
   const onClickToCart = async () => {
