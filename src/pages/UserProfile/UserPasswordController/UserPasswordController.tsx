@@ -38,11 +38,7 @@ const UserPasswordController: React.FC<Props> = (props) => {
             style={userPasswordChangeStyles.input}
             editable={props.showInputChange}
           />
-          {/* {!showInputChange ? ( */}
           <Text style={userPasswordChangeStyles.input_description}>Your password</Text>
-          {/* ) : ( */}
-          {/* <Text style={userPasswordChangeStyles.input_description}>Old password</Text> */}
-          {/* )} */}
         </View>
       )}
       name={props.name}

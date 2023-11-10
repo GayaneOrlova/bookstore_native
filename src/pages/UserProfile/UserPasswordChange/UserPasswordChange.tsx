@@ -26,7 +26,6 @@ type Props = {
 const UserPasswordChange: React.FC<Props> = () => {
   const dispatch = useAppDispatch();
   const [showInputChange, setShowInputChange] = useState(false);
-
   const { control, handleSubmit, formState: { errors } } = useForm<UserLoginType>({ resolver: yupResolver(changePasswordSchema), });
 
   const handlePress = () => {
@@ -50,7 +49,6 @@ const UserPasswordChange: React.FC<Props> = () => {
     <View>
       <View style={userPasswordChangeStyles.password_group}>
         <Text style={{ fontSize: 14 }}>Password</Text>
-
         <TouchableOpacity onPress={handlePress}>
           <Text style={userPasswordChangeStyles.change_text}>Change password</Text>
         </TouchableOpacity>
@@ -63,9 +61,11 @@ const UserPasswordChange: React.FC<Props> = () => {
           <UserPasswordController placeholder={'New password'} showInputChange={showInputChange} control={control} name={'new_password'} />
           {errors.new_password && <Text style={userPasswordChangeStyles.error}>{errors.new_password.message}</Text>}
           <Text style={userPasswordChangeStyles.input_text}>Enter your password</Text>
+
           <UserPasswordController placeholder={'Password replay'} showInputChange={showInputChange} control={control} name={'confirm_password'} />
-          {errors.confirm_password && <Text style={{ color: 'red' }}>{errors.confirm_password.message}</Text>}
+          {errors.confirm_password && <Text style={userPasswordChangeStyles.error}>{errors.confirm_password.message}</Text>}
           <Text style={userPasswordChangeStyles.input_text}>Repeat your password without errors</Text>
+          
           <Button style={userPasswordChangeStyles.button_confirm} text={'Confirm'}
             onPress={handleSubmit(onSubmit)} />
         </>

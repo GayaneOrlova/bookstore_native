@@ -6,7 +6,6 @@ import { useAppSelector } from '../../store/hooks';
 
 import { getFcmToken, onMessageReceived } from './pushUtils';
 import usePushOpenBook from './usePushOpenBook';
-import { toast } from '../utils';
 
 
 const usePushNotifications = () => {

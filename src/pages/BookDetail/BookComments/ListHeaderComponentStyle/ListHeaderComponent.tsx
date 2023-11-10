@@ -20,7 +20,6 @@ type Props = {
 
 const ListHeaderComponent: React.FC<Props> = (props) => {
   const isUser = useAppSelector(state => state.user.user);
-
   return (
     <View>
       <Header />

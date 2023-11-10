@@ -20,7 +20,6 @@ const userPasswordChangeStyles = StyleSheet.create({
   },
   input_text: {
     fontSize: 14,
-    marginVertical: 10,
   },
   password_group: {
     flexDirection: 'row',
@@ -34,7 +33,6 @@ const userPasswordChangeStyles = StyleSheet.create({
     marginTop: 30,
     backgroundColor: COLORS.dark_blue,
   },
-  
   error: {
     color: 'red'
   },

@@ -9,16 +9,10 @@ export const toast = (text: string | any) => {
       50,)
 };
 
+export const generateRandomID = (min = 1, max = 1000) => {
+  let rand = min - 0.5 + Math.random() * (max - min + 1);
+  return String(Math.round(rand));
+}
 
-// export const axiosError = (err: any) => {
-//   if (isAxiosError(err)) {
-//     const errorText = Object.values(err.response?.data)[0];
-//     toast(errorText);
-//   }
-//   else {
-//     toast('An error was occured!');
-//   }
-//   }
-  
-// };
+
 

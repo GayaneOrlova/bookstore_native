@@ -23,5 +23,4 @@ export const changePasswordSchema = yup.object().shape({
 
 export const changeUserInfoSchema = yup.object().shape({
   username: yup.string().required('Username is required'),
-  // email: yup.string().required('Email is required'),
 });

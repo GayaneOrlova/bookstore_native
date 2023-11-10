@@ -7,7 +7,7 @@ export async function getFcmToken() {
   const fcmToken = await messaging().getToken();
 
   try {
-    const responce = await postToApi({ android: 'android', fcmToken });
+    await postToApi({ android: 'android', fcmToken });
   }
   catch (err: any) {
     const errorText = Object.values(err.response.data)[0];

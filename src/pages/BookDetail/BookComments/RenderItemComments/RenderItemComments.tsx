@@ -5,11 +5,11 @@ import { CommentsType } from '../../../../store/slices/bookSlice';
 import renderItemCommentsStyle from './RenderItemCommentsStyle';
 
 type Props = {
-  item:CommentsType;
+  item: CommentsType;
 }
 
 const RenderItemComments: React.FC<Props> = (props) => {
-
+console.log('uri: props.item.avatar_url', props.item.avatar_url)
   return (
     <View>
       <View style={renderItemCommentsStyle.comment_item}>

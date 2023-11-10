@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useAppDispatch, useAppSelector } from '../store/hooks';
@@ -18,11 +17,16 @@ import FavoritesPage from './FavoritesPage/FavoritesPage';
 import { toast } from '../utils/utils';
 import usePushNotifications from '../utils/firebasePushNotification/usePushNotifications';
 
-const Stack = createStackNavigator();
-
 type RootStackParamList = {
-  BookDetail: { id: number }
+  BookDetail: { id: number },
+  Homepage: undefined,
+  Login: undefined,
+  Signup: undefined,
+  UserProfile: undefined,
+  Cart: undefined,
+  FavoritesPage: undefined,
 };
+const Stack = createStackNavigator<RootStackParamList>();
 
 const Main: React.FC = () => {
   usePushNotifications();
@@ -57,63 +61,61 @@ const Main: React.FC = () => {
   if (!initialization) { return null; }
 
   return (
-    // <NavigationContainer>
-      <Stack.Navigator>
-        {!isUser.email ? (
-          <>
-            <Stack.Screen
-              name="Homepage"
-              component={Homepage}
-              options={{ title: 'Homepage' }}
-            />
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ title: 'Login' }}
-            />
-            <Stack.Screen
-              name="Signup"
-              component={Signup}
-              options={{ title: 'Signup' }}
-            />
-            <Stack.Screen
-              name="BookDetail"
-              component={BookDetail}
-              options={{ title: 'BookDetail' }}
-            />
-          </>
-        ) : (
-          <>
-            <Stack.Screen
-              name="Homepage"
-              component={Homepage}
-              options={{ title: 'Homepage' }}
-            />
-            <Stack.Screen
-              name="UserProfile"
-              component={UserProfile}
-              options={{ title: 'UserProfile' }}
-            />
-            <Stack.Screen
-              name="BookDetail"
-              component={BookDetail}
-              options={{ title: 'BookDetail' }}
-            />
-            <Stack.Screen
-              name="Cart"
-              component={Cart}
-              options={{ title: 'Cart' }}
-            />
-            <Stack.Screen
-              name="FavoritesPage"
-              component={FavoritesPage}
-              options={{ title: 'FavoritesPage' }}
-            />
-          </>
-        )
-        }
-      </Stack.Navigator>
-    // </NavigationContainer>
+    <Stack.Navigator>
+      {!isUser.email ? (
+        <>
+          <Stack.Screen
+            name="Homepage"
+            component={Homepage}
+            options={{ title: 'Homepage' }}
+          />
+          <Stack.Screen
+            name="Login"
+            component={Login}
+            options={{ title: 'Login' }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{ title: 'Signup' }}
+          />
+          <Stack.Screen
+            name="BookDetail"
+            component={BookDetail}
+            options={{ title: 'BookDetail' }}
+          />
+        </>
+      ) : (
+        <>
+          <Stack.Screen
+            name="Homepage"
+            component={Homepage}
+            options={{ title: 'Homepage' }}
+          />
+          <Stack.Screen
+            name="UserProfile"
+            component={UserProfile}
+            options={{ title: 'UserProfile' }}
+          />
+          <Stack.Screen
+            name="BookDetail"
+            component={BookDetail}
+            options={{ title: 'BookDetail' }}
+          />
+          <Stack.Screen
+            name="Cart"
+            component={Cart}
+            options={{ title: 'Cart' }}
+          />
+          <Stack.Screen
+            name="FavoritesPage"
+            component={FavoritesPage}
+            options={{ title: 'FavoritesPage' }}
+          />
+        </>
+      )
+      }
+    </Stack.Navigator>
   );
 }
 

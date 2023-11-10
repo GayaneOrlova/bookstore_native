@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ListRenderItemInfo, ScrollView, Platform, } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { io } from 'socket.io-client';
 
 import { BookType, CommentsType } from '../../../store/slices/bookSlice';
 import { useAppSelector } from '../../../store/hooks';
 
 import RenderItemComments from './RenderItemComments/RenderItemComments';
 import Footer from '../../Footer/Footer';
-
-import { io } from 'socket.io-client';
 import PostComment from './PostComment';
 import ListHeaderComponent from './ListHeaderComponentStyle/ListHeaderComponent';
 import bookCommentsStyle from './BookCommentsStyle';
+
+import generateRandomID from '../../../utils/utils';
 
 
 type Props = {
@@ -27,7 +28,6 @@ type Props = {
 const BookComments: React.FC<Props> = (props) => {
   const isUser = useAppSelector(state => state.user.user);
   const [comments, setComments] = useState<CommentsType[]>(props.commentList);
-console.log('!!!', comments)
   const [access, setAccess] = useState<string>('');
 
   const token = async () => {
@@ -40,7 +40,7 @@ console.log('!!!', comments)
   }, [])
 
   let URL = '';
-  
+
   if (Platform.OS === 'ios') {
     URL = 'http://localhost:8000';
   } else if (Platform.OS === 'android') {
@@ -77,7 +77,7 @@ console.log('!!!', comments)
             <RenderItemComments item={item} />
           )}
 
-          keyExtractor={(item) => item.created_at}
+          keyExtractor={(item) => generateRandomID()}
           ListHeaderComponent={
             <ListHeaderComponent
               bookDetail={props.bookDetail}
@@ -110,3 +110,5 @@ console.log('!!!', comments)
 };
 
 export default BookComments;
+
+
