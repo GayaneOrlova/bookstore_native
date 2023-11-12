@@ -33,7 +33,6 @@ const UserPasswordChange: React.FC<Props> = () => {
   };
 
   const onSubmit = async (text: UserLoginType) => {
-    console.log(text, 'text')
     try {
       const response = await userPasswordChange(text);
       dispatch(setNewPassword(response.data));

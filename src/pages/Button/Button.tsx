@@ -1,9 +1,10 @@
 import React from 'react';
 import {Text, TouchableOpacity, ViewStyle} from 'react-native';
-
-import buttonStyles from './ButtonStyles';
 import { useAppSelector } from '../../store/hooks';
 import { BookType } from '../../store/slices/bookSlice';
+
+import buttonStyles from './ButtonStyles';
+
 
 type Props = {
   text: string;

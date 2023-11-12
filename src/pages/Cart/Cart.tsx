@@ -55,8 +55,6 @@ const Cart: React.FC<Props> = () => {
     fetchUserCart();
   }, []);
 
-console.log('cartList?.total_price', cartList?.total_price)
-console.log('cartList', cartList)
 
   return (
     <View>

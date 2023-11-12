@@ -9,7 +9,6 @@ import messaging from '@react-native-firebase/messaging';
 
 messaging().setBackgroundMessageHandler(async remoteMessage => {
   if (Platform.OS === 'ios') return;
-  console.log('Background Notification:', remoteMessage.notification);
 });
 
 AppRegistry.registerComponent(appName, () => App);

@@ -6,7 +6,7 @@ const renderItemCommentsStyle = StyleSheet.create({
     marginBottom: 10,
     marginHorizontal: 15,
     padding: 10,
-    backgroundColor: '#eaebea',
+    backgroundColor: COLORS.light_grey,
     borderRadius: 16,
   },
   detail_info_group: {

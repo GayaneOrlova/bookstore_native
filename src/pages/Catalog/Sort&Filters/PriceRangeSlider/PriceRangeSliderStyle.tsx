@@ -47,7 +47,7 @@ const priceRangeSliderStyles = StyleSheet.create({
   },
   track: {
     height: 12,
-    backgroundColor: '#D6D8E7',
+    borderBottomColor: COLORS.light_blue,
     borderRadius: 16,
   },
   selectedTrack: {

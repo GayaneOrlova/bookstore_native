@@ -28,11 +28,9 @@ const RenderBookItem: React.FC<Props> = (props) => {
 
   const dispatch = useAppDispatch();
   const isUser = useAppSelector(state => state.user.user);
-  console.log(32, isUser);
   const isBookOnCart = isUser.cart_items_books.includes(props.item?.id);
 
   const onBookDetailPage = (id: number) => {
-  console.log(29, id);
     navigation.navigate('BookDetail', { id });
   };
 

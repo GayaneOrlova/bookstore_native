@@ -13,7 +13,7 @@ const bookCommentsStyle = StyleSheet.create({
     minHeight: 87,
     marginBottom: 30,
     paddingLeft: 10,
-    backgroundColor: '#eaebea',
+    backgroundColor: COLORS.light_grey,
     borderRadius: 16,
   },
   post_comment: {

@@ -4,7 +4,7 @@ import { COLORS } from '../../../utils/colors';
 const userPasswordChangeStyles = StyleSheet.create({
   change_text: {
     fontSize: 12,
-    color: '#8D9F4F',
+    color: COLORS.dark_green,
     marginBottom: 10,
     textDecorationLine: 'underline',
   },

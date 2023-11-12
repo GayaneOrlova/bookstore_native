@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../utils/colors';
 
 const cartQuantitySelectorStyles = StyleSheet.create({
   container: {
@@ -9,8 +10,9 @@ const cartQuantitySelectorStyles = StyleSheet.create({
   buttons: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dcdedc',
-    width: 32, height: 32,
+    backgroundColor: COLORS.light_grey,
+    width: 32,
+    height: 32,
     borderRadius: 25,
   },
   buttons_text: {

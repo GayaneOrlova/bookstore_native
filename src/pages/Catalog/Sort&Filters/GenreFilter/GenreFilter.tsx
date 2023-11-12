@@ -29,9 +29,7 @@ const GenreFilter: React.FC<Props> = (props) => {
   const handleGenreSelection = async () => {
     try {
       if (selectedGenres.length > 0) {
-      console.log('selectedGenres:', selectedGenres)
         const genresFilter = selectedGenres.map((id: number) => (genres?.find(item => item.key === id)?.value));
-        console.log('genresFilter:', genresFilter)
         const genresString = "genre=" + genresFilter.join("&genre=");
         props.setGenreQueryString(genresString);
       }

@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Control, Controller } from "react-hook-form";
 
 import Input from '../../Input/Input';
-import userPasswordChangeStyles from './UserPasswordControllerStyles';
+import userPasswordControllerStyles from './UserPasswordControllerStyles';
 
 import { COLORS } from '../../../utils/colors';
 
@@ -35,10 +35,10 @@ const UserPasswordController: React.FC<Props> = (props) => {
             placeholder={props.placeholder}
             placeholderTextColor={COLORS.dark_blue}
             secureTextEntry
-            style={userPasswordChangeStyles.input}
+            style={userPasswordControllerStyles.input}
             editable={props.showInputChange}
           />
-          <Text style={userPasswordChangeStyles.input_description}>Your password</Text>
+          <Text style={userPasswordControllerStyles.input_description}>Your password</Text>
         </View>
       )}
       name={props.name}

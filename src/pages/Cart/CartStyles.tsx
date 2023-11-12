@@ -2,17 +2,10 @@ import { StyleSheet } from 'react-native';
 import { COLORS } from '../../utils/colors';
 
 const cartStyles = StyleSheet.create({
-  cart_container: {
-    flexDirection: 'column',
-    gap: 30,
-    marginTop: 30,
-    marginBottom: 80,
-    borderColor: '#D6D8E7',
-  },
   render_item: {
     flexDirection: 'row',
     gap: 20,
-    borderBottomColor: '#D6D8E7',
+    borderBottomColor: COLORS.light_blue,
     borderBottomWidth: 1,
     paddingBottom: 30,
   },

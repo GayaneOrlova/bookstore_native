@@ -7,14 +7,12 @@ const emptyCartStyles = StyleSheet.create({
     gap: 30,
     marginTop: 30,
     marginBottom: 80,
-    borderColor: '#D6D8E7',
     marginHorizontal: 15,
   },
   text: {
     fontSize: 18,
     fontWeight: '700',
     marginRight: 15,
-    width: 165,
   },
   text_description: {
     color: COLORS.dark_blue,
